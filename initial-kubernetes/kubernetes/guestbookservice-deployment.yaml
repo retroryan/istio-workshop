@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: guestbook-service
-        image: gcr.io/sparkcluster-177619/guestbook:1.0
+        image: retroryan/guestbook:1.0
         ports:
         - name: http
           containerPort: 8080

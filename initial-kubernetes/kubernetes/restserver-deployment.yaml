@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
       - name: restserver
-        image: gcr.io/sparkcluster-177619/restserver:1.0
+        image: retroryan/restserver:1.0
         env:
         - name: HELLOWORLDSERVICE_PORT
           value: http://helloworld-service:8080

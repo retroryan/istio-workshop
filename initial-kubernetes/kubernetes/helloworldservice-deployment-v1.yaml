@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: helloworld-service
-        image: gcr.io/sparkcluster-177619/helloworld:1.0
+        image: retroryan/helloworld:1.0
         env:
         - name: VERSION
           value: "1.0"

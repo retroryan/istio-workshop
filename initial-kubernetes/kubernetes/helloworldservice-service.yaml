@@ -22,6 +22,7 @@ metadata:
     app: helloworld-service
     visualize: "true"
 spec:
+  type: LoadBalancer
   ports:
     - name: http
       port: 8080

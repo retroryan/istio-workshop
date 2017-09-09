@@ -5,15 +5,15 @@ metadata:
   labels:
     app: mysql
     visualize: "true"
-spec: 
+spec:
   replicas: 1
   template:
     metadata:
-      labels: 
+      labels:
         app: mysql
         visualize: "true"
     spec:
-      containers: 
+      containers:
       - name: mysql
         image: mysql:5.6
         env:
@@ -22,7 +22,7 @@ spec:
           value: yourpassword
         - name: MYSQL_DATABASE
           value: app
-        ports: 
+        ports:
         - containerPort: 3306
           name: mysql
         volumeMounts:
