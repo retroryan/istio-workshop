@@ -32,6 +32,7 @@ spec:
         serving: "true"
         version: latest
         visualize: "true"
+        layer: controller-plane
     spec:
       containers:
       - name: guestbook-service

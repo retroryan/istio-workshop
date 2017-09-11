@@ -26,6 +26,7 @@ spec:
       labels:
         app: redis
         visualize: "true"
+        layer: frontend
     spec:
       containers:
       - name: redis

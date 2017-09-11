@@ -32,6 +32,7 @@ spec:
         version: latest
         serving: "true"
         visualize: "true"
+        layer: frontend
       annotations:
         visualizer/uses: helloworld-service,guestbook-service,redis
     spec:

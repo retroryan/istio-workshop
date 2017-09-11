@@ -34,6 +34,7 @@ spec:
         serving: "true"
         visualize: "true"
         version: v2
+        layer: controller-plane
     spec:
       containers:
       - name: helloworld-service
