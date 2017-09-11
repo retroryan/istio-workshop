@@ -1,9 +1,0 @@
-type: route-rule
-name: istio-test-default
-namespace: default
-spec:
-  destination: istio-test.default.svc.cluster.local
-  route:
-    - tags:
-        version: v2
-      weight: 100

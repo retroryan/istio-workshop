@@ -37,7 +37,7 @@ class ApplicationConfig {
     def uri
 
     if (serviceEndpoint?.trim()) {
-      uri = serviceEndpoint.replace("tcp:", "http:") + "/hello"
+      uri = serviceEndpoint.replace("tcp:", "http:") + "/api/hello"
 
       println "Using backend: ${uri}"
       return new RestHelloWorldService(uri: uri)
@@ -53,7 +53,7 @@ class ApplicationConfig {
     def uri
 
     if (guestbookServiceEndpoint?.trim()) {
-      uri = guestbookServiceEndpoint.replace("tcp:", "http:") + "/api/messages"
+      uri = guestbookServiceEndpoint.replace("tcp:", "http:") + "/messages"
 
       println "Using backend: ${uri}"
       return new RestGuestbookService(uri: uri)

@@ -1,13 +1,10 @@
 type: route-rule
-name: canary-helloworld-v2
+name: force-hello-v1
 namespace: default
 spec:
   destination: helloworld-service.default.svc.cluster.local
-  match:
-    httpHeaders:
-      foo:
-        exact: bar
-  precedence: 2
+  precedence: 1
   route:
     - tags:
         version: v1
+      weight: 100
