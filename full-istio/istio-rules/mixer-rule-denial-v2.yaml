@@ -1,0 +1,4 @@
+rules:
+  - selector: destination.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
+    aspects:
+    - kind: denials
