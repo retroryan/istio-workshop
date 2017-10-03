@@ -29,4 +29,5 @@ This will take a few minutes to run. Behind the scenes, it will create Google Co
 
 The scopes parameter is important for this lab. Scopes determine what Google Cloud Platform resources these newly created instances can access.  By default, instances are able to read from Google Cloud Storage, write metrics to Google Cloud Monitoring, etc. For our lab, we add the cloud-platform scope to give us more privileges, such as writing to Cloud Storage as well.
 
-####[Next - Exercise 2 - Deploying a microservice to Kubernetes](exercise-2/README.md)    [Previous Setup for the workshop](setup/README.md)
+#### [Next - Exercise 2 - Deploying a microservice to Kubernetes](exercise-2/README.md)    
+#### [Previous Setup for the workshop](setup/README.md)
