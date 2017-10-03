@@ -16,7 +16,7 @@ The external ip will start as pending.  After a short period the EXTERNAL IP wil
 
 #### Exercise 3 Details
 
-Open the helloworldservice-service.yaml to examine the service descriptor. The important part about this file is the selector section. This is how a service knows which pod to route the traffic to, by matching the selector labels with the labels of the pods.
+Open the [helloworldservice-service.yaml](helloworldservice-service.yaml) to examine the service descriptor. The important part about this file is the selector section. This is how a service knows which pod to route the traffic to, by matching the selector labels with the labels of the pods.
 
 The other important part to notice in this file is the type of service is a Load Balancer.  This tells GCE that an externally facing load balancer should be created for this service so that it is accessible from the outside.
 

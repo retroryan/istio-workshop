@@ -1,4 +1,4 @@
-## Exercise 1 - Startup Kubernetes Cluster
+## Exercise 1 - Startup a Kubernetes Cluster
 
 #### Set Default Region and Zones
 
