@@ -14,7 +14,7 @@ The external ip will start as pending.  After a short period the EXTERNAL IP wil
 
 `curl 104.154.120.67:8080/hello/world`
 
-[Next - Exercise 4 - Scaling In and Out](exercise-4/README.md)
+#### [Next - Exercise 4 - Scaling In and Out](../exercise-4/README.md)
 
 #### Exercise 3 Details
 
