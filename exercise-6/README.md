@@ -34,4 +34,4 @@ The Istio Ingress Proxy is deployed as a Kubernetes Ingress Controller.  That me
 
 `curl 104.155.181.0/hello/world`
 
-#### [Continue to Exercise 7 - Request Routing with Istio Route Rules](exercise-7/README.md)
+#### [Continue to Exercise 7 - Request Routing with Istio Route Rules](../exercise-7/README.md)

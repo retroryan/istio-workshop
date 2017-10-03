@@ -1,35 +1,38 @@
 ## Request Routing with Istio Route Rules
 
-#### Create the necessary cluster roles
+The Istio Ingress Controller provides a [complete set of rules](https://istio.io/docs/concepts/traffic-management/rules-configuration.html) that use Envoy's traffic management capabilities. These exercises will show how to dynamically configure the Istio Ingress Controller by sumbitting commands to the Istio Pilot using the istioctl command line tool.
 
-`kubectl create clusterrolebinding cluster-admin-binding \
-    --clusterrole=cluster-admin \
-    --user=$(gcloud config get-value core/account)`
+If you do not have the istioctl command line tool go back to [exercise-5](../exercise-5/#download-istio) and download Istio.
 
-#### Deploy Istio Pilot
+As an example we are going to deploy a V2 of the hello world service and see what happens with the current Ingress Rules.
 
-Details about the Istio Pilot can be found in the section about the [Istio Pilot in the Istio Docs](https://istio.io/docs/concepts/what-is-istio/overview.html#pilot)
+#### Deploy Hello World Service V2
 
-`kubectl apply -f istio-pilot.yaml`
+Deploy V2 of Hello World Service from this deployment description - [helloworldservice-deployment-v2.yaml](helloworldservice-deployment-v2.yaml)
 
-#### Deploy Istio Proxy
+`kubectl create -f helloworldservice-deployment-v2.yaml`
 
-Details about the Istio Proxy can be found in the section about the [Envoy Proxy in the Istio Docs](https://istio.io/docs/concepts/what-is-istio/overview.html#envoy)
+#### Kubernetes service behavior of round robining between Services
 
-To create the Istio Ingress Proxy we will apply the istio-ingress.yaml.  Similar to the pilot it also creates roles, a service account, deployment and kubernetes service.
+If we curl the service over and over we will see the it round robins between the version of the services:
 
-`kubectl apply -f istio-ingress.yaml`
+```
+$ curl 104.155.181.0/hello/world
+{"greeting":"Hello world from helloworld-service-v1-986699223-758r0 with 1.0","hostname":"helloworld-service-v1-986699223-758r0","version":"1.0"}
+$ curl 104.155.181.0/hello/world
+{"greeting":"Hello world from helloworld-service-v2-190019907-k10vk with 2.0","hostname":"helloworld-service-v2-190019907-k10vk","version":"2.0"}
+$ curl 104.155.181.0/hello/world
+{"greeting":"Hello world from helloworld-service-v1-986699223-758r0 with 1.0","hostname":"helloworld-service-v1-986699223-758r0","version":"1.0"}
+$ curl 104.155.181.0/hello/world
+{"greeting":"Hello world from helloworld-service-v2-190019907-k10vk with 2.0","hostname":"helloworld-service-v2-190019907-k10vk","version":"2.0"}
+$ curl 104.155.181.0/hello/world
+{"greeting":"Hello world from helloworld-service-v1-986699223-758r0 with 1.0","hostname":"helloworld-service-v1-986699223-758r0","version":"1.0"}
+```
 
-#### Verify the Pilot and Proxy are deployed
+What we see is that the service is load balancing the traffic in a round robin fashion between the two versions of the hello world service.  What we want to do is force all the traffic to a single version of the service by using a routing rule.
 
-The list of pods should show istio-pilot and istio-proxy running:
+#### Create a routing rules
 
-`kubectl get pods`
+`istioctl create -f force-hello-v1.yaml`
 
-#### Kubernetes Ingress Resources
-
-The Istio Ingress Proxy is deployed as a Kubernetes Ingress Controller.  That means that Kubernetes Ingress rules can be used to configure the Ingress traffic to route to the Kubernetes Services.  This is done by deploying an Kubernetes Ingress Resource that directs traffic to the different services.
-
-`kubectl create -f ingress-helloworld.yaml`
-
-`curl 104.155.181.0/hello/world`
+Look at how this [routing rule](force-hello-v1.yaml) is forcing all the traffic to V1 of the service.
