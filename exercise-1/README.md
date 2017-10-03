@@ -1,4 +1,4 @@
-##Exercise 1 - Startup Kubernetes Cluster
+## Exercise 1 - Startup Kubernetes Cluster
 
 #### Set Default Region and Zones
 
@@ -6,7 +6,7 @@
 
 `gcloud config set compute/region us-central1`
 
-#### Create Kubernetes Cluster using the Google Container Engine.
+#### Create a Kubernetes Cluster using the Google Container Engine.
 
 Google Container Engine is Google’s hosted version of Kubernetes.
 

@@ -22,7 +22,7 @@
 
 >helloworld-service-v1-....     1/1       Running   0          20s
 
-#### Any of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
+#### All of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
 
 `kubectl logs helloworld-service-v1-...`
 
@@ -35,7 +35,7 @@ We will be using yaml files throughout this workshop.  Every file describes a re
 
 The pod deploys a microservice that is a container whose images contains a self-executing JAR files. The source is available at [istio-by-example-java](https://github.com/saturnism/istio-by-example-java) if you are interested in seeing it.
 
-In this first example we deploy a Kubernetes pod by specifying a deployment.  
+In this first example we deployed a Kubernetes pod by specifying a deployment for [hello world service](helloworldservice-deployment.yaml).  
 
 A Kubernetes pod is a group of containers, tied together for the purposes of administration and networking. It can contain one or more containers.  All containers within a single pod will share the same networking interface, IP address, volumes, etc.  All containers within the same pod instance will live and die together.  It’s especially useful when you have, for example, a container that runs the application, and another container that periodically polls logs/metrics from the application container.
 
