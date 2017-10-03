@@ -1,5 +1,4 @@
 ## [Setup for the workshop](setup/README.md)
-[Setup Instructions](setup/README.md)
 
 ## Credits
 These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and Grand Cloud.
