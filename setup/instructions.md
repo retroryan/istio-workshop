@@ -1,30 +1,28 @@
-- Setup [CLOUD SDK](https://cloud.google.com/sdk/)
+1. Setup [CLOUD SDK](https://cloud.google.com/sdk/)
 
--  Install Cloud SDK
+1.  Install Cloud SDK
 
   `./google-cloud-sdk/install.sh`
 
-- Initialize Cloud SDK
+1. Initialize Cloud SDK
 
   `./google-cloud-sdk/bin/gcloud init`
 
-- Login to Cloud
+1. Login to Cloud
 
   `gcloud auth login`
 
-
-- Verify Cloud SDK
+1. Verify Cloud SDK
 
   `gcloud config list`
 
-
-- Install kubectl
+1. Install kubectl
 
   `gcloud components install kubectl`
 
-- Verify kubectl
- -> kubectl version
+1. Verify kubectl
+  `kubectl version`
 
-- Get the Workshop Source:
+1. Get the Workshop Source:
 
   `git clone https://github.com/retroryan/istio-workshop`
