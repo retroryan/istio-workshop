@@ -6,9 +6,9 @@
 
 `kubectl get pods`
 
->NAME                           READY     STATUS    RESTARTS   AGE
+>NAME                           READY     STATUS    RESTARTS    AGE
 
->helloworld-service-v1-....     1/1       Running   0          20s
+>helloworld-service-v1-....     1/1       Running   0           20s
 
 #### Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
 
@@ -21,3 +21,30 @@
 >NAME                           READY     STATUS    RESTARTS   AGE
 
 >helloworld-service-v1-....     1/1       Running   0          20s
+
+
+
+## Exercise 2 - Details from Ray Tsang [https://twitter.com/saturnism](@saturnism)
+
+We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
+
+In this first example we deploy a Kubernetes pod by specifying a deployment.  
+
+A Kubernetes pod is a group of containers, tied together for the purposes of administration and networking. It can contain one or more containers.  All containers within a single pod will share the same networking interface, IP address, volumes, etc.  All containers within the same pod instance will live and die together.  It’s especially useful when you have, for example, a container that runs the application, and another container that periodically polls logs/metrics from the application container.
+
+You can start a single Pod in Kubernetes by creating a Pod resource. However, a Pod created this way would be known as a Naked Pod. If a Naked Pod dies/exits, it will not be restarted by Kubernetes. A better way to start a pod, is by using a higher-level construct such as Replication Controller, Replica Set, or a Deployment.
+
+Prior to Kubernetes 1.2, Replication Controller is the preferred way deploy and manage your application instances. Kubernetes 1.2 introduced two new concepts - Replica Set, and Deployments.
+
+Replica Set is the next-generation Replication Controller. The only difference between a Replica Set and a Replication Controller right now is the selector support. Replica Set supports the new set-based selector requirements whereas a Replication Controller only supports equality-based selector requirements.
+
+For example, Replication Controller can only select pods based on equality, such as "environment = prod", whereas Replica Sets can select using the "in" operator, such as "environment in (prod, qa)". Learn more about the different selectors in the [http://kubernetes.io/docs/user-guide/labels/](Labels guide).
+
+Deployment provides declarative updates for Pods and Replica Sets. You only need to describe the desired state in a Deployment object, and the Deployment controller will change the actual state to the desired state at a controlled rate for you. You can use deployments to easily:
+- Create a Deployment to bring up a Replica Set and Pods.
+- Check the status of a Deployment to see if it succeeds or not.
+- Later, update that Deployment to recreate the Pods (for example, to use a new image, or configuration).
+- Rollback to an earlier Deployment revision if the current Deployment isn’t stable.
+- Pause and resume a Deployment.
+
+In this workshop, because we are working with Kubernetes 1.7+, we will be using Deployment extensively.
