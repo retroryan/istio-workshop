@@ -33,6 +33,8 @@
 
 We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
 
+The pod deploys a microservice that is a container whose images contains a self-executing JAR files. The source is available at [https://github.com/saturnism/istio-by-example-java](istio-by-example-java) if you are interested in seeing it.
+
 In this first example we deploy a Kubernetes pod by specifying a deployment.  
 
 A Kubernetes pod is a group of containers, tied together for the purposes of administration and networking. It can contain one or more containers.  All containers within a single pod will share the same networking interface, IP address, volumes, etc.  All containers within the same pod instance will live and die together.  It’s especially useful when you have, for example, a container that runs the application, and another container that periodically polls logs/metrics from the application container.
