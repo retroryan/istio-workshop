@@ -38,3 +38,5 @@ export PATH=$PWD/istoi-0.1.6/bin:$PATH
 Istio related commands have to be done in the Istio directory.  Any Istio related command will use istio$:
 
 `istio$ kubectl apply -f istio-ingress.yaml`
+
+[Next - Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)

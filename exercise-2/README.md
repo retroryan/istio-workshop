@@ -28,6 +28,8 @@
 
 `kubectl logs -f helloworld-service-v1-...``
 
+[Next - Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
+
 ## Exercise 2 - Details
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 

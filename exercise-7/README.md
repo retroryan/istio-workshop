@@ -1,4 +1,4 @@
-## Creating the Istio Ingress with the Pilot and Proxy
+## Request Routing with Istio Route Rules
 
 #### Create the necessary cluster roles
 

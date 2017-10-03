@@ -5,8 +5,8 @@
 - [Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
 - [Exercise 4 - Scaling In and Out](exercise-4/README.md)
 - [Exercise 5 - Setup for Creating an Istio Ingress Controller](exercise-5/README.md)
-- [Exercise 6 - Creating the Istio Pilot and Proxy](exercise-6/README.md)
-- [Exercise 7 - Google Cloud SDK Setup](exercise-7/README.md)
+- [Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)
+- [Exercise 7 - Request Routing with Istio Route Rules](exercise-7/README.md)
 
 ## Credits
 These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and Grand Cloud.
