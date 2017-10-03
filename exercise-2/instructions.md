@@ -22,9 +22,13 @@
 
 >helloworld-service-v1-....     1/1       Running   0          20s
 
+####Any of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
+`kubectl logs helloworld-service-v1-...`
 
+`kubectl logs -f helloworld-service-v1-...``
 
-## Exercise 2 - Details from Ray Tsang [https://twitter.com/saturnism](@saturnism)
+## Exercise 2 - Details
+#### By Ray Tsang [https://twitter.com/saturnism](@saturnism)
 
 We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
 
@@ -48,3 +52,7 @@ Deployment provides declarative updates for Pods and Replica Sets. You only need
 - Pause and resume a Deployment.
 
 In this workshop, because we are working with Kubernetes 1.7+, we will be using Deployment extensively.
+
+There are other containers running too. The interesting one is the pause container. The atomic unit Kubernetes can manage is actually a Pod, not a container. A Pod can be composed of multiple tightly-coupled containers that is guaranteed to scheduled onto the same node, and will share the same Pod IP address, and can mount the same volumes.. What that essentially means is that if you run multiple containers in the same Pod, they will share the same namespaces.
+
+A pause container is how Kubernetes uses Docker containers to create shared namespaces so that the actual application containers within the same Pod can share resources.
