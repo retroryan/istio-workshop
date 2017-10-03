@@ -1,4 +1,4 @@
-## Exercise 3 - Scaling In and Out
+## Exercise 4 - Scaling In and Out
 
 #### Scale the number of Hello World Service “pods
 

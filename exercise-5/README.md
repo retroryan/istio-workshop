@@ -1,4 +1,4 @@
-## Istio Ingress Tutorial
+## Setup for Creating an Istio Ingress Controller
 
 We are going to create a single Ingress Controller for the entire cluster.  This will eliminate the need for the services to have an external load balancer ip.
 
@@ -14,22 +14,26 @@ We still need the services to be created.  The version of the [helloworldservice
 
 `kubectl create -f helloworldservice-service.yaml`
 
-Now when you view the service the EXTERNAL-IP should be <none>
+Now when you view the service the EXTERNAL-IP should be none
 
 `kubectl get service`
 
 >NAME                 CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+
 >helloworld-service   10.31.240.202   <none>        8080/TCP   28s
+
 >kubernetes           10.31.240.1     <none>        443/TCP    1h
 
 ## Download Istio
+
+Only download Istio - do not install it yet!
 
 ```
 curl -L https://git.io/getIstio | sh -
 export PATH=$PWD/istoi-0.1.6/bin:$PATH
 ```
 
-#### Installing and running Istio
+#### A note on running Istio
 
 Istio related commands have to be done in the Istio directory.  Any Istio related command will use istio$:
 
