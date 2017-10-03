@@ -22,7 +22,8 @@
 
 >helloworld-service-v1-....     1/1       Running   0          20s
 
-####Any of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
+#### Any of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
+
 `kubectl logs helloworld-service-v1-...`
 
 `kubectl logs -f helloworld-service-v1-...``
