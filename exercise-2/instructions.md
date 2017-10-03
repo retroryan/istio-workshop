@@ -29,11 +29,11 @@
 `kubectl logs -f helloworld-service-v1-...``
 
 ## Exercise 2 - Details
-#### By Ray Tsang [https://twitter.com/saturnism](@saturnism)
+#### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
 We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
 
-The pod deploys a microservice that is a container whose images contains a self-executing JAR files. The source is available at [https://github.com/saturnism/istio-by-example-java](istio-by-example-java) if you are interested in seeing it.
+The pod deploys a microservice that is a container whose images contains a self-executing JAR files. The source is available at [istio-by-example-java](https://github.com/saturnism/istio-by-example-java) if you are interested in seeing it.
 
 In this first example we deploy a Kubernetes pod by specifying a deployment.  
 
@@ -45,7 +45,7 @@ Prior to Kubernetes 1.2, Replication Controller is the preferred way deploy and 
 
 Replica Set is the next-generation Replication Controller. The only difference between a Replica Set and a Replication Controller right now is the selector support. Replica Set supports the new set-based selector requirements whereas a Replication Controller only supports equality-based selector requirements.
 
-For example, Replication Controller can only select pods based on equality, such as "environment = prod", whereas Replica Sets can select using the "in" operator, such as "environment in (prod, qa)". Learn more about the different selectors in the [http://kubernetes.io/docs/user-guide/labels/](Labels guide).
+For example, Replication Controller can only select pods based on equality, such as "environment = prod", whereas Replica Sets can select using the "in" operator, such as "environment in (prod, qa)". Learn more about the different selectors in the [Labels guide](http://kubernetes.io/docs/user-guide/labels).
 
 Deployment provides declarative updates for Pods and Replica Sets. You only need to describe the desired state in a Deployment object, and the Deployment controller will change the actual state to the desired state at a controlled rate for you. You can use deployments to easily:
 - Create a Deployment to bring up a Replica Set and Pods.
