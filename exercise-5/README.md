@@ -37,6 +37,6 @@ export PATH=$PWD/istoi-0.1.6/bin:$PATH
 
 Istio related commands need to have `istioctl` in the path.  Verify it is available by running:
 
-` istioctl -h`
+`istioctl -h`
 
 #### [Continue to Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](../exercise-6/README.md)

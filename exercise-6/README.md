@@ -2,9 +2,11 @@
 
 #### Create the necessary cluster roles
 
-`kubectl create clusterrolebinding cluster-admin-binding \
+```
+kubectl create clusterrolebinding cluster-admin-binding \
     --clusterrole=cluster-admin \
-    --user=$(gcloud config get-value core/account)`
+    --user=$(gcloud config get-value core/account)
+```
 
 #### Deploy Istio Pilot
 
