@@ -1,5 +1,5 @@
-## Setup for the workshop
-[Setup Instructions](setup/instructions.md)
+## [Setup for the workshop](setup/README.md)
+[Setup Instructions](setup/README.md)
 
 ## Credits
 

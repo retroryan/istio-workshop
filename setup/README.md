@@ -28,3 +28,5 @@
 #### Get the Workshop Source:
 
   `git clone https://github.com/retroryan/istio-workshop`
+
+#### [Continue to Exercise 1](../exercise-1/README.md)
