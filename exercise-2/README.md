@@ -28,8 +28,6 @@
 
 `kubectl logs -f helloworld-service-v1-...``
 
-#### [Next - Exercise 3 - Creating a Kubernetes Service](../exercise-3/README.md)
-
 ## Exercise 2 - Details
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
@@ -61,3 +59,5 @@ In this workshop, because we are working with Kubernetes 1.7+, we will be using 
 There are other containers running too. The interesting one is the pause container. The atomic unit Kubernetes can manage is actually a Pod, not a container. A Pod can be composed of multiple tightly-coupled containers that is guaranteed to scheduled onto the same node, and will share the same Pod IP address, and can mount the same volumes.. What that essentially means is that if you run multiple containers in the same Pod, they will share the same namespaces.
 
 A pause container is how Kubernetes uses Docker containers to create shared namespaces so that the actual application containers within the same Pod can share resources.
+
+#### [Continue to Exercise 3 - Creating a Kubernetes Service](../exercise-3/README.md)

@@ -39,4 +39,4 @@ Istio related commands have to be done in the Istio directory.  Any Istio relate
 
 `istio$ kubectl apply -f istio-ingress.yaml`
 
-#### [Next - Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)
+#### [Continue to Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)

@@ -34,4 +34,4 @@ Verify the new instance has joined the Kubernetes cluster, you’ll should be ab
 
 `kubectl scale deployment helloworld-service --replicas=4`
 
-#### [Next Exercise 5 - Setup for Creating an Istio Ingress Controller](exercise-5/README.md)
+#### [Continue to Exercise 5 - Setup for Creating an Istio Ingress Controller](exercise-5/README.md)
