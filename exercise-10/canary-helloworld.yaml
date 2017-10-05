@@ -1,0 +1,13 @@
+type: route-rule
+name: canary-helloworld-v2
+namespace: default
+spec:
+  destination: helloworld-service.default.svc.cluster.local
+  match:
+    httpHeaders:
+      user-agent:
+        exact: mobile
+  precedence: 2
+  route:
+    - tags:
+        version: v2

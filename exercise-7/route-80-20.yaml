@@ -1,0 +1,12 @@
+type: route-rule
+name: route8020-helloworld-service
+spec:
+  destination: helloworld-service.default.svc.cluster.local
+  precedence: 1
+  route:
+  - tags:
+      version: v1
+    weight: 80
+  - tags:
+      version: v2
+    weight: 20

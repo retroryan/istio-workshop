@@ -33,6 +33,18 @@ What we see is that the service is load balancing the traffic in a round robin f
 
 #### Create a routing rules
 
+Force all the traffic to a single version of the service by creating a routing rule using `istioctl`:
+
 `istioctl create -f force-hello-v1.yaml`
 
 Look at how this [routing rule](force-hello-v1.yaml) is forcing all the traffic to V1 of the service.
+
+Try curling the service as before and verify you only see v1 of the service.
+
+#### Only route 20% of the traffic to the new service
+
+You can route traffic based on weights.  In this example we will route 20% of the traffic to the new service.
+
+`istioctl create -f force-hello-v1.yaml`
+
+#### [Continue to Exercise 8 - Full Install of Istio](../exercise-8/README.md)

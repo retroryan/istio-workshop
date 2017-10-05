@@ -1,0 +1,10 @@
+type: route-rule
+name: force-hello-v1
+namespace: default
+spec:
+  destination: helloworld-service.default.svc.cluster.local
+  precedence: 1
+  route:
+    - tags:
+        version: v1
+      weight: 100
