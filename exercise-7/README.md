@@ -45,6 +45,6 @@ Try curling the service as before and verify you only see v1 of the service.
 
 You can route traffic based on weights.  In this example we will route 20% of the traffic to the new service.
 
-`istioctl create -f force-hello-v1.yaml`
+`istioctl create -f route-80-20.yaml`
 
 #### [Continue to Exercise 8 - Full Install of Istio](../exercise-8/README.md)
