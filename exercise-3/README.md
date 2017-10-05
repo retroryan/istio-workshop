@@ -14,7 +14,8 @@ The external ip will start as pending.  After a short period the EXTERNAL IP wil
 
 `curl 104.154.120.67:8080/hello/world`
 
-#### Exercise 3 Details
+#### Explanation
+#### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
 Open the [helloworldservice-service.yaml](helloworldservice-service.yaml) to examine the service descriptor. The important part about this file is the selector section. This is how a service knows which pod to route the traffic to, by matching the selector labels with the labels of the pods.
 

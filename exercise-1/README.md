@@ -22,7 +22,7 @@ The project name in that case is workshopcluster-177619
       --cluster-version "1.7.5" \
       --project <YOUR PROJECT NAME>`
 
-## Exercise 1 Details
+## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
 This will take a few minutes to run. Behind the scenes, it will create Google Compute Engine instances, and configure each instance as a Kubernetes node. These instances don’t include the Kubernetes Master node. In Google Container Engine, the Kubernetes Master node is managed service so that you don’t have to worry about it!

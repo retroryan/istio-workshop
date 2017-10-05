@@ -1,4 +1,4 @@
-## Creating the Istio Ingress with the Pilot and Proxy
+## Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy
 
 #### Create the necessary cluster roles
 

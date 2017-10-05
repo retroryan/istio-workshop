@@ -1,4 +1,4 @@
-## Request Routing with Istio Route Rules
+## Exercise 7 - Request Routing with Istio Route Rules
 
 The Istio Ingress Controller provides a [complete set of rules](https://istio.io/docs/concepts/traffic-management/rules-configuration.html) that use Envoy's traffic management capabilities. These exercises will show how to dynamically configure the Istio Ingress Controller by sumbitting commands to the Istio Pilot using the istioctl command line tool.
 

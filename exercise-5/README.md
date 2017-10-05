@@ -1,4 +1,4 @@
-## Setup for Creating an Istio Ingress Controller
+## Exercise 5 - Setup for Creating an Istio Ingress Controller
 
 We are going to create a single Ingress Controller for the entire cluster.  This will eliminate the need for the services to have an external load balancer ip.
 

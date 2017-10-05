@@ -1,4 +1,4 @@
-## Full Install of Istio
+## Exercise 8 - Full Install of Istio
 
 #### Start with a clean slate and delete everything from the cluster
 

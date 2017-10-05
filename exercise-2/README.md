@@ -28,7 +28,7 @@
 
 `kubectl logs -f helloworld-service-v1-...``
 
-## Exercise 2 - Details
+## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
 We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
