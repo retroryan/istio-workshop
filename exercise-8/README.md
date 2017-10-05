@@ -6,6 +6,8 @@
 
 #### Install Istio
 
+change to the istio directory and and install istio in the kubernetes cluster
+
 ```
 cd istio-0.1.6
 kubectl apply -f install/kubernetes/istio.yaml

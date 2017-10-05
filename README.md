@@ -8,13 +8,13 @@
 - [Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
 - [Exercise 4 - Scaling In and Out](exercise-4/README.md)
 
-# Introduction to Istio
+## Introduction to Istio
 
 - [Exercise 5 - Setup for Creating an Istio Ingress Controller](exercise-5/README.md)
 - [Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)
 - [Exercise 7 - Request Routing with Istio Route Rules](exercise-7/README.md)
 
-# Istio in Depth
+## Istio in Depth
 
 - [Exercise 8 - Full Install of Istio](exercise-8/README.md)
 - [Exercise 9 - Deploying Services with Istio](exercise-9/README.md)
