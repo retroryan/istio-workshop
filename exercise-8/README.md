@@ -11,7 +11,9 @@
 1 - First grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio):
 
 ```
-    kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)
+    kubectl create clusterrolebinding cluster-admin-binding \
+        --clusterrole=cluster-admin \
+        --user=$(gcloud config get-value core/account)
 ```
 2 - Next install Istio on the Kubernetes cluster:
 
