@@ -17,11 +17,10 @@
 ## Istio in Depth
 
 - [Exercise 8 - Full Install of Istio](exercise-8/README.md)
-- [Exercise 9 - Deploying Services with Istio](exercise-9/README.md)
-- [Exercise 10 - Canary Deployments and Fault Injection](exercise-10/README.md)
-- [Exercise 11 - Telemetry and Rate Limiting with Mixer](exercise-11/README.md)
-
-
+- [Exercise 9 - Creating a Service Mesh with Istio Proxy](exercise-9/README.md)
+- [Exercise 10 - Request Routing and Canary Deployments](exercise-10/README.md)
+- [Exercise 11 - Fault Injection](exercise-10/README.md)
+- [Exercise 12 - Telemetry and Rate Limiting with Mixer](exercise-11/README.md)
 
 
 ## Credits

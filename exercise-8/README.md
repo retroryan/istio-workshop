@@ -6,15 +6,17 @@
 
 #### Install Istio
 
-change to the istio directory and and install istio in the kubernetes cluster
+CD to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
+
+1 - First grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio):
+
+`kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)`
+
+2 - Next install Istio on the Kubernetes cluster:
 
 ```
-cd istio-0.1.6
+cd istio-0.2.9
 kubectl apply -f install/kubernetes/istio.yaml
-kubectl apply -f install/kubernetes/addons/prometheus.yaml
-kubectl apply -f install/kubernetes/addons/grafana.yaml
-kubectl apply -f install/kubernetes/addons/servicegraph.yaml
-kubectl apply -f install/kubernetes/addons/zipkin.yaml
 ```
 
 

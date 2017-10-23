@@ -28,8 +28,12 @@ Now when you view the service the EXTERNAL-IP should be none
 
 Only download Istio - do not install it yet!
 
+Either download it directly or get the latest:
+
+https://github.com/istio/istio/releases
+
 ```
-curl -L https://git.io/getIstio | sh -
+curl -L https://git.io/getLatestIstio | sh -
 export PATH=$PWD/istoi-0.1.6/bin:$PATH
 ```
 

@@ -21,6 +21,7 @@ metadata:
     visualize: "true"
 spec:
   type: LoadBalancer
+  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 8080
