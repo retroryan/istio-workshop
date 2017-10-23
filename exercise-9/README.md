@@ -16,25 +16,25 @@ Istio sidecars can also be automatically injected into a Pod before deployment u
 
 To see how the deployment yaml is modified run the following command:
 
-`istioctl kube-inject -f helloworld-deployment.yaml`
+    `istioctl kube-inject -f helloworld-deployment.yaml`
 
 #### Deploy all of the Guest Book Services to get started
 
 1 - Start the Guest Book services using the following script:
 
 ```
-guestbook/deployGuestBookIstio.sh
+    guestbook/deployGuestBookIstio.sh
 ```
 
 2 - You can access the public IP of the HelloWorld UI by running describe on the service and look for LoadBalancer Ingress IP in the output in a minute or two:
 
-`kubectl describe services helloworld-ui`
+    `kubectl describe services helloworld-ui`
 
 3 - You can now access the guestbook via the helloworld ui ingress IP address by navigating the browser to http://INGRESS_IP/.
 
 4 - The hello world ui also has a rest endpoint that we will use for testing routing rules.  It takes the last part of the URL as the name to create a greeting for.  Verify it works by running:
 
-`curl http://INGRESS_IP/echo/universe`
+    `curl http://INGRESS_IP/echo/universe`
 
 
 
