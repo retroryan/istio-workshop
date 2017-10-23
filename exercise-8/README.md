@@ -12,12 +12,12 @@
 
 2 - Next install Istio on the Kubernetes cluster:
 
-CD to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
+Change to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
 
-  ```
-  cd istio-0.2.9
-  kubectl apply -f install/kubernetes/istio.yaml
-  ```
+    ```
+    cd istio-0.2.9
+    kubectl apply -f install/kubernetes/istio.yaml
+    ```
 
 
 #### [Continue to Exercise 9 - Deploying Services with Istio](../exercise-9/README.md)
