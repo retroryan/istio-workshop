@@ -23,7 +23,54 @@ $ curl 35.188.171.180/echo/universe
 
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 
+```
+
+####Canary Deployments
+
+Currently the routing rule routes only to V1 of the hello world service which is not real useful. What we want to do next is a canary deployment and push some of the traffic to V2. This can be done by creating another rule with a higher precedence that routes some of the traffic to V2 based on http headers.  As an example we will use the following canary deployment in canary-helloworld.yaml
 
 ```
+  type: route-rule
+  name: canary-helloworld-v2
+  namespace: default
+  spec:
+    destination: helloworld-service.default.svc.cluster.local
+    match:
+      httpHeaders:
+        foo:
+          exact: bar
+    precedence: 2
+    route:
+      - tags:
+          version: v1
+```
+
+Note that rules with a higher precedence number are applied first.  If a precedence is not specified then it defaults to 0.  So with these 2 rules in place the one with precedence 2 will be applied first.
+
+Test this out by creating the rule:
+
+```
+    istioctl create -f canary-helloworld.yaml
+```
+
+Now when you curl the end point set the user agent to be mobile and you should only see V2:
+
+```
+$ curl http://104.198.198.111/echo/universe -A mobile
+
+{"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
+
+$ curl 35.188.171.180/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+
+```
+
+An important point to note is that the user-agent http header is propagated in the span baggage.  Look at these two classes for details:
+
+https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java
+
+https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java
+
 
 #### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)
