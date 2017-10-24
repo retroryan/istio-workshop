@@ -1,6 +1,10 @@
-## Exercise 5 - Setup for Creating an Istio Ingress Controller
+## Exercise 5 - Installing Istio
 
-We are going to create a single Ingress Controller for the entire cluster.  This will eliminate the need for the services to have an external load balancer ip.
+#### Start with a clean slate and delete all deployed services from the cluster
+
+```
+    kubectl delete all --all
+```
 
 ## Download Istio
 
@@ -21,4 +25,33 @@ Istio related commands need to have `istioctl` in the path.  Verify it is availa
 
 `istioctl -h`
 
-#### [Continue to Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](../exercise-6/README.md)
+
+#### Install Istio on the Kubernetes Cluster
+
+1 - First grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio):
+
+```
+    kubectl create clusterrolebinding cluster-admin-binding \
+        --clusterrole=cluster-admin \
+        --user=$(gcloud config get-value core/account)
+```
+2 - Next install Istio on the Kubernetes cluster:
+
+Change to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
+
+```
+    cd istio-0.2.9
+    kubectl apply -f install/kubernetes/istio.yaml
+```
+
+
+#### Viewing the Istio Deployments
+
+Istio is deployed in a separate Kubernetes namespace `istio-system`  You can watch the state of Istio and other services and pods using the watch command.  For example in 2 separate terminal windows run:
+
+```
+  watch -n 30 kubectl get po --all-namespaces
+  watch -n 30 kubectl get svc --all-namespaces
+```
+
+#### [Continue to Exercise 6 - Creating a Service Mesh with Istio Proxy](../exercise-6/README.md)

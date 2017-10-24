@@ -1,4 +1,0 @@
-rules:
-  - selector: target.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
-    aspects:
-    - kind: denials

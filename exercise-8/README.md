@@ -1,37 +1,29 @@
-## Exercise 8 - Full Install of Istio
+## Exercise 8 - Request Routing and Canary Deployments
 
-#### Start with a clean slate and delete everything from the cluster
+Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1.  Otherwise it will just round robin between V1 and V2
 
-```
-    kubectl delete all --all
-```
+#### Configure the default route for hello world service
 
-#### Install Istio on the Kubernetes Cluster
-
-1 - First grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio):
+1 - Set the default version for all requests to the hello world service using :
 
 ```
-    kubectl create clusterrolebinding cluster-admin-binding \
-        --clusterrole=cluster-admin \
-        --user=$(gcloud config get-value core/account)
-```
-2 - Next install Istio on the Kubernetes cluster:
-
-Change to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
-
-```
-    cd istio-0.2.9
-    kubectl apply -f install/kubernetes/istio.yaml
+istioctl create -f guestbook/force-hello-v1.yaml
 ```
 
+This ingress rule forces v1 of the service by giving it a weight of 100.
 
-#### Viewing the Istio Deployments
-
-Istio is deployed in a separate Kubernetes namespace `istio-system`  You can watch the state of Istio and other services and pods using the watch command.  For example in 2 separate terminal windows run:
+2 - Now when you curl the echo service it should always return V1 of the hello world service:
 
 ```
-  watch -n 30 kubectl get po --all-namespaces
-  watch -n 30 kubectl get svc --all-namespaces
+$ curl 35.188.171.180/echo/universe  
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+
+$ curl 35.188.171.180/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+
+
 ```
 
-#### [Continue to Exercise 9 - Creating a Service Mesh with Istio Proxy](../exercise-9/README.md)
+#### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)

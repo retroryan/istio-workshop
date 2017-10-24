@@ -2,25 +2,20 @@
 - [Setup for the workshop](setup/README.md)
 - [Exercise 1 - Google Cloud SDK Setup](exercise-1/README.md)
 
-## Introduction to Kubernetes
+## Exploring Kubernetes
 
 - [Exercise 2 - Deploying a microservice to Kubernetes](exercise-2/README.md)
 - [Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
 - [Exercise 4 - Scaling In and Out](exercise-4/README.md)
 
-## Introduction to Istio
+## Creating a Service Mesh with Istio
 
-- [Exercise 5 - Setup for Creating an Istio Ingress Controller](exercise-5/README.md)
-- [Exercise 6 - Creating the Istio Ingress with the Pilot and Proxy](exercise-6/README.md)
-- [Exercise 7 - Request Routing with Istio Route Rules](exercise-7/README.md)
-
-## Istio in Depth
-
-- [Exercise 8 - Full Install of Istio](exercise-8/README.md)
-- [Exercise 9 - Creating a Service Mesh with Istio Proxy](exercise-9/README.md)
-- [Exercise 10 - Request Routing and Canary Deployments](exercise-10/README.md)
-- [Exercise 11 - Fault Injection](exercise-10/README.md)
-- [Exercise 12 - Telemetry and Rate Limiting with Mixer](exercise-11/README.md)
+- [Exercise 5 - Installing Istio](exercise-8/README.md)
+- [Exercise 6 - Creating a Service Mesh with Istio Proxy](exercise-9/README.md)
+- [Exercise 7 - Istio Ingress Controller](exercise-10/README.md)
+- [Exercise 8 - Request Routing and Canary Deployments](exercise-10/README.md)
+- [Exercise 9 - Fault Injection](exercise-10/README.md)
+- [Exercise 10 - Telemetry and Rate Limiting with Mixer](exercise-11/README.md)
 
 
 ## Credits
