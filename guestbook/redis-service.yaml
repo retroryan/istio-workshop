@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#  DO NOT NAME THE PORT REDIS!!! This routes the connection through Istio and breaks the application
+
 kind: Service
 apiVersion: v1
 metadata:
@@ -22,7 +24,5 @@ metadata:
 spec:
   ports:
     - port: 6379
-      targetPort: 6379
-      name: redis
   selector:
     app: redis

@@ -11,4 +11,4 @@ sleep 120
 kubectl apply -f $SCRIPTDIR/guestbook-deployment.yaml -f $SCRIPTDIR/guestbook-service.yaml
 sleep 120
 echo "Waiting for guestbook startup before starting UI"
-kubectl apply -f $SCRIPTDIR/ui-deployment.yaml -f $SCRIPTDIR/ui-service.yaml
+kubectl apply -f $SCRIPTDIR/guestbook-ui-deployment.yaml -f $SCRIPTDIR/guestbook-ui-service.yaml
