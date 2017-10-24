@@ -9,7 +9,7 @@ A Kubernetes Ingress rule can be created that routes external requests through t
 1 - Configure the Guess Book UI default route with the Istio Ingress Controller:
 
 ```
-kubectl apply -f guestbook-ingress.yaml
+kubectl apply -f guestbook/guestbook-ingress.yaml
 ```
 
 In this file notice that the ingress class is specified as   `kubernetes.io/ingress.class: istio` which routes the request to Istio.

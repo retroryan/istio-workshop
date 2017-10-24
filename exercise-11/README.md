@@ -2,40 +2,28 @@
 
 Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1.  Otherwise it will just round robin between V1 and V2
 
-#### Configure Guess Book Default Route with the Istio Ingress Controller
+#### Configure the default route for hello world service
 
-1 - Configure the Guess Book UI default route with the Istio Ingress Controller:
-
-```
-kubectl apply -f guestbook-ui-ingress.yaml
-```
-
-This ingress rule force v1 of the service by giving it a weight of 100.
-
-2 - Then find the external IP of the Istio Ingress controller:
+1 - Set the default version for all requests to the hello world service using :
 
 ```
-kubectl get svc -n istio-system
+istioctl create -f guestbook/force-hello-v1.yaml
+```
 
-NAMESPACE      NAME                   CLUSTER-IP      EXTERNAL-IP      PORT(S)                                                  AGE
-istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/TCP,443:32165/TCP                               1h
+This ingress rule forces v1 of the service by giving it a weight of 100.
+
+2 - Now when you curl the echo service it should always return V1 of the hello world service:
+
+```
+$ curl 35.188.171.180/echo/universe  
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+
+$ curl 35.188.171.180/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+
 
 ```
 
-3 - Browse to the website of the guest Book using the INGRESS IP to see the Guest Book UI.  
-
-http://INGRESS_IP/hello/world
-
-Also you should be able to curl the Guest Book using:
-
-```
-curl http://INGRESS_IP/echo/universe  
-```
-
-And the hello world service with:
-
-```
-http://INGRESS_IP/hello/world
-```
-
-#### [Continue to Exercise 12 - Fault Injection](../exercise-11/README.md)
+#### [Continue to Exercise 12 - Fault Injection](../exercise-12/README.md)
