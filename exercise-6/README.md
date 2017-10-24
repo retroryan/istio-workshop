@@ -34,7 +34,7 @@ This adds the Istio Proxy as an additional container to the Pod and setups the n
 
 To deploy all of the guest book related components each deployment needs to be wrapped with a call to istioctl.  The following script does this for each of the components.
 
-1 - Start the Guest Book services using the following script:
+1 - Start the Guest Book services using the following script - note there is a delay between when the services get deployed because of interdependencies required to start the services:
 
 ```
     guestbook/deployGuestBookIstio.sh
