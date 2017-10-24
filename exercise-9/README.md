@@ -54,4 +54,17 @@ To deploy all of the guest book related components each deployment needs to be w
     curl http://EXTERNAL-IP/echo/universe
 ```
 
+5 - Try curling the echo endpoint multiple times and notice how it round robins between v1 and v2 of the hello world service:
+
+```
+  $ curl 146.148.33.1/echo/universe
+
+  {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},
+
+  $ curl 146.148.33.1/echo/universe
+
+  {"greeting":{"hostname":"helloworld-service-v2-1009285752-n2tpb","greeting":"Hello universe from helloworld-service-v2-1009285752-n2tpb with 2.0","version":"2.0"}
+
+```
+
 #### [Continue to Exercise 10 - Request Routing and Canary Deployments](../exercise-10/README.md)
