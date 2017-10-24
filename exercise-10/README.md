@@ -1,18 +1,22 @@
-## Exercise 10 - Request Routing and Canary Deployments
+## Exercise 10 - Istio Ingress Controller
 
-Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1.  Otherwise it will just round robin between V1 and V2
+The components deployed on the service mesh by default are not exposed outside the cluster.  External access to individual services so far has been provided by creating an external load balancer on each service.  
 
-#### Configure Guess Book Default Route with the Istio Ingress Controller
+A Kubernetes Ingress rule can be created that routes external requests through the Istio Ingress Controller to the backing services.
+
+#### Configure Guess Book Ingress Routes with the Istio Ingress Controller
 
 1 - Configure the Guess Book UI default route with the Istio Ingress Controller:
 
 ```
-kubectl apply -f guestbook-ui-ingress.yaml
+kubectl apply -f guestbook-ingress.yaml
 ```
 
-This ingress rule force v1 of the service by giving it a weight of 100.
+In this file notice that the ingress class is specified as   `kubernetes.io/ingress.class: istio` which routes the request to Istio.
 
-2 - Then find the external IP of the Istio Ingress controller:
+The second thing to notice is that the request is routed to different services, either helloworld-service or guestbook-ui depending on the request.  
+
+2 - Find the external IP of the Istio Ingress controller:
 
 ```
 kubectl get svc -n istio-system
@@ -38,4 +42,4 @@ And the hello world service with:
 http://INGRESS_IP/hello/world
 ```
 
-#### [Continue to Exercise 11 - Fault Injection](../exercise-11/README.md)
+#### [Continue to Exercise 11 - Request Routing and Canary Deployments](../exercise-11/README.md)

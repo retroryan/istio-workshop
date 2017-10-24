@@ -67,4 +67,6 @@ To deploy all of the guest book related components each deployment needs to be w
 
 ```
 
-#### [Continue to Exercise 10 - Request Routing and Canary Deployments](../exercise-10/README.md)
+We will change this behavior in future exercises.
+
+#### [Continue to Exercise 10 - Istio Ingress Controller](../exercise-10/README.md)

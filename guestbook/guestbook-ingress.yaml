@@ -15,13 +15,18 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: guestbook-ingress
   annotations:
     kubernetes.io/ingress.class: istio
+  name: simple-ingress
 spec:
   rules:
-  - http:
-      paths:
-      - backend:
-          serviceName: guestbook-ui
-          servicePort: 8080
+    - http:
+        paths:
+          - path: /hello/.*
+            backend:
+              serviceName: helloworld-service
+              servicePort: 8080
+          - path: /echo/.*
+            backend:
+              serviceName: guestbook-ui
+              servicePort: 80
