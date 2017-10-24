@@ -12,20 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Service
-apiVersion: v1
+apiVersion: extensions/v1beta1
+kind: Ingress
 metadata:
-  name: helloworld-ui
-  labels:
-    app: helloworld-ui
-    visualize: "true"
+  name: guestbook-ingress
+  annotations:
+    kubernetes.io/ingress.class: istio
 spec:
-  type: LoadBalancer
-  type: LoadBalancer
-  ports:
-    - port: 80
-      targetPort: 8080
-      name: http
-  selector:
-    app: helloworld-ui
-    serving: "true"
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: guestbook-ui
+          servicePort: 8080

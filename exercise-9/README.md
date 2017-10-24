@@ -17,10 +17,22 @@ Istio sidecars can also be automatically injected into a Pod before deployment u
 To see how the deployment yaml is modified run the following command:
 
 ```
-    istioctl kube-inject -f helloworld-deployment.yaml
+    istioctl kube-inject -f guestbook/helloworld-deployment.yaml
 ```
 
+Inside the yaml there is now an additional container:
+
+```
+  image: docker.io/istio/proxy_debug:0.2.9
+  imagePullPolicy: IfNotPresent
+  name: istio-proxy
+```
+
+This adds the Istio Proxy as an additional container to the Pod and setups the necessary configuration.
+
 #### Deploy all of the Guest Book Services to get started
+
+To deploy all of the guest book related components each deployment needs to be wrapped with a call to istioctl.  The following script does this for each of the components.
 
 1 - Start the Guest Book services using the following script:
 
@@ -28,18 +40,18 @@ To see how the deployment yaml is modified run the following command:
     guestbook/deployGuestBookIstio.sh
 ```
 
-2 - You can access the public IP of the HelloWorld UI by running describe on the service and look for LoadBalancer Ingress IP in the output in a minute or two:
+2 - Find the public IP of the Guest Book UI by running describe on the service and look for EXTERNAL-IP in the output (it will take several minutes to be assigned, so give it a minute or two):
 
 ```
-    kubectl describe services helloworld-ui
+    kubectl describe services guestbook-ui
 ```
 
-3 - You can now access the guestbook via the helloworld ui ingress IP address by navigating the browser to http://INGRESS_IP/.
+3 - Access the guestbook via the Guest Book EXTERNAL-IP address by navigating the browser to http://EXTERNAL-IP/.
 
-4 - The hello world ui also has a rest endpoint that we will use for testing routing rules.  It takes the last part of the URL as the name to create a greeting for.  Verify it works by running:
+4 - The Guest Book UI also has a rest endpoint that can be used for testing routing rules.  It takes the last part of the URL as the name to create a greeting for.  Verify it works by running:
 
 ```
-    curl http://INGRESS_IP/echo/universe
+    curl http://EXTERNAL-IP/echo/universe
 ```
 
-#### [Continue to Exercise 10 - Canary Deployments and Fault Injection](../exercise-10/README.md)
+#### [Continue to Exercise 10 - Request Routing and Canary Deployments](../exercise-10/README.md)

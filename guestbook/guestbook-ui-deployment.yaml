@@ -15,20 +15,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: helloworld-ui
+  name: guestbook-ui
   labels:
-    app: helloworld-ui
+    app: guestbook-ui
     visualize: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: helloworld-ui
+      app: guestbook-ui
       serving: "true"
   template:
     metadata:
       labels:
-        app: helloworld-ui
+        app: guestbook-ui
         version: latest
         serving: "true"
         visualize: "true"
@@ -37,8 +37,8 @@ spec:
         visualizer/uses: helloworld-service,guestbook-service,redis
     spec:
       containers:
-      - name: helloworld-ui
-        image: retroryan/helloworld-ui-istio:java-1.0
+      - name: guestbook-ui
+        image: retroryan/guestbook-ui-istio:java-1.0
         imagePullPolicy: Always
         ports:
         - name: http
