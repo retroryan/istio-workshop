@@ -1,0 +1,4 @@
+rules:
+  - selector: source.labels["app"]=="helloworld-ui"
+    aspects:
+    - kind: denials
