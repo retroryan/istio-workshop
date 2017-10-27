@@ -9,6 +9,6 @@ kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/helloworld-deployment-v2.y
 echo "Waiting for mysql and redis startup before starting guestbook"
 sleep 120
 kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/guestbook-deployment.yaml) -f $SCRIPTDIR/guestbook-service.yaml
-sleep 120
 echo "Waiting for guestbook service startup before starting Guest Book UI"
+sleep 120
 kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/guestbook-ui-deployment.yaml) -f $SCRIPTDIR/guestbook-ui-service.yaml

@@ -7,10 +7,9 @@ spec:
   destination:
     name: helloworld-service
   match:
-    request:
-      headers:
-        user-agent:
-          exact: mobile
+    httpHeaders:
+      Foo:
+        exact: bar
   route:
   - labels:
       version: v1

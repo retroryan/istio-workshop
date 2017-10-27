@@ -25,7 +25,7 @@ $ curl 35.188.171.180/echo/universe
 
 ```
 
-####Canary Deployments
+#### Canary Deployments
 
 Currently the routing rule routes only to V1 of the hello world service which is not real useful. What we want to do next is a canary deployment and push some of the traffic to V2. This can be done by creating another rule with a higher precedence that routes some of the traffic to V2 based on http headers.  As an example we will use the following canary deployment in canary-helloworld.yaml
 
@@ -38,7 +38,7 @@ Currently the routing rule routes only to V1 of the hello world service which is
     match:
       httpHeaders:
         foo:
-          exact: bar
+          exact: mobile
     precedence: 2
     route:
       - tags:
@@ -50,7 +50,7 @@ Note that rules with a higher precedence number are applied first.  If a precede
 Test this out by creating the rule:
 
 ```
-    istioctl create -f canary-helloworld.yaml
+    istioctl create -f guestbook/canary-helloworld.yaml
 ```
 
 Now when you curl the end point set the user agent to be mobile and you should only see V2:

@@ -26,7 +26,7 @@ spec:
             backend:
               serviceName: helloworld-service
               servicePort: 8080
-          - path: /echo/.*
+          - path: /.*
             backend:
               serviceName: guestbook-ui
               servicePort: 80

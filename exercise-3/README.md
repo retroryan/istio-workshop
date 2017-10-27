@@ -6,7 +6,7 @@ In Kubernetes, you can instruct the underlying infrastructure to create an exter
 
 #### Create the Hello World Service “service”
 
-`kubectl apply -f helloworldservice-service.yaml --record`
+`kubectl apply -f kubernetes/helloworldservice-service.yaml --record`
 
 `kubectl get services`
 
