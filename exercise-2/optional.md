@@ -29,3 +29,5 @@ root@helloworld-...:/app/src# exit
 root@helloworld-...:/data# hostname -i
 10.104.1.5
 ```
+
+#### [Continue to Exercise 3 - Creating a Kubernetes Service](../exercise-3/README.md)

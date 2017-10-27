@@ -1,6 +1,8 @@
 ## Exercise 2 - Deploying a microservice to Kubernetes
 
-#### Deploy hello world service to kubernetes
+#### Deploy Hello World
+
+1 - Deploy hello world service to kubernetes
 
 `kubectl apply -f helloworldservice-deployment.yaml --record`
 
@@ -10,11 +12,11 @@
 
 >helloworld-service-v1-....     1/1       Running   0           20s
 
-#### Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
+2 -  Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
 
 `kubectl delete pod helloworld-service-v1-...`
 
-#### Kubernetes will automatically restart this pod for you.  Verify it is restarted
+3 - Kubernetes will automatically restart this pod for you.  Verify it is restarted
 
 `kubectl get pods`
 
@@ -22,13 +24,14 @@
 
 >helloworld-service-v1-....     1/1       Running   0          20s
 
-#### All of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
+4 -  All of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
 
 `kubectl logs helloworld-service-v1-...`
 
 `kubectl logs -f helloworld-service-v1-...``
 
 ## Explanation
+
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
 We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
@@ -59,5 +62,7 @@ In this workshop, because we are working with Kubernetes 1.7+, we will be using 
 There are other containers running too. The interesting one is the pause container. The atomic unit Kubernetes can manage is actually a Pod, not a container. A Pod can be composed of multiple tightly-coupled containers that is guaranteed to scheduled onto the same node, and will share the same Pod IP address, and can mount the same volumes.. What that essentially means is that if you run multiple containers in the same Pod, they will share the same namespaces.
 
 A pause container is how Kubernetes uses Docker containers to create shared namespaces so that the actual application containers within the same Pod can share resources.
+
+#### Optional - [Peering under the covers of Kubernetes](optional.md)
 
 #### [Continue to Exercise 3 - Creating a Kubernetes Service](../exercise-3/README.md)
