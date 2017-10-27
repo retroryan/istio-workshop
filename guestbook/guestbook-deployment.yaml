@@ -37,7 +37,6 @@ spec:
       containers:
       - name: guestbook-service
         image: retroryan/guestbook-service-istio:java-1.0
-        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http

@@ -1,17 +1,17 @@
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: canary-helloworld
+  name: helloworld-service-chrome
   namespace: default
 spec:
   destination:
     name: helloworld-service
+  precedence: 3
   match:
     request:
       headers:
         user-agent:
-          exact: mobile
-  precedence: 2
+          regex: ".*Chrome.*"
   route:
-    - labels:
-        version: "2.0"
+  - labels:
+      version: "2.0"

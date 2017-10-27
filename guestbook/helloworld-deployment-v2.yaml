@@ -19,7 +19,7 @@ metadata:
   labels:
     app: helloworld-service-v2
     visualize: "true"
-    version: v2
+    version: "2.0"
 spec:
   replicas: 1
   selector:
@@ -33,16 +33,17 @@ spec:
         version: "latest"
         serving: "true"
         visualize: "true"
-        version: v2
+        version: "2.0"
         layer: controller-plane
     spec:
       containers:
       - name: helloworld-service
-        image: retroryan/helloworld-service-istio:java-2.0
-        imagePullPolicy: Always
+        image: retroryan/helloworld-service-istio:java-1.0
         env:
         - name: version
           value: "2.0"
+        - name: GREETING
+          value: "Hola $name from $hostname version $version"
         ports:
         - name: http
           containerPort: 8080

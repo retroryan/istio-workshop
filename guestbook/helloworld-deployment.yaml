@@ -19,7 +19,7 @@ metadata:
   labels:
     app: helloworld-service-v1
     visualize: "true"
-    version: v1
+    version: "1.0"
 spec:
   replicas: 1
   selector:
@@ -33,13 +33,12 @@ spec:
         version: "latest"
         serving: "true"
         visualize: "true"
-        version: v1
+        version: "1.0"
         layer: controller-plane
     spec:
       containers:
       - name: helloworld-service
         image: retroryan/helloworld-service-istio:java-1.0
-        imagePullPolicy: Always
         env:
         - name: version
           value: "1.0"

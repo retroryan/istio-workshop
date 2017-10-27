@@ -5,8 +5,8 @@ spec:
   precedence: 1
   route:
   - tags:
-      version: v1
+      version: "1.0"
     weight: 80
   - tags:
-      version: v2
+      version: "2.0"
     weight: 20
