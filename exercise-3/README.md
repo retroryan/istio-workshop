@@ -31,13 +31,13 @@ provide a stable IP address, allow discovery from the API, and also create a DNS
 
 #### Optional - curl the service using a DNS name
 
-If you login into another container you can access the helloworldservice via the DNS name.  For example start a busybox shell and curl the service using the service name:
+If you login into another container you can access the helloworldservice via the DNS name.  For example start  tutum/curl to get a shell and curl the service using the service name:
 
 ```
-kubectl run curl --image=radial/busyboxplus:curl -i --tty
+kubectl run curl --image=tutum/curl -i --tty
 
-root@busybox:/data# wget -qO- http://helloworld-service:8080/hello/Ray
-{"greeting":"Hello Ryan from helloworld-service-... with 1.0","hostname":"helloworld-service-...","version":"1.0"}
+root@busybox:/data# wget -qO- http://helloworld-service:8080/hello/Batman
+{"greeting":"Hello Batman from helloworld-service-... with 1.0","hostname":"helloworld-service-...","version":"1.0"}
 
 root@busybox:/data# exit
 ```

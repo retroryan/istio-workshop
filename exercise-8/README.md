@@ -27,22 +27,20 @@ $ curl 35.188.171.180/echo/universe
 
 #### Canary Deployments
 
-Currently the routing rule routes only to V1 of the hello world service which is not real useful. What we want to do next is a canary deployment and push some of the traffic to V2. This can be done by creating another rule with a higher precedence that routes some of the traffic to V2 based on http headers.  As an example we will use the following canary deployment in canary-helloworld.yaml
+Currently the routing rule routes only to V1 of the hello world service which is not real useful. What we want to do next is a canary deployment and push some of the traffic to V2. This can be done by creating another rule with a higher precedence that routes some of the traffic to V2 based on http headers.  As an example we will use the following canary deployment in canary-helloworld.yaml  This rule routes all traffic from a mobile user agent to version 2.0 of the service.
 
 ```
-  type: route-rule
-  name: canary-helloworld-v2
-  namespace: default
-  spec:
-    destination: helloworld-service.default.svc.cluster.local
+    destination:
+      name: helloworld-service
     match:
-      httpHeaders:
-        foo:
-          exact: mobile
+      request:
+        headers:
+          user-agent:
+            exact: mobile
     precedence: 2
     route:
-      - tags:
-          version: v1
+      - labels:
+          version: "2.0"
 ```
 
 Note that rules with a higher precedence number are applied first.  If a precedence is not specified then it defaults to 0.  So with these 2 rules in place the one with precedence 2 will be applied first.
@@ -72,5 +70,27 @@ https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-examp
 
 https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java
 
+#### Optional - Route based on the browser
+
+It is also possible to route it based on the Web Browser.  For example the following routes to version 2.0 if the browser is chrome:
+
+```
+  match:
+    request:
+      headers:
+        user-agent:
+          regex: ".*Chrome.*"
+  route:
+  - labels:
+      version: "2.0"
+```
+
+To apply this route run:
+
+```
+    istioctl create -f route-ui-user-agent-chrome.yaml
+```
+
+Then navigate to the home page in chrome and another browser.
 
 #### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)

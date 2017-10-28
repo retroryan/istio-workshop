@@ -1,6 +1,6 @@
 ## Exercise 9 - Fault Injection and Rate Limiting
 
-####Overview of Istio Mixer
+#### Overview of Istio Mixer
 
 https://istio.io/docs/concepts/policy-and-control/mixer.html
 
@@ -9,7 +9,7 @@ https://istio.io/docs/concepts/policy-and-control/mixer.html
 First we configure Mixer for a kubernetes environment, setting up the kubernetes adapter to produce attributes about the kubernetes deployment (e.g. the labels on the target and source pods).
 
 ```
-    istioctl mixer rule create global global -f kubernetes.yaml
+    istioctl mixer rule create global global -f mixer-kubernetes.yaml
 ```
 
 #### Service Isolation Using Mixer
