@@ -88,7 +88,7 @@ It is also possible to route it based on the Web Browser.  For example the follo
 To apply this route run:
 
 ```
-    istioctl create -f route-ui-user-agent-chrome.yaml
+    istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 ```
 
 Then navigate to the home page in chrome and another browser.
