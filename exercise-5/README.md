@@ -16,7 +16,7 @@ https://github.com/istio/istio/releases
 
 ```
 curl -L https://git.io/getLatestIstio | sh -
-export PATH=$PWD/istio-0.2.9/bin:$PATH
+export PATH=$PWD/istio-0.2.10/bin:$PATH
 ```
 
 #### Running istioctl
@@ -37,10 +37,10 @@ Istio related commands need to have `istioctl` in the path.  Verify it is availa
 ```
 2 - Next install Istio on the Kubernetes cluster:
 
-Change to the Istio directory (istio-0.2.9) and and install istio in the kubernetes cluster
+Change to the Istio directory (istio-0.2.10) and and install istio in the kubernetes cluster
 
 ```
-    cd istio-0.2.9
+    cd istio-0.2.10
     kubectl apply -f install/kubernetes/istio.yaml
 ```
 
