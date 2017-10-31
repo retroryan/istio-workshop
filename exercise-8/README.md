@@ -48,7 +48,7 @@ Note that rules with a higher precedence number are applied first.  If a precede
 Test this out by creating the rule:
 
 ```
-    istioctl create -f guestbook/canary-helloworld.yaml
+    istioctl create -f guestbook/route-rule-canary.yaml
 ```
 
 Now when you curl the end point set the user agent to be mobile and you should only see V2:
