@@ -4,10 +4,11 @@ kubectl apply -f <(istioctl kube-inject -f guestbook/helloworld-deployment.yaml)
 kubectl apply -f <(istioctl kube-inject -f guestbook/helloworld-deployment-v2.yaml)
 
 ### Wait for mysql and redis startup before starting guestbook !!!!
+sleep 120
 
 kubectl apply -f <(istioctl kube-inject -f guestbook/guestbook-deployment.yaml) -f guestbook/guestbook-service.yaml
 
 ### Wait for guestbook service startup before starting Guest Book UI"
-
+sleep 120
 
 kubectl apply -f <(istioctl kube-inject -f guestbook/guestbook-ui-deployment.yaml) -f guestbook/guestbook-ui-service.yaml
