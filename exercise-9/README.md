@@ -9,7 +9,7 @@ https://istio.io/docs/concepts/policy-and-control/mixer.html
 First we configure Mixer for a kubernetes environment, setting up the kubernetes adapter to produce attributes about the kubernetes deployment (e.g. the labels on the target and source pods).
 
 ```
-    istioctl mixer rule create global global -f mixer-kubernetes.yaml
+    istioctl mixer rule create global global -f guestbook/mixer-kubernetes.yaml
 ```
 
 #### Service Isolation Using Mixer
@@ -24,7 +24,7 @@ Block Access to the hello world service by adding the mixer-rule-denial.yaml rul
 ```
 
 ```
-    istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f mixer-rule-denial.yaml
+    istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f guestbook/mixer-rule-denial.yaml
 ```
 
 #### Block Access to v2 of the hello world service
