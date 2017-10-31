@@ -1,14 +1,13 @@
-#!/bin/bash
+kubectl apply -f guestbook/mysql-pvc.yaml -f <(istioctl kube-inject -f guestbook/mysql-deployment.yaml) -f guestbook/mysql-service.yaml
+kubectl apply -f <(istioctl kube-inject -f guestbook/redis-deployment.yaml) -f guestbook/redis-service.yaml
+kubectl apply -f <(istioctl kube-inject -f guestbook/helloworld-deployment.yaml) -f guestbook/helloworld-service.yaml
+kubectl apply -f <(istioctl kube-inject -f guestbook/helloworld-deployment-v2.yaml)
 
-SCRIPTDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+### Wait for mysql and redis startup before starting guestbook !!!!
 
-kubectl apply -f $SCRIPTDIR/mysql-pvc.yaml -f <(istioctl kube-inject -f $SCRIPTDIR/mysql-deployment.yaml) -f $SCRIPTDIR/mysql-service.yaml
-kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/redis-deployment.yaml) -f $SCRIPTDIR/redis-service.yaml
-kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/helloworld-deployment.yaml) -f $SCRIPTDIR/helloworld-service.yaml
-kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/helloworld-deployment-v2.yaml)
-echo "Waiting for mysql and redis startup before starting guestbook"
-sleep 120
-kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/guestbook-deployment.yaml) -f $SCRIPTDIR/guestbook-service.yaml
-echo "Waiting for guestbook service startup before starting Guest Book UI"
-sleep 120
-kubectl apply -f <(istioctl kube-inject -f $SCRIPTDIR/guestbook-ui-deployment.yaml) -f $SCRIPTDIR/guestbook-ui-service.yaml
+kubectl apply -f <(istioctl kube-inject -f guestbook/guestbook-deployment.yaml) -f guestbook/guestbook-service.yaml
+
+### Wait for guestbook service startup before starting Guest Book UI"
+
+
+kubectl apply -f <(istioctl kube-inject -f guestbook/guestbook-ui-deployment.yaml) -f guestbook/guestbook-ui-service.yaml

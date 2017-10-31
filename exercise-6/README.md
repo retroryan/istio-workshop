@@ -40,6 +40,8 @@ To deploy all of the guest book related components each deployment needs to be w
     guestbook/deployGuestBookIstio.sh
 ```
 
+Note for windows -  You will need to manually run each command from that file and set the directly properly.
+
 2 - Find the public IP of the Guest Book UI by running describe on the service and look for EXTERNAL-IP in the output (it will take several minutes to be assigned, so give it a minute or two):
 
 ```
