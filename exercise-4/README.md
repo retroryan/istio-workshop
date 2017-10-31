@@ -32,6 +32,6 @@ If you look at the pod status some of the Pods will show a `Pending` state.   Th
 
 `kubectl get nodes`
 
-`kubectl scale deployment helloworld-service --replicas=4`
+`kubectl scale deployment helloworld-service-v1 --replicas=4`
 
 #### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)
