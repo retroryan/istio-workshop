@@ -40,7 +40,7 @@ https://github.com/istio/istio/releases
 
 ```
 curl -L https://git.io/getLatestIstio | sh -
-export PATH=$PWD/istoi-0.1.6/bin:$PATH
+export PATH=$PWD/istoi-0.2.10/bin:$PATH
 ```
 
 #### Windows Setup

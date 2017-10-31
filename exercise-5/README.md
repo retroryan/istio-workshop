@@ -16,7 +16,7 @@ https://github.com/istio/istio/releases
 
 ```
 curl -L https://git.io/getLatestIstio | sh -
-export PATH=$PWD/istoi-0.1.6/bin:$PATH
+export PATH=$PWD/istio-0.2.9/bin:$PATH
 ```
 
 #### Running istioctl
