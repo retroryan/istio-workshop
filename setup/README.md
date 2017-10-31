@@ -1,5 +1,9 @@
 ## Workshop Setup
 
+###  Google Cloud Shell or Local Install
+
+This workshop can either be run all locally using the following setup instructions or it can be run in Google Cloud Shell.
+
 #### Setup [CLOUD SDK](https://cloud.google.com/sdk/)
 
 ####  Install Cloud SDK
