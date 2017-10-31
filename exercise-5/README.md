@@ -5,7 +5,7 @@
 Start with a clean slate and delete all deployed services from the cluster:
 
 ```
-    kubectl delete all --all
+    kubectl delete all
 ```
 
 #### Download Istio
