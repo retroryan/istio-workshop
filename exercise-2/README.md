@@ -14,7 +14,7 @@
 
 2 -  Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
 
-`kubectl delete pod kubernetes/helloworld-service-v1-...`
+`kubectl delete pod helloworld-service-v1-...`
 
 3 - Kubernetes will automatically restart this pod for you.  Verify it is restarted
 
