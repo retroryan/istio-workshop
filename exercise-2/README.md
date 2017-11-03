@@ -4,31 +4,38 @@
 
 1 - Deploy hello world service to kubernetes
 
-`kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record`
+```sh
+$ kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record
 
-`kubectl get pods`
-
->NAME                           READY     STATUS    RESTARTS    AGE
-
->helloworld-service-v1-....     1/1       Running   0           20s
+$ kubectl get pods
+NAME                           READY     STATUS    RESTARTS    AGE
+helloworld-service-v1-....     1/1       Running   0           20s
+```
 
 2 -  Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
 
-`kubectl delete pod helloworld-service-v1-...`
-
+```sh
+$ kubectl delete pod kubernetes/helloworld-service-v1-...
+```
 3 - Kubernetes will automatically restart this pod for you.  Verify it is restarted
 
-`kubectl get pods`
-
->NAME                           READY     STATUS    RESTARTS   AGE
-
->helloworld-service-v1-....     1/1       Running   0          20s
+```sh
+$ kubectl get pods
+NAME                           READY     STATUS    RESTARTS   AGE
+helloworld-service-v1-....     1/1       Running   0          20s
+```
 
 4 -  All of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
 
-`kubectl logs helloworld-service-v1-...`
+```sh
+$ kubectl logs helloworld-service-v1-...
+```
 
-`kubectl logs -f helloworld-service-v1-...``
+or to follow the log file:
+
+```sh
+$ kubectl logs -f helloworld-service-v1-...
+```
 
 ## Explanation
 

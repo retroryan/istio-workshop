@@ -2,9 +2,10 @@
 
 #### Set Default Region and Zones
 
-`gcloud config set compute/zone us-central1-f`
-
-`gcloud config set compute/region us-central1`
+```sh
+$ gcloud config set compute/zone us-central1-f
+$ gcloud config set compute/region us-central1
+```
 
 #### Create a Kubernetes Cluster using the Google Container Engine.
 
@@ -12,7 +13,9 @@ Google Container Engine is Google’s hosted version of Kubernetes.
 
 Note if you have multiple gcloud accounts then specify a project name using the --project flag.  By default it can be left off.  You can get your project name from the command line with:
 
-`gcloud config get-value core/project`
+```sh
+$ gcloud config get-value core/project
+```
 
 Or the project name can be found in the URL of Google Cloud Console.  For example if you look in the console it should be something like:
 
@@ -20,7 +23,9 @@ https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619
 
 The project name in that case is workshopcluster-177619
 
-`gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform --project <YOUR PROJECT NAME OPTIONAL>`
+```sh
+$ gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform --project <YOUR PROJECT NAME OPTIONAL>
+```
 
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)

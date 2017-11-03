@@ -6,15 +6,19 @@ In Kubernetes, you can instruct the underlying infrastructure to create an exter
 
 #### Create the Hello World Service “service”
 
-`kubectl apply -f kubernetes/helloworldservice-service.yaml --record`
+```sh
+$ kubectl apply -f kubernetes/helloworldservice-service.yaml --record
 
-`kubectl get services`
+$ kubectl get services
+```
 
 The external ip will start as pending.  After a short period the EXTERNAL IP will be populated.   This is the external IP of the Load Balancer.   
 
 #### Curl the external ip to test the helloworld service:
 
-`curl 104.154.120.67:8080/hello/world`
+```sh
+$ curl 104.154.120.67:8080/hello/world
+```
 
 #### Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
@@ -33,8 +37,8 @@ provide a stable IP address, allow discovery from the API, and also create a DNS
 
 If you login into another container you can access the helloworldservice via the DNS name.  For example start  tutum/curl to get a shell and curl the service using the service name:
 
-```
-kubectl run curl --image=tutum/curl -i --tty
+```sh
+$ kubectl run curl --image=tutum/curl -i --tty
 
 root@busybox:/data# wget -qO- http://helloworld-service:8080/hello/Batman
 {"greeting":"Hello Batman from helloworld-service-... with 1.0","hostname":"helloworld-service-...","version":"1.0"}

@@ -4,8 +4,8 @@
 
 Start with a clean slate and delete all deployed services from the cluster:
 
-```
-    kubectl delete all
+```sh
+$ kubectl delete all --all
 ```
 
 #### Download Istio
@@ -14,34 +14,36 @@ Either download it directly or get the latest using curl:
 
 https://github.com/istio/istio/releases
 
-```
-curl -L https://git.io/getLatestIstio | sh -
-export PATH=$PWD/istio-0.2.10/bin:$PATH
+```sh
+$ curl -L https://git.io/getLatestIstio | sh -
+$ export PATH=$PWD/istio-0.2.10/bin:$PATH
 ```
 
 #### Running istioctl
 
 Istio related commands need to have `istioctl` in the path.  Verify it is available by running:
 
-`istioctl -h`
+```sh
+$ istioctl -h
+```
 
 
 #### Install Istio on the Kubernetes Cluster
 
 1 - First grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio):
 
-```
-    kubectl create clusterrolebinding cluster-admin-binding \
-        --clusterrole=cluster-admin \
-        --user=$(gcloud config get-value core/account)
+```sh
+$ kubectl create clusterrolebinding cluster-admin-binding \
+    --clusterrole=cluster-admin \
+    --user=$(gcloud config get-value core/account)
 ```
 2 - Next install Istio on the Kubernetes cluster:
 
 Change to the Istio directory (istio-0.2.10) and and install istio in the kubernetes cluster
 
-```
-    cd istio-0.2.10
-    kubectl apply -f install/kubernetes/istio.yaml
+```sh
+$ cd istio-0.2.10
+$ kubectl apply -f install/kubernetes/istio.yaml
 ```
 
 
@@ -50,8 +52,8 @@ Change to the Istio directory (istio-0.2.10) and and install istio in the kubern
 Istio is deployed in a separate Kubernetes namespace `istio-system`  You can watch the state of Istio and other services and pods using the watch command.  For example in 2 separate terminal windows run:
 
 ```
-  watch -n 30 kubectl get po --all-namespaces
-  watch -n 30 kubectl get svc --all-namespaces
+$ kubectl get pods -w --all-namespaces
+$ kubectl get services -w --all-namespaces
 ```
 
 #### [Continue to Exercise 6 - Creating a Service Mesh with Istio Proxy](../exercise-6/README.md)
