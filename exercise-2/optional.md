@@ -3,7 +3,7 @@
 
 `kubectl get pods -owide`
 
-That will list the node the pod is running on.  For example you should see:
+That will list the node the pod is running on. For example you should see:
 
 `NODE gke-guestbook-...`
 

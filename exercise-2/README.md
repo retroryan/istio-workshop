@@ -4,43 +4,54 @@
 
 1 - Deploy hello world service to kubernetes
 
-`kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record`
+```sh
+kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record
+```
+```sh
+kubectl get pods
 
-`kubectl get pods`
+NAME                           READY     STATUS    RESTARTS    AGE
+helloworld-service-v1-....    1/1       Running   0           20s
+```
 
->NAME                           READY     STATUS    RESTARTS    AGE
+2 -  Note the name of the pod above for use in the command below. Then delete one of the hello world pods.
 
->helloworld-service-v1-....     1/1       Running   0           20s
+```sh
+kubectl delete pod kubernetes/helloworld-service-v1-...
+```
 
-2 -  Note the name of the pod above for use in the command below.  Then delete one of the hello world pods.
+3 - Kubernetes will automatically restart this pod for you. Verify it is restarted
 
-`kubectl delete pod helloworld-service-v1-...`
+```sh
+kubectl get pods
 
-3 - Kubernetes will automatically restart this pod for you.  Verify it is restarted
-
-`kubectl get pods`
-
->NAME                           READY     STATUS    RESTARTS   AGE
-
->helloworld-service-v1-....     1/1       Running   0          20s
+NAME                           READY     STATUS    RESTARTS   AGE
+helloworld-service-v1-....    1/1       Running   0          20s
+```
 
 4 -  All of the container output to STDOUT and STDERR will be accessible as Kubernetes logs:
 
-`kubectl logs helloworld-service-v1-...`
+```sh
+kubectl logs helloworld-service-v1-...
+```
 
-`kubectl logs -f helloworld-service-v1-...``
+or to follow the log file:
+
+```sh
+kubectl logs -f helloworld-service-v1-...
+```
 
 ## Explanation
 
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
-We will be using yaml files throughout this workshop.  Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
+We will be using yaml files throughout this workshop. Every file describes a resource that needs to be deployed into Kubernetes. We won’t be able to go into details on the contents, but you are definitely encouraged to read them and see how pods, services, and others are declared.
 
 The pod deploys a microservice that is a container whose images contains a self-executing JAR files. The source is available at [istio-by-example-java](https://github.com/saturnism/istio-by-example-java) if you are interested in seeing it.
 
-In this first example we deployed a Kubernetes pod by specifying a deployment using this [helloworldservice-deployment.yaml](helloworldservice-deployment.yaml).  
+In this first example we deployed a Kubernetes pod by specifying a deployment using this [helloworldservice-deployment.yaml](helloworldservice-deployment.yaml). 
 
-A Kubernetes pod is a group of containers, tied together for the purposes of administration and networking. It can contain one or more containers.  All containers within a single pod will share the same networking interface, IP address, volumes, etc.  All containers within the same pod instance will live and die together.  It’s especially useful when you have, for example, a container that runs the application, and another container that periodically polls logs/metrics from the application container.
+A Kubernetes pod is a group of containers, tied together for the purposes of administration and networking. It can contain one or more containers. All containers within a single pod will share the same networking interface, IP address, volumes, etc. All containers within the same pod instance will live and die together. It’s especially useful when you have, for example, a container that runs the application, and another container that periodically polls logs/metrics from the application container.
 
 You can start a single Pod in Kubernetes by creating a Pod resource. However, a Pod created this way would be known as a Naked Pod. If a Naked Pod dies/exits, it will not be restarted by Kubernetes. A better way to start a pod, is by using a higher-level construct such as Replication Controller, Replica Set, or a Deployment.
 

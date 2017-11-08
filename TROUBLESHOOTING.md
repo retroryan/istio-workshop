@@ -7,7 +7,7 @@ It can be used to describe any Kubernetes resource.
 
 `kubectl describe service helloworld-service`
 
-kubectl top can be used to see resource utilization.  A very common problem is the pod was not able to be scheduled.
+kubectl top can be used to see resource utilization. A very common problem is the pod was not able to be scheduled.
 
 `kubectl top nodes`
 
