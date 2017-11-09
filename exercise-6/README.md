@@ -45,7 +45,7 @@ Note for windows -  You will need to manually run each command from that file an
 2 - Find the public IP of the Guest Book UI by running describe on the service and look for EXTERNAL-IP in the output (it will take several minutes to be assigned, so give it a minute or two):
 
 ```sh
-kubectl describe services guestbook-ui
+kubectl get services guestbook-ui
 ```
 
 ```sh

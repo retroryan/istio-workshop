@@ -1,5 +1,15 @@
 ## Exercise 1 - Startup a Kubernetes Cluster
 
+#### Create a gcloud project
+
+It is necessary to create a project in your google cloud account to follow this workshop. You can do it directly in [gcloud console](https://console.cloud.google.com/projectcreate) or executing
+
+```sh
+gcloud projects create <YOUR PROJECT ID>
+```
+
+Note: For this workshop you should have already created and configured a project in you google cloud account.
+
 #### Set Default Region and Zones
 
 ```sh
@@ -13,20 +23,26 @@ gcloud config set compute/region us-central1
 
 Google Container Engine is Google’s hosted version of Kubernetes.
 
-Note if you have multiple gcloud accounts then specify a project name using the --project flag. By default it can be left off. You can get your project name from the command line with:
+To create a container cluster execute:
+
+```sh
+gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform --project <YOUR PROJECT ID OPTIONAL>
+```
+
+**Note**
+
+If you have multiple gcloud accounts then specify a project id using the --project flag. By default it can be left off. You can get your default project id from the command line with:
 
 ```sh
 gcloud config get-value core/project
 ```
 
-Or the project name can be found in the URL of Google Cloud Console. For example if you look in the console it should be something like:
+Also the project id can be found in the URL of Google Cloud Console. For example if you look in the console it should be something like "https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619" then the project id is "workshopcluster-177619".
 
-https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619
-
-The project name in that case is workshopcluster-177619
+It is recommended to set your <project-id> project as the default one to avoid specifying `--project` flag in all commands. 
 
 ```sh
-gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform --project <YOUR PROJECT NAME OPTIONAL>
+gcloud config set project <YOUR PROJECT ID>
 ```
 
 ## Explanation
