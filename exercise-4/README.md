@@ -60,8 +60,5 @@ gcloud compute instances list
 ```sh
 kubectl get nodes
 ```
-```sh
-kubectl scale deployment helloworld-service-v1 --replicas=4
-```
 
 #### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)

@@ -26,6 +26,8 @@ This workshop can either be run all locally using the following setup instructio
 
   `gcloud components install kubectl`
 
+If you already have an installation of kubectl in your computer you can skip this step.
+
 #### Verify kubectl
   `kubectl version`
 
