@@ -13,6 +13,7 @@
 # limitations under the License.
 
 #  DO NOT NAME THE PORT REDIS!!! This routes the connection through Istio and breaks the application
+#  https://github.com/istio/istio/issues/1238
 
 kind: Service
 apiVersion: v1

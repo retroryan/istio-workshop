@@ -34,7 +34,7 @@ Spec:
 2 - Now when you curl the echo service it should always return V1 of the hello world service:
 
 ```sh
-curl 35.188.171.180/echo/universe  
+curl http://$INGRESS_IP/echo/universe  
 
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
@@ -47,6 +47,7 @@ curl 35.188.171.180/echo/universe
 #### Canary Deployments
 
 Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is canary a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll canary based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+
 ```yaml
 destination:
   name: helloworld-service

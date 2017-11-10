@@ -78,39 +78,4 @@ WAIT FOR GUESTBOOK TO BE RUNNING!!
 
 3 - kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml
 
-4 - Find the public IP of the Guest Book UI by running describe on the service and look for EXTERNAL-IP in the output (it will take several minutes to be assigned, so give it a minute or two):
-
-```sh
-kubectl get services guestbook-ui
-```
-
-```sh
-export EXTERNAL_IP=<IP from above>
-```
-
-3 - Access the guestbook via the Guest Book EXTERNAL-IP address by navigating the browser to http://<EXTERNAL IP>/.
-
-4 - The Guest Book UI also has a rest endpoint that can be used for testing routing rules. It takes the last part of the URL as the name to create a greeting for. Verify it works by running:
-
-```sh
-curl http://$EXTERNAL_IP/echo/universe
-```
-
-5 - Try curling the echo endpoint multiple times and notice how it round robins between v1 and v2 of the hello world service:
-
-```sh
-curl $EXTERNAL_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},
-```
-
-```sh
-curl $EXTERNAL_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v2-1009285752-n2tpb","greeting":"Hello universe from helloworld-service-v2-1009285752-n2tpb with 2.0","version":"2.0"}
-
-```
-
-We will change this behavior in future exercises.
-
 #### [Continue to Exercise 7 - Istio Ingress Controller](../exercise-7/README.md)

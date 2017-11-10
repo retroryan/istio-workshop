@@ -18,3 +18,7 @@ kubectl top can be used to see resource utilization. A very common problem is th
 `kubectl top nodes`
 
 `kubectl top pods`
+
+View the logs of a Pod by finding the full pod name and specify the main container, i.e.:
+
+`kubectl logs guestbook-ui-1872113123-1lw81 -c guestbook-ui`

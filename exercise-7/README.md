@@ -47,16 +47,35 @@ istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/
 export INGRESS_IP=<External IP from above>
 ```
 
-3 - Browse to the website of the guest Book using the INGRESS IP to see the Guest Book UI: `http://INGRESS_IP/hello/world`
+3 - Browse to the website of the guest Book using the INGRESS IP to see the Guest Book UI: `http://INGRESS_IP`
 
-You can also curl the Guest Book:
+4 - You can also access the hello world service and see the json in the browser:
+`http://INGRESS_IP/hello/world`
+
+
+5 - curl the Guest Book:
 ```
 curl http://$INGRESS_IP/echo/universe
 ```
 
 And the hello world service:
 ```
-http://$INGRESS_IP/hello/world
+curl http://$INGRESS_IP/hello/world
+```
+
+6 - Then curl the echo endpoint multiple times and notice how it round robins between v1 and v2 of the hello world service:
+
+```sh
+curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},
+```
+
+```sh
+curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v2-1009285752-n2tpb","greeting":"Hello universe from helloworld-service-v2-1009285752-n2tpb with 2.0","version":"2.0"}
+
 ```
 
 #### [Continue to Exercise 8 - Request Routing and Canary Deployments](../exercise-8/README.md)
