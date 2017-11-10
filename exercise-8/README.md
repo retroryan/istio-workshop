@@ -39,7 +39,7 @@ curl http://$INGRESS_IP/echo/universe
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 ```sh
-curl 35.188.171.180/echo/universe
+curl http://$INGRESS_IP/echo/universe
 
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
@@ -77,7 +77,7 @@ curl http://$INGRESS_IP/echo/universe -A mobile
 {"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
 ```
 ```sh
-$ curl $INGRESS_IP/echo/universe
+$ curl http://$INGRESS_IP/echo/universe
 
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
@@ -105,6 +105,12 @@ To apply this route run:
 istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 ```
 
-Then navigate to the home page in Chrome and another browser.
+Test this by first navigating to the home page in Chrome:  You should see:
+
+Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
+
+If you then navigate to it another browser you should see:
+
+Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 
 #### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)
