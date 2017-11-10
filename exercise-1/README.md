@@ -40,7 +40,11 @@ Google Container Engine is Google’s hosted version of Kubernetes.
 To create a container cluster execute:
 
 ```sh
-gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform
+gcloud container clusters create guestbook \
+      --enable-kubernetes-alpha \
+      --num-nodes 4 \
+      --scopes cloud-platform \
+      --no-enable-legacy-authorization
 ```
 
 

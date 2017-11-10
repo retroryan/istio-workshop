@@ -1,6 +1,6 @@
 ## Exercise 7 - Istio Ingress Controller
 
-The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer on each service. 
+The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer on each service.
 
 A Kubernetes Ingress rule can be created that routes external requests through the Istio Ingress Controller to the backing services.
 

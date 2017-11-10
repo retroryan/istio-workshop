@@ -45,7 +45,6 @@ Change to the Istio directory (istio-0.2.12) and and install istio in the kubern
 For this workshop we use istio-auth.yaml enable mutual TLS authentication between sidecars.:
 
 ```sh
-cd istio-0.2.12
 kubectl apply -f install/kubernetes/istio-auth.yaml
 ```
 
