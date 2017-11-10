@@ -19,6 +19,20 @@ gcloud config set compute/zone us-central1-f
 gcloud config set compute/region us-central1
 ```
 
+#### Configure your Default Project
+
+If you have multiple gcloud accounts then be sure the correct one is specified for the gcloud. You can get your default project id from the command line with:
+
+```sh
+gcloud config get-value core/project
+```
+
+If needed you can set a new project id.  The project id can be found in the URL of Google Cloud Console. For example if you look in the console it should be something like "https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619" then the project id is "workshopcluster-177619".
+
+```sh
+gcloud config set project <YOUR PROJECT ID>
+```
+
 #### Create a Kubernetes Cluster using the Google Container Engine.
 
 Google Container Engine is Google’s hosted version of Kubernetes.
@@ -26,24 +40,10 @@ Google Container Engine is Google’s hosted version of Kubernetes.
 To create a container cluster execute:
 
 ```sh
-gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform --project <YOUR PROJECT ID OPTIONAL>
+gcloud container clusters create guestbook --num-nodes 4 --scopes cloud-platform
 ```
 
-**Note**
 
-If you have multiple gcloud accounts then specify a project id using the --project flag. By default it can be left off. You can get your default project id from the command line with:
-
-```sh
-gcloud config get-value core/project
-```
-
-Also the project id can be found in the URL of Google Cloud Console. For example if you look in the console it should be something like "https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619" then the project id is "workshopcluster-177619".
-
-It is recommended to set your <project-id> project as the default one to avoid specifying `--project` flag in all commands. 
-
-```sh
-gcloud config set project <YOUR PROJECT ID>
-```
 
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)

@@ -42,8 +42,11 @@ kubectl create clusterrolebinding cluster-admin-binding \
 
 Change to the Istio directory (istio-0.2.12) and and install istio in the kubernetes cluster
 
+For this workshop we use istio-auth.yaml enable mutual TLS authentication between sidecars.:
+
 ```sh
-kubectl apply -f istio-0.2.12/install/kubernetes/istio.yaml
+cd istio-0.2.12
+kubectl apply -f install/kubernetes/istio-auth.yaml
 ```
 
 #### Viewing the Istio Deployments

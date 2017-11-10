@@ -1,3 +1,9 @@
+##Google Cloud SDK Troubleshooting
+
+If kubectl is not connecting to your cluster or showing pods trying getting the credentials:
+
+`gcloud container clusters get-credentials`
+
 ##Kubernetes Troubleshooting
 
 The most important tool to know for debugging problems is the describe resource command.
