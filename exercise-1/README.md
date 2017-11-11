@@ -4,11 +4,13 @@
 
 It is necessary to create a project in your google cloud account to follow this workshop. You can do it directly in [gcloud console](https://console.cloud.google.com/projectcreate) or executing
 
+Note: For the Scale by the Bay workshop you should already have a project in you google cloud account configured called scalebay17-sfo-5180.
+
 ```sh
-gcloud projects create <YOUR PROJECT ID>
+gcloud projects create scalebay17-sfo-5180
 ```
 
-Note: For this workshop you should have already created and configured a project in you google cloud account.
+
 
 #### Set Default Region and Zones
 

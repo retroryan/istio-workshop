@@ -1,12 +1,12 @@
 ## Workshop Setup
 
-If you where provided with a Google Cloud Lab username Setup the account first:
+If you where provided with a Google Cloud Lab username setup the account first:
 
 1 - Dismiss the offer for a free trial and select the project
 
 ![Google Cloud Console Setup](../images/homescreen.png)
 
-2 - Select the ScaleBay SFO 5102 Project:
+2 - Select the ScaleBay SFO 5102 project:
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 
