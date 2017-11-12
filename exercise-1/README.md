@@ -1,16 +1,5 @@
 ## Exercise 1 - Startup a Kubernetes Cluster
 
-#### Create a gcloud project
-
-It is necessary to create a project in your google cloud account to follow this workshop. You can do it directly in [gcloud console](https://console.cloud.google.com/projectcreate) or executing
-
-Note: For the Scale by the Bay workshop you should already have a project in you google cloud account configured called scalebay17-sfo-5180.
-
-```sh
-gcloud projects create scalebay17-sfo-5180
-```
-
-
 
 #### Set Default Region and Zones
 
@@ -29,10 +18,10 @@ If you have multiple gcloud accounts then be sure the correct one is specified f
 gcloud config get-value core/project
 ```
 
-If needed you can set a new project id.  The project id can be found in the URL of Google Cloud Console. For example if you look in the console it should be something like "https://console.cloud.google.com/kubernetes/list?project=workshopcluster-177619" then the project id is "workshopcluster-177619".
+If needed you can set a new project id.  Note: For the Scale by the Bay workshop you should already have a project in you google cloud account configured called scalebay17-sfo-5180.
 
 ```sh
-gcloud config set project <YOUR PROJECT ID>
+gcloud config set project scalebay17-sfo-5180
 ```
 
 #### Create a Kubernetes Cluster using the Google Container Engine.
