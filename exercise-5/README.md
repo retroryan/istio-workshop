@@ -45,7 +45,17 @@ Change to the Istio directory (istio-0.2.12) and and install istio in the kubern
 For this workshop we use istio-auth.yaml enable mutual TLS authentication between sidecars.:
 
 ```sh
-kubectl apply -f install/kubernetes/istio-auth.yaml
+  kubectl apply -f install/kubernetes/istio-auth.yaml
+```
+
+####  Install Add-ons for Grafana, Prometheus, and Zipkin:
+
+```sh
+  cd istio-0.2.12
+  kubectl apply -f install/kubernetes/addons/zipkin.yaml
+  kubectl apply -f install/kubernetes/addons/grafana.yaml
+  kubectl apply -f install/kubernetes/addons/prometheus.yaml
+  kubectl apply -f install/kubernetes/addons/servicegraph.yaml
 ```
 
 #### Viewing the Istio Deployments

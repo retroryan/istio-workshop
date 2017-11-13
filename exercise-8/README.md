@@ -4,8 +4,9 @@ First we need to configure Istio to automatically gather telemetry data for serv
 
 #### Create a Rule to Collect Telemetry Data
 
-istioctl create -f guestbook_telemetry.yaml
-
+```
+  istioctl create -f guestbook/guestbook-telemetry.yaml
+```
 #### View Guestbook Telemetry data
 
 Generate a small load to the application:
@@ -40,6 +41,11 @@ $ kubectl -n istio-system port-forward \
   $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') \
   9090:9090
 ```
+
+Browse to http://localhost:9090/graph
+
+In the “Expression” input box enter: request_count. Click the Execute button.
+
 
 ### Service Graph
 ```

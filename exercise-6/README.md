@@ -43,16 +43,6 @@ kubectl apply -f install/kubernetes/istio-initializer.yaml
 
 This adds sidecar.initializer.istio.io to Kubernetes list of pending initializers in the workload. The istio-initializer controller observes resources as they are deployed to Kubernetes and automatically injects the Istio Proxy sidecar by injecting the sidecar template.
 
-####  Install Add-ons for Grafana, Prometheus, and Zipkin:
-
-```sh
-  cd ~/istio-0.2.7
-  kubectl apply -f install/kubernetes/addons/zipkin.yaml
-  kubectl apply -f install/kubernetes/addons/grafana.yaml
-  kubectl apply -f install/kubernetes/addons/prometheus.yaml
-  kubectl apply -f install/kubernetes/addons/servicegraph.yaml
-```
-
 #### Deploy Guest Book Services
 
 For demonstrating Istio we’re going to use [this guestbook example](https://github.com/retroryan/spring-boot-docker). This example is built with Spring Boot, with a frontend using Spring MVC and Thymeleaf, and two microservices.  The 3 microservices that we are going to deploy are:
