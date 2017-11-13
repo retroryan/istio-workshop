@@ -9,9 +9,11 @@ https://istio.io/docs/tasks/security/mutual-tls.html
     -o jsonpath='{.items[0].metadata.name}') \
     -c istio-proxy /bin/bash
 ```
+
 Does not work because istio-proxy container does not have curl!!!
 
-```curl https://helloworld-service:8080/hello/sanfrancisco -v --key /etc/certs/key.pem --cert /etc/certs/cert-chain.pem --cacert /etc/certs/root-cert.pem -k
+```
+  curl https://helloworld-service:8080/hello/sanfrancisco -v --key /etc/certs/key.pem --cert /etc/certs/cert-chain.pem --cacert /etc/certs/root-cert.pem -k
 ```
 
 Copy certs to local directory and use for curl:
