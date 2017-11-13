@@ -78,4 +78,4 @@ curl http://$INGRESS_IP/echo/universe
 
 ```
 
-#### [Continue to Exercise 8 - Request Routing and Canary Deployments](../exercise-8/README.md)
+#### [Exercise 8 - Telemetry](../exercise-8/README.md)

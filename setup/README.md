@@ -2,9 +2,11 @@
 
 ###  Google Cloud Console Setup
 
+Login to Google Cloud Console and be sure you can access Google Container Engine:
+
 [https://console.cloud.google.com/home](https://console.cloud.google.com/home)
 
-If you where provided with a Google Cloud Lab username setup the account first.
+If you where provided with a Google Cloud Lab username setup the account by:
 
 1 - Dismiss the offer for a free trial and select the project
 
@@ -14,11 +16,11 @@ If you where provided with a Google Cloud Lab username setup the account first.
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 
-###  Google Cloud Shell or Local Install
+##  Google Cloud Shell or Local Install
 
 This workshop can either be run all locally using the following setup instructions or it can be run in Google Cloud Shell.
 
-#### Setup [CLOUD SDK](https://cloud.google.com/sdk/)
+### Local Setup [CLOUD SDK](https://cloud.google.com/sdk/)
 
 ####  Install Cloud SDK
 
@@ -45,12 +47,12 @@ If you already have an installation of kubectl in your computer you can skip thi
 #### Verify kubectl
   `kubectl version`
 
-#### Get the Workshop Source:
+## Get the Workshop Source:
 
   `git clone https://github.com/retroryan/istio-workshop`
 
 
-#### Download Istio
+## Download Istio
 
 Only download Istio - do not install it yet!
 

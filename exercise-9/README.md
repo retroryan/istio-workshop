@@ -1,49 +1,116 @@
-## Exercise 9 - Fault Injection and Rate Limiting
+## Exercise 8 - Request Routing and Canary Deployments
 
-#### Overview of Istio Mixer
+Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
-See the overview of Mixer at [istio.io](https://istio.io/docs/concepts/policy-and-control/mixer.html).
+#### Configure the default route for hello world service
 
-#### Setting Up Mixer for Kubernetes
+1 - Set the default version for all requests to the hello world service using :
 
-First we configure Mixer for a kubernetes environment, setting up the kubernetes adapter to produce attributes about the kubernetes deployment (e.g. the labels on the target and source pods).
-
-```sh
-istioctl mixer rule create global global -f guestbook/mixer-kubernetes.yaml
+```
+istioctl create -f guestbook/route-rule-force-hello-v1.yaml
 ```
 
-#### Service Isolation Using Mixer
+This ingress rule forces `v1` of the service by giving it a weight of 100. We can see this by describing the resource we created:
+```sh
+kubectl describe routerules helloworld-default
 
-Block Access to the hello world service by adding the mixer-rule-denial.yaml rule shown below:
+Name:         helloworld-default
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  config.istio.io/v1alpha2
+Kind:         RouteRule
+Metadata:
+  ...
+Spec:
+  Destination:
+    Name:      helloworld-service
+  Precedence:  1
+  Route:
+    Labels:
+      Version:  1.0
+```
+
+2 - Now when you curl the echo service it should always return V1 of the hello world service:
+
+```sh
+curl http://$INGRESS_IP/echo/universe  
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+```
+```sh
+curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+```
+
+#### Canary Deployments
+
+Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is canary a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll canary based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
 
 ```yaml
-rules:
-  - selector: source.labels["app"]=="helloworld-ui"
-    aspects:
-    - kind: denials
+destination:
+  name: helloworld-service
+match:
+  request:
+    headers:
+      user-agent:
+        exact: mobile
+precedence: 2
+route:
+  - labels:
+      version: "2.0"
 ```
+
+Note that rules with a higher precedence number are applied first. If a precedence is not specified then it defaults to 0. So with these two rules in place the one with precedence 2 will be applied before the rule with precedence 1.
+
+Test this out by creating the rule:
+```sh
+istioctl create -f guestbook/route-rule-canary.yaml
+```
+
+Now when you curl the end point set the user agent to be mobile and you should only see V2:
 
 ```sh
-istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f guestbook/mixer-rule-denial.yaml
+curl http://$INGRESS_IP/echo/universe -A mobile
+
+{"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
+```
+```sh
+$ curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
-#### Block Access to v2 of the hello world service
+An important point to note is that the user-agent http header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
+
+#### Optional - Route based on the browser
+
+It is also possible to route it based on the Web Browser. For example the following routes to version 2.0 if the browser is chrome:
 
 ```yaml
-rules:
-  - selector: destination.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
-    aspects:
-    - kind: denials
+match:
+  request:
+    headers:
+      user-agent:
+        regex: ".*Chrome.*"
+route:
+- labels:
+    version: "2.0"
 ```
+
+To apply this route run:
 
 ```sh
-istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f mixer-rule-denial-v2.yaml
+istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 ```
 
-Then we clean up the rules to get everything working again:
+Test this by first navigating to the home page in Chrome:  You should see:
 
-```sh
-istioctl mixer rule delete global helloworld-service.default.svc.cluster.local
-```
+Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
 
-#### [Continue to Exercise 10 - Telemetry and Rate Limiting with Mixer](../exercise-10/README.md)
+If you then navigate to it another browser you should see:
+
+Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
+
+#### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)

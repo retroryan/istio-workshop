@@ -12,10 +12,11 @@
 
 - [Exercise 5 - Installing Istio](exercise-5/README.md)
 - [Exercise 6 - Creating a Service Mesh with Istio Proxy](exercise-6/README.md)
-- [Exercise 7 - Istio Ingress Controller](exercise-7/README.md)
-- [Exercise 8 - Request Routing and Canary Deployments](exercise-8/README.md)
-- [Exercise 9 - Fault Injection](exercise-9/README.md)
-- [Exercise 10 - Telemetry and Rate Limiting with Mixer](exercise-10/README.md)
+- [Exercise 7 -  Istio Ingress Controller](exercise-7/README.md)
+- [Exercise 8 - Telemetry](exercise-8/README.md)
+- [Exercise 9 - Request Routing and Canary Deployments](exercise-8/README.md)
+- [Exercise 10 - Fault Injection](exercise-9/README.md)
+- [Exercise 11 - Telemetry and Rate Limiting with Mixer](exercise-10/README.md)
 
 
 ## Credits
