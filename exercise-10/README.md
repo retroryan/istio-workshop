@@ -1,4 +1,6 @@
-## Exercise 9 - Fault Injection and Rate Limiting
+## Exercise 10 - Fault Injection and Rate Limiting
+
+THIS EXERCISE DOES NOT WORK!! Needs fixed!!!
 
 #### Overview of Istio Mixer
 
@@ -46,4 +48,4 @@ Then we clean up the rules to get everything working again:
 istioctl mixer rule delete global helloworld-service.default.svc.cluster.local
 ```
 
-#### [Continue to Exercise 10 - Telemetry and Rate Limiting with Mixer](../exercise-10/README.md)
+#### [Continue to Exercise 11 - Security](../exercise-11/README.md)

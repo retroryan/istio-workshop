@@ -1,4 +1,4 @@
-## Exercise 8 - Request Routing and Canary Deployments
+## Exercise 9 - Request Routing and Canary Deployments
 
 Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
@@ -113,4 +113,4 @@ If you then navigate to it another browser you should see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 
-#### [Continue to Exercise 9 - Fault Injection](../exercise-9/README.md)
+#### [Continue to Exercise 10 - Fault Injection and Rate Limiting](../exercise-10/README.md)
