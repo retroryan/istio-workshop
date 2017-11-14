@@ -2,7 +2,7 @@
 
 ###  Google Cloud Console Setup
 
-Login to Google Cloud Console and be sure you can access Google Container Engine:
+Login to Google Cloud Console and be sure you can access Google Container Engine.
 
 [https://console.cloud.google.com/home](https://console.cloud.google.com/home)
 
