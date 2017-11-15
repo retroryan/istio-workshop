@@ -6,7 +6,7 @@ Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), be
 
 1 - Set the default version for all requests to the hello world service using :
 
-```
+```sh
 istioctl create -f guestbook/route-rule-force-hello-v1.yaml
 ```
 

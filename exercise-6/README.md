@@ -38,7 +38,7 @@ This adds the Istio Proxy as an additional container to the Pod and setups the n
 Istio sidecars can also be automatically injected into a Pod before deployment using an alpha feature in Kubernetes called Initializers.  The istio-sidecar InitializerConfiguration is resource that specifies resources where Istio sidecar should be injected. By default the Istio sidecar will be injected into deployments, statefulsets, jobs, and daemonsets.  This is setup by running the following from the `istio-0.2.12` dir:
 
 ```sh
-kubectl apply -f install/kubernetes/istio-initializer.yaml
+kubectl apply -f istio-0.2.12/install/kubernetes/istio-initializer.yaml
 ```
 
 This adds `sidecar.initializer.istio.io` to Kubernetes list of pending initializers in the workload. The istio-initializer controller observes resources as they are deployed to Kubernetes and automatically injects the Istio Proxy sidecar by injecting the sidecar template.
@@ -59,7 +59,7 @@ Note that the services have to be started in a fixed order because they depend o
 
 1 - Deploy MySQL, Redis and the Hello World microservices and the associated Kubernetes Services from the `istio-workshop` dir:
 
-```
+```sh
 kubectl apply -f guestbook/mysql-pvc.yaml  -f guestbook/mysql-deployment.yaml -f guestbook/mysql-service.yaml
 kubectl apply -f guestbook/redis-deployment.yaml -f guestbook/redis-service.yaml
 kubectl apply -f guestbook/helloworld-deployment.yaml -f guestbook/helloworld-service.yaml
@@ -70,12 +70,16 @@ BE SURE TO WAIT FOR ALL OF THESE SERVICES TO BE RUNNING BEFORE CONTINUING!!!  (H
 
 2 - Deploy the Guest Book microservice:
 
-```
+```sh
 kubectl apply -f guestbook/guestbook-deployment.yaml -f guestbook/guestbook-service.yaml
 ```
 
 WAIT FOR GUESTBOOK TO BE RUNNING!!  (Hint: `kubectl get -w deployment`)
 
-3 - `kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml`
+3 - Deploy the Guide Book UI:
+
+```sh
+kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml
+```
 
 #### [Continue to Exercise 7 - Istio Ingress Controller](../exercise-7/README.md)

@@ -6,46 +6,74 @@ THIS EXERCISE DOES NOT WORK!! Needs fixed!!!
 
 See the overview of Mixer at [istio.io](https://istio.io/docs/concepts/policy-and-control/mixer.html).
 
-#### Setting Up Mixer for Kubernetes
-
-First we configure Mixer for a kubernetes environment, setting up the kubernetes adapter to produce attributes about the kubernetes deployment (e.g. the labels on the target and source pods).
-
-```sh
-istioctl mixer rule create global global -f guestbook/mixer-kubernetes.yaml
-```
-
 #### Service Isolation Using Mixer
 
-Block Access to the hello world service by adding the mixer-rule-denial.yaml rule shown below:
+We'll block access to the Hello World service by adding the mixer-rule-denial.yaml rule shown below:
 
 ```yaml
-rules:
-  - selector: source.labels["app"]=="helloworld-ui"
-    aspects:
-    - kind: denials
+# Create a denier that returns a google.rpc.Code 7 (PERMISSION_DENIED)
+apiVersion: "config.istio.io/v1alpha2"
+kind: denier
+metadata:
+  name: denyall
+  namespace: istio-system
+spec:
+  status:
+    code: 7
+    message: Not allowed
+---
+# The (empty) data handed to denyall at run time
+apiVersion: "config.istio.io/v1alpha2"
+kind: checknothing
+metadata:
+  name: denyrequest
+  namespace: istio-system
+spec:
+---
+# The rule that uses denier to deny requests with source.labels["app"] == "helloworld-ui"
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: deny-hello-world
+  namespace: istio-system
+spec:
+  match: source.labels["app"]=="helloworld-ui"
+  actions:
+  - handler: denyall.denier
+    instances:
+    - denyrequest.checknothing
 ```
 
 ```sh
-istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f guestbook/mixer-rule-denial.yaml
+istioctl create -f guestbook/mixer-rule-denial.yaml
 ```
 
 #### Block Access to v2 of the hello world service
 
 ```yaml
-rules:
-  - selector: destination.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
-    aspects:
-    - kind: denials
+# Rule that re-uses denier to deny requests to version two of the hello world UI
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: deny-hello-world-v2
+  namespace: istio-system
+spec:
+  match: source.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
+  actions:
+  - handler: denyall.denier
+    instances:
+    - denyrequest.checknothing
 ```
 
 ```sh
-istioctl mixer rule create global helloworld-service.default.svc.cluster.local -f mixer-rule-denial-v2.yaml
+istioctl create -f guestbook/mixer-rule-denial-v2.yaml
 ```
 
 Then we clean up the rules to get everything working again:
 
 ```sh
-istioctl mixer rule delete global helloworld-service.default.svc.cluster.local
+istioctl delete -f guestbook/mixer-rule-denial.yaml
+istioctl delete -f guestbook/mixer-rule-denial-v2.yaml
 ```
 
 #### [Continue to Exercise 11 - Security](../exercise-11/README.md)
