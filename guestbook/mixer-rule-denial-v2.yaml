@@ -2,10 +2,10 @@
 apiVersion: "config.istio.io/v1alpha2"
 kind: rule
 metadata:
-  name: deny-hello-world-v2
+  name: deny-hello-world
   namespace: istio-system
 spec:
-  match: source.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
+  match: destination.service=="helloworld-service.default.svc.cluster.local" && destination.labels["version"] == "2.0"
   actions:
   - handler: denyall.denier
     instances:
