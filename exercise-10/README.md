@@ -30,14 +30,14 @@ metadata:
   namespace: istio-system
 spec:
 ---
-# The rule that uses denier to deny requests with source.labels["app"] == "helloworld-ui"
+# The rule that uses denier to deny requests to the helloworld service
 apiVersion: "config.istio.io/v1alpha2"
 kind: rule
 metadata:
   name: deny-hello-world
   namespace: istio-system
 spec:
-  match: source.labels["app"]=="helloworld-ui"
+  match: destination.service=="helloworld-service.default.svc.cluster.local"
   actions:
   - handler: denyall.denier
     instances:
@@ -51,14 +51,14 @@ istioctl create -f guestbook/mixer-rule-denial.yaml
 #### Block Access to v2 of the hello world service
 
 ```yaml
-# Rule that re-uses denier to deny requests to version two of the hello world UI
+# The rule that uses denier to deny requests to version 2.0 of the helloworld service
 apiVersion: "config.istio.io/v1alpha2"
 kind: rule
 metadata:
-  name: deny-hello-world-v2
+  name: deny-hello-world
   namespace: istio-system
 spec:
-  match: source.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
+  match: destination.service=="helloworld-service.default.svc.cluster.local" && destination.labels["version"] == "2.0"
   actions:
   - handler: denyall.denier
     instances:
