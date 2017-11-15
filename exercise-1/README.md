@@ -18,10 +18,10 @@ If you have multiple gcloud accounts then be sure the correct one is specified f
 gcloud config get-value core/project
 ```
 
-If needed you can set a new project id.  Note: For the Scale by the Bay workshop you should already have a project in you google cloud account configured called scalebay17-sfo-5180.
+If needed you can set a new project id.  Note: For the Scale by the Bay workshop you should already have a project in you Google Cloud account configured called scalebay17-sfo-SOME_NUMBER.  Take note of the `SOME_NUMBER` and use it in the following command.
 
 ```sh
-gcloud config set project scalebay17-sfo-5180
+gcloud config set project scalebay17-sfo-SOME_NUMBER
 ```
 
 #### Create a Kubernetes Cluster using the Google Container Engine.
@@ -38,7 +38,8 @@ gcloud container clusters create guestbook \
       --no-enable-legacy-authorization
 ```
 
-
+#### Verify kubectl
+  `kubectl version`
 
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)

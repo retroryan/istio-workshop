@@ -22,7 +22,7 @@ The external ip will start as pending. After a short period the EXTERNAL IP will
 #### Curl the external ip to test the helloworld service:
 
 ```sh
-curl http://104.154.120.67:8080/hello/world
+curl http://[YOUR_SERVICE_EXTERNAL_IP]:8080/hello/world
 ```
 
 #### Explanation
