@@ -17,7 +17,7 @@ To create a service mesh with Istio we update the deployment of the Pods to add 
 Manually the side car can be injected by running the istioctl kube-inject command which modifies the yaml file before creating the deployments. This injects the Proxy into the deployment by updating the YAML to add the Proxy as a sidecar. When this command is used the microservices are now packaged with an Proxy sidecar that manages incoming and outgoing calls for the service.
 
 
-To see how the deployment yaml is modified run the following command:
+To see how the deployment yaml is modified run the following command from the `istio-workshop` dir:
 
 ```sh
 istioctl kube-inject -f guestbook/helloworld-deployment.yaml
@@ -35,13 +35,13 @@ This adds the Istio Proxy as an additional container to the Pod and setups the n
 
 #### Automatic sidecar injection
 
-Istio sidecars can also be automatically injected into a Pod before deployment using an alpha feature in Kubernetes called Initializers.  The istio-sidecar InitializerConfiguration is resource that specifies resources where Istio sidecar should be injected. By default the Istio sidecar will be injected into deployments, statefulsets, jobs, and daemonsets.  This is setup by running:
+Istio sidecars can also be automatically injected into a Pod before deployment using an alpha feature in Kubernetes called Initializers.  The istio-sidecar InitializerConfiguration is resource that specifies resources where Istio sidecar should be injected. By default the Istio sidecar will be injected into deployments, statefulsets, jobs, and daemonsets.  This is setup by running the following from the `istio-0.2.12` dir:
 
 ```sh
 kubectl apply -f install/kubernetes/istio-initializer.yaml
 ```
 
-This adds sidecar.initializer.istio.io to Kubernetes list of pending initializers in the workload. The istio-initializer controller observes resources as they are deployed to Kubernetes and automatically injects the Istio Proxy sidecar by injecting the sidecar template.
+This adds `sidecar.initializer.istio.io` to Kubernetes list of pending initializers in the workload. The istio-initializer controller observes resources as they are deployed to Kubernetes and automatically injects the Istio Proxy sidecar by injecting the sidecar template.
 
 #### Deploy Guest Book Services
 
@@ -57,7 +57,7 @@ It requires MySQL to store guestbook entries, and Redis to store session informa
 
 Note that the services have to be started in a fixed order because they depend on other services being started.
 
-1 - Deploy MySQL, Redis and the Hello World microservices and the associated Kubernetes Services:
+1 - Deploy MySQL, Redis and the Hello World microservices and the associated Kubernetes Services from the `istio-workshop` dir:
 
 ```
 kubectl apply -f guestbook/mysql-pvc.yaml  -f guestbook/mysql-deployment.yaml -f guestbook/mysql-service.yaml
@@ -66,7 +66,7 @@ kubectl apply -f guestbook/helloworld-deployment.yaml -f guestbook/helloworld-se
 kubectl apply -f guestbook/helloworld-deployment-v2.yaml
 ```
 
-BE SURE TO WAIT FOR ALL OF THESE SERVICES TO BE RUNNING BEFORE CONTINUING!!!
+BE SURE TO WAIT FOR ALL OF THESE SERVICES TO BE RUNNING BEFORE CONTINUING!!!  (Hint: `kubectl get -w deployment`)
 
 2 - Deploy the Guest Book microservice:
 
@@ -74,8 +74,8 @@ BE SURE TO WAIT FOR ALL OF THESE SERVICES TO BE RUNNING BEFORE CONTINUING!!!
 kubectl apply -f guestbook/guestbook-deployment.yaml -f guestbook/guestbook-service.yaml
 ```
 
-WAIT FOR GUESTBOOK TO BE RUNNING!!
+WAIT FOR GUESTBOOK TO BE RUNNING!!  (Hint: `kubectl get -w deployment`)
 
-3 - kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml
+3 - `kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml`
 
 #### [Continue to Exercise 7 - Istio Ingress Controller](../exercise-7/README.md)

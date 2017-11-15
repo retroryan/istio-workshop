@@ -5,6 +5,7 @@
 1 - Deploy hello world service to kubernetes
 
 ```sh
+cd istio-workshop
 kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record
 ```
 ```sh
@@ -17,7 +18,7 @@ helloworld-service-v1-....    1/1       Running   0           20s
 2 -  Note the name of the pod above for use in the command below. Then delete one of the hello world pods.
 
 ```sh
-kubectl delete pod kubernetes/helloworld-service-v1-...
+kubectl delete pod helloworld-service-v1-...
 ```
 
 3 - Kubernetes will automatically restart this pod for you. Verify it is restarted

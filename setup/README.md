@@ -2,7 +2,7 @@
 
 ###  Google Cloud Console Setup
 
-Login to Google Cloud Console and be sure you can access Google Container Engine.
+Login to Google Cloud Console with the special workshop credentials:
 
 [https://console.cloud.google.com/home](https://console.cloud.google.com/home)
 
@@ -12,7 +12,7 @@ If you where provided with a Google Cloud Lab username setup the account by:
 
 ![Google Cloud Console Setup](../images/homescreen.png)
 
-2 - Select the ScaleBay SFO 5102 project:
+2 - Select the ScaleBay SFO [SOME_NUMBER] project:
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 
@@ -43,9 +43,6 @@ This workshop can either be run all locally using the following setup instructio
   `gcloud components install kubectl`
 
 If you already have an installation of kubectl in your computer you can skip this step.
-
-#### Verify kubectl
-  `kubectl version`
 
 ## Get the Workshop Source:
 
