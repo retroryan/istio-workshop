@@ -46,6 +46,11 @@ spec:
 istioctl create -f guestbook/mixer-rule-denial.yaml
 ```
 
+Verify that access is now denied:
+```sh
+curl http://$INGRESS_IP/hello/world
+```
+
 #### Block Access to v2 of the hello world service
 
 ```yaml
@@ -64,13 +69,23 @@ spec:
 ```
 
 ```sh
+istioctl delete -f guestbook/mixer-rule-denial.yaml
 istioctl create -f guestbook/mixer-rule-denial-v2.yaml
 ```
 
-Then we clean up the rules to get everything working again:
+Check that you can access the v1 service:
+```sh
+curl http://$INGRESS_IP/hello/world
+```
+
+But you should not be able to access v2:
+```sh
+curl http://$INGRESS_IP/hello/world -A mobile
+```
+
+Clean up the rule:
 
 ```sh
-istioctl delete -f guestbook/mixer-rule-denial.yaml
 istioctl delete -f guestbook/mixer-rule-denial-v2.yaml
 ```
 
