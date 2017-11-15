@@ -39,8 +39,8 @@ Events:  <none>
 ```sh
 kubectl get service istio-ingress -n istio-system
 
-NAMESPACE      NAME                   CLUSTER-IP      EXTERNAL-IP      PORT(S)                                                  AGE
-istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/TCP,443:32165/TCP                               1h
+NAMESPACE      NAME                   CLUSTER-IP      EXTERNAL-IP      PORT(S)                       AGE
+istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/TCP,443:32165/TCP    1h
 ```
 
 ```sh

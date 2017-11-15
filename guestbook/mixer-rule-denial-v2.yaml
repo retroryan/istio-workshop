@@ -1,4 +1,12 @@
-rules:
-  - selector: target.labels["app"]=="helloworld-ui" && source.labels["version"] == "2.0"
-    aspects:
-    - kind: denials
+# Rule that re-uses denier to deny requests to version two of the hello world UI
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: deny-hello-world-v2
+  namespace: istio-system
+spec:
+  match: source.labels["app"]=="helloworld-ui" && source.labels["version"] == "v2"
+  actions:
+  - handler: denyall.denier
+    instances:
+    - denyrequest.checknothing
