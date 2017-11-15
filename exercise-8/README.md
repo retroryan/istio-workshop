@@ -12,7 +12,7 @@ istioctl create -f guestbook/guestbook-telemetry.yaml
 Generate a small load to the application:
 
 ```sh
-watch -n 0.5 curl http://INGRESS_IP/hello/world
+while sleep 0.5; do curl http://$INGRESS_IP/hello/world; done
 ```
 
 ### Grafana
