@@ -1,7 +1,5 @@
 ## Exercise 10 - Fault Injection and Rate Limiting
 
-THIS EXERCISE DOES NOT WORK!! Needs fixed!!!
-
 #### Overview of Istio Mixer
 
 See the overview of Mixer at [istio.io](https://istio.io/docs/concepts/policy-and-control/mixer.html).
