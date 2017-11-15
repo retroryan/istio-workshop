@@ -1,3 +1,22 @@
+# Create a denier that returns a google.rpc.Code 7 (PERMISSION_DENIED)
+apiVersion: "config.istio.io/v1alpha2"
+kind: denier
+metadata:
+  name: denyall
+  namespace: istio-system
+spec:
+  status:
+    code: 7
+    message: Not allowed
+---
+# The (empty) data handed to denyall at run time
+apiVersion: "config.istio.io/v1alpha2"
+kind: checknothing
+metadata:
+  name: denyrequest
+  namespace: istio-system
+spec:
+---
 # Rule that re-uses denier to deny requests to version two of the hello world UI
 apiVersion: "config.istio.io/v1alpha2"
 kind: rule
