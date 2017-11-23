@@ -19,9 +19,12 @@
 
 
 ## Credits
-These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and Grand Cloud.
+These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and [Grand Cloud](www.grandcloud.com).  This content is free to use we only ask that you keep the original attributions included in any future contributions or forks.
+
+#### Ryan Knight [@knight_cloud](https://twitter.com/knight_cloud)
 
 #### Ray Tsang  [@saturnism](https://twitter.com/saturnism)
+
 The Kubernetes and Istio Exercises are derived from the work of Ray Tsang  [@saturnism](https://twitter.com/saturnism) and these repositories:
 
 [https://github.com/saturnism/spring-boot-docker](https://github.com/saturnism/spring-boot-docker)
@@ -29,7 +32,8 @@ The Kubernetes and Istio Exercises are derived from the work of Ray Tsang  [@sat
 [https://github.com/saturnism/istio-by-example-java](https://github.com/saturnism/istio-by-example-java)
 
 #### Zach Butcher [@ZachButcher](https://twitter.com/ZackButcher)
-Zach was instrumental in helping write the Istio tutorials.
+
+Zach was instrumental in helping write the Istio tutorials and in particular the Istio Mixer Exercises.
 
 ####  Kelsey Hightower [@kelseyhightower](https://twitter.com/kelseyhightower)
 The Istio Ingress Tutorial is largely based on the work of Kelsey and this repository:
