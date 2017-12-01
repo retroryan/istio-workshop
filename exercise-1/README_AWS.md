@@ -132,8 +132,8 @@ kops create cluster  \
   --zones eu-central-1a,eu-central-1b,eu-central-1c \
   --master-zones eu-central-1a,eu-central-1b,eu-central-1c  \
   --dns-zone=YOURHOSTEDZONEID \
-  --node-size m4.xlarge \
-  --master-size m4.large  \
+  --node-size t2.micro \
+  --master-size t2.micro  \
   --topology private \
   --networking calico \
   --vpc=YOURVPCID \
