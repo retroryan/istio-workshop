@@ -6,7 +6,7 @@ Login to Google Cloud Console with the special workshop credentials:
 
 [https://console.cloud.google.com/home](https://console.cloud.google.com/home)
 
-If you where provided with a Google Cloud Lab username setup the account by:
+If you were provided with a Google Cloud Lab username setup the account by:
 
 1 - Dismiss the offer for a free trial and select the project
 
