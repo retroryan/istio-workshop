@@ -37,14 +37,14 @@ Events:  <none>
 2 - Find the external IP of the Istio Ingress controller:
 
 ```sh
-kubectl get service istio-ingress -n istio-system
+kubectl get service istio-ingress -n istio-system -o wide
 
 NAMESPACE      NAME                   CLUSTER-IP      EXTERNAL-IP      PORT(S)                       AGE
 istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/TCP,443:32165/TCP    1h
 ```
 
 ```sh
-export INGRESS_IP=<External IP from above>
+export INGRESS_IP=$(kubectl get service istio-ingress -n istio-system --template="{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
 ```
 
 3 - Browse to the website of the guest Book using the INGRESS IP to see the Guest Book UI: `http://INGRESS_IP`
