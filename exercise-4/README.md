@@ -38,7 +38,7 @@
     kubectl scale deployment helloworld-service-v1 --replicas=17
     ```
 
-If you look at the pod status, some of the pods will show a `Pending` state. That is because we have cordoned one worker node, leaving only two available for scheduling. And the underlying infrastructure has run out of capacity to run the containers with the requested resources.
+If you look at the pod status, some of the pods will show a `Pending` state. That is because we only have four physical nodes, and the underlying infrastructure has run out of capacity to run the containers with the requested resources. And the underlying infrastructure has run out of capacity to run the containers with the requested resources.
 
 3. Pick a pod name that has a `Pending` state to confirm the lack of resources in the detailed status.
 
@@ -46,21 +46,22 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
     kubectl describe pod helloworld-service...
     ```
 
-4. Uncordon the worker to be available for scheduling.
+4. We can easily spin up another Compute Engine instance to append to the cluster.
 
     ```
-    kubectl get nodes
+    gcloud container clusters resize guestbook --size=5
+    gcloud compute instances list
     ```
-    Open another terminal, run the `export KUBECONFIG ...` command from [Lab 1](../exercise-1/README.md) again and run:
+
+    Open another terminal and run:
+
     ```
     kubectl get po -w -o wide
     ```
+
     This will monitor the recovering process.
-    Go back the working terminal. Pick the one node with "not-ready" status and run:
-    ```
-    kubectl uncordon [name]
-    ```
-5. Verify all three workers are available and the pending pod is rescheduled.     
+
+5. Verify the new instance has joined the Kubernetes cluster, you’ll should be able to see it with this command:    
 
     ```
     kubectl get nodes
