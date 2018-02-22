@@ -16,7 +16,9 @@
 - [Exercise 7 -  Istio Ingress Controller](exercise-7/README.md)
 - [Exercise 8 - Telemetry](exercise-8/README.md)
 - [Exercise 9 - Request Routing and Canary Deployments](exercise-9/README.md)
-- [Exercise 10 - Fault Injection and Rate Limiting](exercise-10/README.md)
+- [Exercise 10 - Service Isolation Using Mixer](exercise-10/README.md)
+- [Exercise 11 - Fault Injection and Rate Limiting](exercise-11/README.md)
+- [Exercise 12 - Security](exercise-12/README.md)
 
 
 ## Credits

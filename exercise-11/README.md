@@ -1,4 +1,4 @@
-## Exercise 10 - Service Isolation Using Mixer
+## Exercise 12 - Security
 
 #### Overview of Istio Mixer
 
