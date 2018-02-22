@@ -18,7 +18,7 @@ https://github.com/istio/istio/releases
 curl -L https://git.io/getLatestIstio | sh -
 ```
 ```sh
-export PATH=$PWD/istio-0.2.12/bin:$PATH
+export PATH=$PWD/istio-0.5.1/bin:$PATH
 ```
 
 #### Running istioctl
@@ -45,18 +45,18 @@ For this workshop we are not using Istio Auth because we want to test using outs
 To install plain istio run:
 
 ```sh
-kubectl apply -f istio-0.2.12/install/kubernetes/istio.yaml
+kubectl apply -f istio-0.5.1/install/kubernetes/istio.yaml
 ```
 
-Note: For this workshop we use istio-auth.yaml enable mutual TLS authentication between sidecars.
+Note: For this workshop we use istio-auth.yaml to enable mutual TLS authentication between sidecars.
 
 ####  Install Add-ons for Grafana, Prometheus, and Zipkin:
 
 ```sh
-kubectl apply -f istio-0.2.12/install/kubernetes/addons/zipkin.yaml
-kubectl apply -f istio-0.2.12/install/kubernetes/addons/grafana.yaml
-kubectl apply -f istio-0.2.12/install/kubernetes/addons/prometheus.yaml
-kubectl apply -f istio-0.2.12/install/kubernetes/addons/servicegraph.yaml
+kubectl apply -f istio-0.5.1/install/kubernetes/addons/zipkin.yaml
+kubectl apply -f istio-0.5.1/install/kubernetes/addons/grafana.yaml
+kubectl apply -f istio-0.5.1/install/kubernetes/addons/prometheus.yaml
+kubectl apply -f istio-0.5.1/install/kubernetes/addons/servicegraph.yaml
 ```
 
 #### Viewing the Istio Deployments

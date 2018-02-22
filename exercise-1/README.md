@@ -32,10 +32,10 @@ To create a container cluster execute:
 
 ```sh
 gcloud container clusters create guestbook \
-      --enable-kubernetes-alpha \
+      --cluster-version=1.9.2-gke.1  \
       --num-nodes 4 \
-      --scopes cloud-platform \
-      --no-enable-legacy-authorization
+      --machine-type "n1-standard-2" \
+      --scopes cloud-platform
 ```
 
 #### Verify kubectl

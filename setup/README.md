@@ -16,6 +16,15 @@ If you were provided with a Google Cloud Lab username setup the account by:
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 
+### Google Cloud
+
+You must set your default compute service account to include:
+
+* `roles/container.admin (Kubernetes Engine Admin)`
+* `Editor (on by default)`
+
+To set this, navigate to the IAM section of the Cloud Console and find your default GCE/GKE service account in the following form: projectNumber-compute@developer.gserviceaccount.com: by default it should just have the Editor role. Then in the Roles drop-down list for that account, find the Kubernetes Engine group and select the role Kubernetes Engine Admin. The Roles listing for your account will change to Multiple.
+
 ##  Google Cloud Shell or Local Install
 
 This workshop can either be run all locally using the following setup instructions or it can be run in Google Cloud Shell.

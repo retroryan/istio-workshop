@@ -32,6 +32,8 @@ name: istio-proxy
 
 #### Automatic sidecar injection
 
+
+
 Istio sidecars can also be automatically injected into a pod before deployment using an alpha feature in Kubernetes called Initializers. The istio-sidecar InitializerConfiguration is resource that specifies resources where Istio sidecar should be injected. By default, the Istio sidecar will be injected into deployments, statefulsets, jobs, and daemonsets. This is set up by running the following from the `istio-0.2.12` dir:
 
 ```sh
@@ -64,19 +66,19 @@ Note that the services must be started in a fixed order because they depend on o
     kubectl apply -f guestbook/helloworld-deployment-v2.yaml
     ```
 
-2. Verify that these microservices are available before continuing. **Do not procede until they are up and running.** 
+2. Verify that these microservices are available before continuing. **Do not procede until they are up and running.**
 
     ```
     kubectl get -w deployment
     ```
-    
+
 3. Deploy the guestbook microservice.
 
     ```sh
     kubectl apply -f guestbook/guestbook-deployment.yaml -f guestbook/guestbook-service.yaml
     ```
 
-4. Verify that guestbook is available before continuing. **Do not procede until the microservice is up and running.** 
+4. Verify that guestbook is available before continuing. **Do not procede until the microservice is up and running.**
 
     ```
     kubectl get -w deployment
