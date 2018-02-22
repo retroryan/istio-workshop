@@ -57,20 +57,6 @@ If you already have an installation of kubectl in your computer you can skip thi
 
   `git clone https://github.com/retroryan/istio-workshop`
 
-
-## Download Istio
-
-Only download Istio - do not install it yet!
-
-Either download it directly or get the latest:
-
-https://github.com/istio/istio/releases
-
-```
-curl -L https://git.io/getLatestIstio | sh -
-export PATH=$PWD/istio-0.2.12/bin:$PATH
-```
-
 #### Windows Setup
 
 If you install [Git for Windows](https://git-scm.com/downloads) you get Curl automatically too. There are some advantages:

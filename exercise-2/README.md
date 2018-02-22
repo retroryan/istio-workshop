@@ -42,6 +42,30 @@ or to follow the log file:
 kubectl logs -f helloworld-service-v1-...
 ```
 
+#### Pod Details
+
+One of the key tools for troubleshooting issues when creating pods is describe which shows the pod details:
+
+```sh
+kubectl describe pods helloworld-service-v1-...
+```
+
+This shows all the details of the pod such as status, events, containers, IP and more.  
+
+An important detail to notice, that will be relevant to Istio is that the pod currently only has a single container.  
+
+```
+Containers:
+  helloworld-service:
+    Container ID:   docker://9f6dd8ffeb104541e95dd6cf5d960851840409bb9e683d79b8e604fe1af1045c
+    Image:          retroryan/helloworld:1.0
+    Image ID:       docker-pullable://retroryan/helloworld@sha256:4ab1359b88ed1e5c820c27ae2c475a816e60d4b99b1703e9223ddb4885a4d2e7
+    Port:           8080/TCP
+```
+
+When we deploy with Istio be sure to notice the additional containers that get added.
+
+
 ## Explanation
 
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)

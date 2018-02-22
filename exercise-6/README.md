@@ -34,13 +34,33 @@ name: istio-proxy
 
 
 
-Istio sidecars can also be automatically injected into a pod before deployment using an alpha feature in Kubernetes called Initializers. The istio-sidecar InitializerConfiguration is resource that specifies resources where Istio sidecar should be injected. By default, the Istio sidecar will be injected into deployments, statefulsets, jobs, and daemonsets. This is set up by running the following from the `istio-0.2.12` dir:
+Istio sidecars can also be automatically injected into a pod before deployment using a feature in Kubernetes called a mutating webhook admission controller. An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. Admission controllers may be “validating”, “mutating”, or both. Mutating controllers may modify the objects they admit; validating controllers may not.
+
+The admission control process proceeds in two phases. In the first phase, mutating admission controllers are run. In the second phase, validating admission controllers are run.
+
+MutatingWebhookConfiguration describes the configuration of and admission webhook that accept or reject and may change the object.  
+
+For Istio the webhook is the sidecar injector webhook deployment called "istio-sidecar-injector".  It will modify a pod before it is started to inject an istio init container and istio proxy container.
+
+#### Installing the Webhook
+
+The Istio 0.5.0 and 0.5.1 releases are missing scripts to provision webhook certificates.  The easiest fix  is to download the scripts directly into the Istio install directories:
+
+Webhooks requires a signed cert/key pair. Use install/kubernetes/webhook-create-signed-cert.sh to generate a cert/key pair signed by the Kubernetes’ CA. The resulting cert/key file is stored as a Kubernetes secret for the sidecar injector webhook to consume.
 
 ```sh
-kubectl apply -f istio-0.2.12/install/kubernetes/istio-initializer.yaml
-```
+cd istio-0.5.1/install/kubernetes
+wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-create-signed-cert.sh
 
-This adds `sidecar.initializer.istio.io` to the Kubernetes list of pending initializers in the workload. The istio-initializer controller observes resources as they are deployed to Kubernetes and automatically injects the Istio Proxy sidecar by injecting the sidecar template.
+wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-patch-ca-bundle.sh
+
+webhook-create-signed-cert.sh \
+    --service istio-sidecar-injector \
+    --namespace istio-system \
+    --secret sidecar-injector-certs
+
+kubectl apply -f install/kubernetes/istio-sidecar-injector-configmap-release.yaml
+```
 
 ### Deploy Guestbook services
 
