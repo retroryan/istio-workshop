@@ -113,4 +113,4 @@ If you then navigate to it another browser you should see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 
-#### [Continue to Exercise 10 - Fault Injection and Rate Limiting](../exercise-10/README.md)
+#### [Continue to Exercise 10 - Service Isolation Using Mixer](../exercise-10/README.md)
