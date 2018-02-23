@@ -34,7 +34,7 @@ Events:  <none>
 
 ```
 
-2 - Find the external IP of the Istio Ingress controller:
+2 - Find the external IP of the Istio Ingress controller and export it to an environment variable:
 
 ```sh
 kubectl get service istio-ingress -n istio-system -o wide
@@ -53,7 +53,7 @@ export INGRESS_IP=$(kubectl get service istio-ingress -n istio-system --template
 `http://INGRESS_IP/hello/world`
 
 
-5 - curl the Guest Book:
+5 - curl the Guest Book Service:
 ```
 curl http://$INGRESS_IP/echo/universe
 ```

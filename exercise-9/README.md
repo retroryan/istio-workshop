@@ -76,15 +76,16 @@ curl http://$INGRESS_IP/echo/universe -A mobile
 
 {"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
 ```
+
 ```sh
-$ curl http://$INGRESS_IP/echo/universe
+curl http://$INGRESS_IP/echo/universe
 
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
 An important point to note is that the user-agent http header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
 
-#### Optional - Route based on the browser
+#### Route based on the browser
 
 It is also possible to route it based on the Web Browser. For example the following routes to version 2.0 if the browser is chrome:
 
@@ -105,12 +106,26 @@ To apply this route run:
 istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 ```
 
-Test this by first navigating to the home page in Chrome:  You should see:
+Test this by first navigating to the echo service in Chrome:
+
+http://35.197.94.184/echo/universe
+
+You should see:
 
 Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
 
-If you then navigate to it another browser you should see:
+If you then navigate to it another browser like firefox you will see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
+
+#### Clean Up
+
+Be sure to delete all the route rules before continuing on to the next exercises.
+
+```sh
+istioctl delete -f guestbook/route-rule-force-hello-v1.yaml
+istioctl delete -f guestbook/route-rule-user-agent-chrome.yaml
+istioctl delete -f guestbook/route-rule-user-mobile.yaml
+```
 
 #### [Continue to Exercise 10 - Service Isolation Using Mixer](../exercise-10/README.md)

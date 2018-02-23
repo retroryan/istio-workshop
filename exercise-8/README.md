@@ -41,7 +41,7 @@ kubectl -n istio-system port-forward \
   9090:9090
 ```
 
-Browse to http://localhost:9090/graph and in the “Expression” input box enter: `request_count`. Click the Execute button.
+Browse to http://localhost:9090/graph and in the “Expression” input box enter: `istio_request_count`. Click the Execute button.
 
 
 ### Service Graph

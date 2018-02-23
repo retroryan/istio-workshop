@@ -168,5 +168,33 @@ kubectl describe pods helloworld-service-v1.....
     ```sh
     kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml
     ```
+7. Access the guestbook UI in the web browser:
+
+The guestbook UI kubernetes service has a type of LoadBalancer.  This creates an external ip through which the ui can be accessed:
+
+```sh
+kubectl get svc guestbook-ui
+NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
+```
+
+You can test access via a web browser and curl.  You should be able to navigate to that IP to access the guestbook ui.
+
+To curl the guest book endpoint use:
+
+```sh
+curl 35.197.94.184/echo/world
+```
+
+Also the hello world service is declared with an external ip which can be curled:
+
+```sh
+kubectl get svc helloworld-service
+NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
+helloworld-service   LoadBalancer   10.59.242.178   35.185.201.165   8080:31255/TCP   14m
+
+curl 35.185.201.165:8080/hello/world
+{"hostname":"helloworld-service-v2-744696b8cb-lwdng","greeting":"Hola world from helloworld-service-v2-744696b8cb-lwdng version 2.0","version":"2.0"}
+```
 
 #### [Continue to Exercise 7 - Istio Ingress controller](../exercise-7/README.md)

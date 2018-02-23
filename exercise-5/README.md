@@ -51,6 +51,16 @@ kubectl apply -f istio-0.5.1/install/kubernetes/istio.yaml
 
 ####  Install Add-ons for Grafana, Prometheus, and Zipkin:
 
+WARNING!! The prometheus yaml needs to be patched!
+
+In the file istio-0.5.1/install/kubernetes/addons/prometheus.yaml update the following stanza to add the correct namespace:
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: istio-system
+
 ```sh
 kubectl apply -f istio-0.5.1/install/kubernetes/addons/zipkin.yaml
 kubectl apply -f istio-0.5.1/install/kubernetes/addons/grafana.yaml
