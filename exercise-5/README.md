@@ -40,7 +40,7 @@ kubectl create clusterrolebinding cluster-admin-binding \
 ```
 2 - Next install Istio on the Kubernetes cluster:
 
-For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between sidecars.
+For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods.
 
 To install plain istio run:
 
@@ -48,7 +48,6 @@ To install plain istio run:
 kubectl apply -f istio-0.5.1/install/kubernetes/istio.yaml
 ```
 
-Note: For this workshop we use istio-auth.yaml to enable mutual TLS authentication between sidecars.
 
 ####  Install Add-ons for Grafana, Prometheus, and Zipkin:
 

@@ -53,7 +53,10 @@ cd istio-0.5.1/install/kubernetes
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-create-signed-cert.sh
 
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-patch-ca-bundle.sh
-webhook-create-signed-cert.sh \
+
+chmod a+x *.sh
+
+./webhook-create-signed-cert.sh \
     --service istio-sidecar-injector \
     --namespace istio-system \
     --secret sidecar-injector-certs
@@ -62,7 +65,21 @@ webhook-create-signed-cert.sh \
 Install the sidecar injection configmap:
 
 ```sh
-kubectl apply -f install/kubernetes/istio-sidecar-injector-configmap-release.yaml
+kubectl apply -f istio-sidecar-injector-configmap-release.yaml
+```
+
+Set the caBundle in the webhook install YAML that the Kubernetes api-server uses to invoke the webhook.
+
+```sh
+cat istio-sidecar-injector.yaml | \
+     ./webhook-patch-ca-bundle.sh > \
+     istio-sidecar-injector-with-ca-bundle.yaml
+```     
+
+Install the sidecar injector webhook.
+
+```sh
+kubectl apply -f istio-sidecar-injector-with-ca-bundle.yaml
 ```
 
 The sidecar injector webhook should now be running.
@@ -107,7 +124,7 @@ Note that the services must be started in a fixed order because they depend on o
 1. Deploy MySQL, Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
 
     ```sh
-    cd ../istio-workshop
+    cd istio-workshop
     kubectl apply -f guestbook/mysql-deployment.yaml -f guestbook/mysql-service.yaml
     kubectl apply -f guestbook/redis-deployment.yaml -f guestbook/redis-service.yaml
     kubectl apply -f guestbook/helloworld-deployment.yaml -f guestbook/helloworld-service.yaml
@@ -118,12 +135,17 @@ Note that the services must be started in a fixed order because they depend on o
 
 ```sh
 kubectl get pod
-kubectl describe helloworld-deployment
 ```
 
-When you get the pod you should see 2/2 meaning that 2 of 2 containers are in the running state.  Describing the pod should show the details of the additional containers.
+When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
 
-3. Verify that these microservices are available before continuing. **Do not procede until they are up and running.**
+When you describe the pod what that shows is the details of the additional containers.
+
+```sh
+kubectl describe pods helloworld-service-v1.....
+```
+
+3. Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
     ```
     kubectl get -w deployment
