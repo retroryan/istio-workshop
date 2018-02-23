@@ -1,4 +1,4 @@
-## Exercise 9 - Request Routing and A/B Testing
+## Exercise 9 - Request Routing and Canary Testing
 
 Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
@@ -44,9 +44,9 @@ curl http://$INGRESS_IP/echo/universe
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
-#### A/B Testing
+#### Canary Testing
 
-Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll do A/B testing based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll do canary testing based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
 
 ```yaml
 destination:
@@ -120,7 +120,7 @@ Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 
 #### Clean Up
 
-Be sure to delete all the route rules before continuing on to the next exercises.
+Be sure to delete all the route rules except the mobilbefore continuing on to the next exercises.
 
 ```sh
 istioctl delete -f guestbook/route-rule-force-hello-v1.yaml
