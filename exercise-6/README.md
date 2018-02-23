@@ -32,9 +32,9 @@ name: istio-proxy
 
 #### Automatic sidecar injection
 
+Istio sidecars can also be automatically injected into a pod at creation time using a feature in Kubernetes called a mutating webhook admission controller.   Note that unlike manual injection, automatic injection occurs at the pod-level. You won't see any change to the deployment itself. Instead you'll want to check individual pods (via kubectl describe) to see the injected proxy.
 
-
-Istio sidecars can also be automatically injected into a pod before deployment using a feature in Kubernetes called a mutating webhook admission controller. An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. Admission controllers may be “validating”, “mutating”, or both. Mutating controllers may modify the objects they admit; validating controllers may not.
+An admission controller is a piece of code that intercepts requests to the Kubernetes API server prior to persistence of the object, but after the request is authenticated and authorized. Admission controllers may be “validating”, “mutating”, or both. Mutating controllers may modify the objects they admit; validating controllers may not.
 
 The admission control process proceeds in two phases. In the first phase, mutating admission controllers are run. In the second phase, validating admission controllers are run.
 
@@ -53,14 +53,42 @@ cd istio-0.5.1/install/kubernetes
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-create-signed-cert.sh
 
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-patch-ca-bundle.sh
-
 webhook-create-signed-cert.sh \
     --service istio-sidecar-injector \
     --namespace istio-system \
     --secret sidecar-injector-certs
+```
 
+Install the sidecar injection configmap:
+
+```sh
 kubectl apply -f install/kubernetes/istio-sidecar-injector-configmap-release.yaml
 ```
+
+The sidecar injector webhook should now be running.
+
+```sh
+kubectl -n istio-system get deployment -listio=sidecar-injector
+
+NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+istio-sidecar-injector   1         1         1            1           1d
+```
+
+NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector (see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors).
+
+Label the default namespace with istio-injection=enabled
+
+```sh
+kubectl label namespace default istio-injection=enabled
+kubectl get namespace -L istio-injection
+
+NAME           STATUS    AGE       ISTIO-INJECTION
+default        Active    1h        enabled
+istio-system   Active    1h        
+kube-public    Active    1h        
+kube-system    Active    1h
+```
+
 
 ### Deploy Guestbook services
 
@@ -86,25 +114,34 @@ Note that the services must be started in a fixed order because they depend on o
     kubectl apply -f guestbook/helloworld-deployment-v2.yaml
     ```
 
-2. Verify that these microservices are available before continuing. **Do not procede until they are up and running.**
+2. Notice that each of the pods now has one istio init container and two running containers. One is the main application container and the second is the istio proxy container.
+
+```sh
+kubectl get pod
+kubectl describe helloworld-deployment
+```
+
+When you get the pod you should see 2/2 meaning that 2 of 2 containers are in the running state.  Describing the pod should show the details of the additional containers.
+
+3. Verify that these microservices are available before continuing. **Do not procede until they are up and running.**
 
     ```
     kubectl get -w deployment
     ```
 
-3. Deploy the guestbook microservice.
+4. Deploy the guestbook microservice.
 
     ```sh
     kubectl apply -f guestbook/guestbook-deployment.yaml -f guestbook/guestbook-service.yaml
     ```
 
-4. Verify that guestbook is available before continuing. **Do not procede until the microservice is up and running.**
+5. Verify that guestbook is available before continuing. **Do not procede until the microservice is up and running.**
 
     ```
     kubectl get -w deployment
     ```
 
-5. Deploy the guestbook UI:
+6. Deploy the guestbook UI:
 
     ```sh
     kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml

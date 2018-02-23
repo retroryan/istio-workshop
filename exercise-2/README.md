@@ -15,6 +15,8 @@ NAME                           READY     STATUS    RESTARTS    AGE
 helloworld-service-v1-....    1/1       Running   0           20s
 ```
 
+An important detail to note is that READY shows 1/1.  That is referring to the number of containers in the pod that are ready and this pod only has 1 container. 
+
 2 -  Note the name of the pod above for use in the command below. Then delete one of the hello world pods.
 
 ```sh
