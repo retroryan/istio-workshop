@@ -18,7 +18,7 @@ https://github.com/istio/istio/releases
 curl -L https://git.io/getLatestIstio | sh -
 ```
 ```sh
-export PATH=$PWD/istio-0.5.1/bin:$PATH
+export PATH=$PWD/istio-0.5.0/bin:$PATH
 ```
 
 #### Running istioctl
@@ -45,27 +45,17 @@ For this workshop we are not using Istio Auth because we want to test using outs
 To install plain istio run:
 
 ```sh
-kubectl apply -f istio-0.5.1/install/kubernetes/istio.yaml
+kubectl apply -f istio-0.5.0/install/kubernetes/istio.yaml
 ```
 
 
 ####  Install Add-ons for Grafana, Prometheus, and Zipkin:
 
-WARNING!! The prometheus yaml needs to be patched!
-
-In the file istio-0.5.1/install/kubernetes/addons/prometheus.yaml update the following stanza to add the correct namespace:
-
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: prometheus
-  namespace: istio-system
-
 ```sh
-kubectl apply -f istio-0.5.1/install/kubernetes/addons/zipkin.yaml
-kubectl apply -f istio-0.5.1/install/kubernetes/addons/grafana.yaml
-kubectl apply -f istio-0.5.1/install/kubernetes/addons/prometheus.yaml
-kubectl apply -f istio-0.5.1/install/kubernetes/addons/servicegraph.yaml
+kubectl apply -f istio-0.5.0/install/kubernetes/addons/zipkin.yaml
+kubectl apply -f istio-0.5.0/install/kubernetes/addons/grafana.yaml
+kubectl apply -f istio-0.5.0/install/kubernetes/addons/prometheus.yaml
+kubectl apply -f istio-0.5.0/install/kubernetes/addons/servicegraph.yaml
 ```
 
 #### Viewing the Istio Deployments

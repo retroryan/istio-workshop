@@ -49,7 +49,7 @@ The Istio 0.5.0 and 0.5.1 releases are missing scripts to provision webhook cert
 Webhooks requires a signed cert/key pair. Use install/kubernetes/webhook-create-signed-cert.sh to generate a cert/key pair signed by the Kubernetes’ CA. The resulting cert/key file is stored as a Kubernetes secret for the sidecar injector webhook to consume.
 
 ```sh
-cd istio-0.5.1/install/kubernetes
+cd istio-0.5.0/install/kubernetes
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-create-signed-cert.sh
 
 wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-patch-ca-bundle.sh
@@ -183,7 +183,7 @@ You can test access via a web browser and curl.  You should be able to navigate 
 To curl the guest book endpoint use:
 
 ```sh
-curl 35.197.94.184/echo/world
+curl 35.230.4.192/echo/world
 ```
 
 Also the hello world service is declared with an external ip which can be curled:

@@ -1,3 +1,3 @@
-## Exercise 11 - Istio Security
+## Exercise 12 - Istio Security
 
 #### Overview of Istio Security
