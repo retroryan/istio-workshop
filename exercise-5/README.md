@@ -1,4 +1,6 @@
-## Exercise 5 - Installing Istio
+## Exercise 5 - Installing Istio 0.5.0
+
+We are using Istio 0.5.0 because of bugs with route rules in Istio 0.5.1  !
 
 #### Clean up
 
@@ -8,15 +10,14 @@ Start with a clean slate and delete all deployed services from the cluster:
 kubectl delete all --all
 ```
 
-#### Download Istio
+#### Download Istio 0.5.0
 
-Either download it directly or get the latest using curl:
+Do NOT download the latest release of istio.  Be sure to download Istio 0.5.0
+
+Download Istio from the following website:
 
 https://github.com/istio/istio/releases
 
-```sh
-curl -L https://git.io/getLatestIstio | sh -
-```
 ```sh
 export PATH=$PWD/istio-0.5.0/bin:$PATH
 ```
@@ -40,7 +41,7 @@ kubectl create clusterrolebinding cluster-admin-binding \
 ```
 2 - Next install Istio on the Kubernetes cluster:
 
-For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods.
+For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods but it prevents the ability to access the services outside the cluster.
 
 To install plain istio run:
 
