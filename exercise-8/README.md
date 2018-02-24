@@ -71,7 +71,7 @@ The logs configuration directs Mixer to send log entries to stdout. It uses thre
 
 
 ```sh
-kubectl -n istio-system logs $(kubectl -n istio-system get pods -l istio=mixer -o jsonpath='{.items[0].metadata.name}') mixer | grep \"instance\":\"newlog.logentry.istio-system\"
+kubectl -n istio-system logs -f $(kubectl -n istio-system get pods -l istio=mixer -o jsonpath='{.items[0].metadata.name}') mixer | grep \"instance\":\"newlog.logentry.istio-system\"
 ```
 
 #### [Continue to Exercise 9 - Distributed Tracing](../exercise-9/README.md)

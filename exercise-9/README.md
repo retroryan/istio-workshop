@@ -35,7 +35,7 @@ wrk -d 500s -c 5 -t 5 http://$INGRESS_IP/hello/world
 Or a shell script:
 
 ```sh
-while sleep 0.5; do curl http://$INGRESS_IP/hello/world; done
+while sleep 0.5; do curl http://$INGRESS_IP/echo/universe -A mobile; done
 ```
 
 ### Zipkin

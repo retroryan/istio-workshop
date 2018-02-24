@@ -118,14 +118,5 @@ If you then navigate to it another browser like firefox you will see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 
-#### Clean Up
-
-Be sure to delete all the route rules except the mobilbefore continuing on to the next exercises.
-
-```sh
-istioctl delete -f guestbook/route-rule-force-hello-v1.yaml
-istioctl delete -f guestbook/route-rule-user-agent-chrome.yaml
-istioctl delete -f guestbook/route-rule-user-mobile.yaml
-```
 
 #### [Continue to Exercise 11 - Service Isolation Using Mixer](../exercise-11/README.md)

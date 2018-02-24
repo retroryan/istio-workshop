@@ -18,4 +18,4 @@ spec:
   httpFault:
     delay:
       percent: 100
-      fixedDelay: 10s
+      fixedDelay: 4s
