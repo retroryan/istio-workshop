@@ -1,28 +1,42 @@
 ## Exercise 9 - Distributed Tracing
 
-First we need to configure Istio to automatically gather telemetry data for services running in the mesh.
+The sample guestbook application shows how a Spring Java application can be configured to collect trace spans using Zipkin or Jaeger.
 
-#### Create a Rule to Collect Telemetry Data
+Although Istio proxies are able to automatically send spans, it needs help from the application to tie together the entire trace. To do this applications need to propagate the appropriate HTTP headers so that when the proxies send span information to Zipkin or Jaeger, the spans can be correlated correctly into a single trace.
+
+To do this the guestbook application collects and propagate the following headers from the incoming request to any outgoing requests:
+
+x-request-id
+x-b3-traceid
+x-b3-spanid
+x-b3-parentspanid
+x-b3-sampled
+x-b3-flags
+x-ot-span-context
+
+This is done with the Spring Istio Support written by Ray Tsang:
+
+https://github.com/retroryan/istio-by-example-java/tree/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio
+
+
+
+#### View Guestbook Traces
+
+Generate a small load to the application either using wrk2 or a shell script:
+
+For wrk2:
 
 ```sh
-istioctl create -f guestbook/guestbook-telemetry.yaml
-```
-#### View Guestbook Telemetry data
+ brew install --HEAD jabley/wrk2/wrk2
 
-Generate a small load to the application:
+wrk -d 500s -c 5 -t 5 http://$INGRESS_IP/hello/world
+```
+
+Or a shell script:
 
 ```sh
 while sleep 0.5; do curl http://$INGRESS_IP/hello/world; done
 ```
-
-### Grafana
-Establish port forward from local port 3000 to the Grafana instance:
-```sh
-kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana \
-  -o jsonpath='{.items[0].metadata.name}') 3000:3000
-```
-
-Browse to http://localhost:3000 and navigate to Istio Dashboard
 
 ### Zipkin
 Establish port forward from local port
@@ -33,30 +47,5 @@ kubectl port-forward -n istio-system \
 ```
 
 Browse to http://localhost:9411
-
-### Prometheus
-```sh
-kubectl -n istio-system port-forward \
-  $(kubectl -n istio-system get pod -l app=prometheus -o jsonpath='{.items[0].metadata.name}') \
-  9090:9090
-```
-
-Browse to http://localhost:9090/graph and in the “Expression” input box enter: `istio_request_count`. Click the Execute button.
-
-
-### Service Graph
-```sh
-kubectl -n istio-system port-forward \
-  $(kubectl -n istio-system get pod -l app=servicegraph -o jsonpath='{.items[0].metadata.name}') \
-  8088:8088
-```
-
-Browse to http://localhost:8088/dotviz
-
-#### Mixer Log Stream
-
-```sh
-kubectl -n istio-system logs $(kubectl -n istio-system get pods -l istio=mixer -o jsonpath='{.items[0].metadata.name}') mixer | grep \"instance\":\"newlog.logentry.istio-system\"
-```
 
 #### [Continue to Exercise 10 - Request Routing and Canary Testing](../exercise-10/README.md)
