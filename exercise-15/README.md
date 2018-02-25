@@ -1,19 +1,21 @@
 ## Exercise 15 - mTLS again, now with 100% more SPIFFE
 
-Explain spiffe
-
-Revist exfiltrated certs,
-
-```
-openssl verify -show_chain -CAfile root-cert.pem cert-chain.pem
-```
-
-to show chain and 
+Istio uses SPIFFE to assert the identify of workloads on the cluster. SPIFFE is a very simple standard. It consists of a notion of identity and a method of proving it. A SPIFFE identity consists of an authority part and a path. The meaning of the path in spiffe land is implementation defined. In k8s it takes the form `/ns/$namespace/sa/$service-account` with the expected meaning. A SPIFFE identify is embedded in a document. This document in principle can take many forms but currently the only defined format is x509. Let's see what an SPIFFE x509 looks like. Remember those certificates we stole earlier? Execute the below snippet either in the directory where you have the certificates locally, if you have openssl installed. If you don't you can install it in the toolbox centos image with with `yum install -y openssl`.
 
 ```
 openssl x509 -in cert-chain.pem -text | less
 ```
 
-to show the spiffe SAN
+The important thing to notice is that the subject isn't what you'd normally expect. It has no meaning here. What is interesting is the URI SAN extension. Note the SPIFFE identify. There is one more part to SPIFFE identity, and that's a signing authority. This a CA certificate with a SPIFFE identify with _no_ path component.
 
-talk about the meaning of the url in the context of k8s
+```
+openssl verify -show_chain -CAfile root-cert.pem cert-chain.pem
+```
+
+You might need to drop the `-show-chain` argument depending on what version of openssl you have installed.  Depending on how long it's been since the certs were extracted they might be out of date. Istio rolls certificates aggressively.
+
+#### Why?
+
+The istio proxy uses the SPIFFE identity to establish secure authenticated communication channels over TLS. By providing identities on both the client and server side it establishes mTLS. The service account is also made available as an attribute in mixer.
+
+Interested parties can find the SPIFFE specification https://github.com/spiffe/spiffe. It's very readable. 
