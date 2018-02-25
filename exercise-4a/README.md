@@ -1,4 +1,4 @@
-# Exercise 4 - Scaling in and out
+# Exercise 4a - Envoy
 
 ### Scale the number of Hello World service pods
 
@@ -69,4 +69,4 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
     ```
 
 
-#### [Continue to Exercise 4a - Envoy](../exercise-4a/README.md)
+#### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)

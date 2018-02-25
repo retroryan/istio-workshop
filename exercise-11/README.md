@@ -1,20 +1,5 @@
 ## Exercise 11 - Service Isolation Using Mixer
 
-#### Inspecting Mixer
-
-Envoy proxies call Mixer to report statistics and check for route rules. By opening up some of the mixer ports we can get an of idea what calls its seeing:
-
-```sh
-kubectl get po -n istio-system
-kubectl  port-forward -n istio-system istio-mixer-65bb55df98-s47ns 9093:9093
-curl localhost:9093/metrics
-```
-
-#### Overview of Istio Mixer
-
-See the overview of Mixer at [istio.io](https://istio.io/docs/concepts/policy-and-control/mixer.html).
-
-
 #### Service Isolation Using Mixer
 
 We'll block access to the Hello World service by adding the mixer-rule-denial.yaml rule shown below:

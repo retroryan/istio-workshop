@@ -1,8 +1,18 @@
 ## Exercise 10 - Request Routing and Canary Testing
 
-Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
+#### Inspecting Mixer
+
+Envoy proxies call Mixer to report statistics and check for route rules. By opening up some of the mixer ports we can get an of idea what calls its seeing:
+
+```sh
+kubectl get po -n istio-system
+kubectl  port-forward -n istio-system istio-mixer-65bb55df98-s47ns 9093:9093
+curl localhost:9093/metrics
+```
 
 #### Configure the default route for hello world service
+
+Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
 1 - Set the default version for all requests to the hello world service using :
 
