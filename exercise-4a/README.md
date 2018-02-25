@@ -1,72 +1,76 @@
 # Exercise 4a - Envoy
 
-### Scale the number of Hello World service pods
+### Run envoy locally using docker
 
-1. Scale the number of replicas of your Hello World service by running the following commands:
+Pull envoy images:
 
-    ```sh
-    kubectl get deployment
+```sh
+docker pull envoyproxy/envoy
+docker pull tutum/curl
+docker pull citizenstig/httpbin
+```
 
-    NAME                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-    helloworld-service-v1   1         1         1            1           1m
-    ```
+If you have problems with docker the following commands are helpful:
 
-    ```sh
-    kubectl scale deployment helloworld-service-v1 --replicas=4
-    ```
+View all running docker images and find the container id:
+`docker ps -a`
 
-    ```sh
-    kubectl get deployment
+Force remove a running docker image:
+`docker rm -f #CONTAINER_ID`
 
-    NAME                    DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-    helloworld-service-v1   4         4         4            4           1m
-    ```
+Run httpbin and expose port 8000:
 
-    ```sh
-    kubectl get pods
+```sh
+docker run -it --name httpbin -p 8000:8000 --rm citizenstig/httpbin
+curl localhost:8000/headers
+```
 
-    NAME                          READY     STATUS    RESTARTS   AGE
-    helloworld-service-v1-...    1/1       Running   0          1m
-    helloworld-service-v1-...    1/1       Running   0          1m
-    helloworld-service-v1-...    1/1       Running   0          1m
-    helloworld-service-v1-...    1/1       Running   0          2m
-    ```
 
-2. Try scaling out further.
+Run envoy using the sample config in guestbook directory.  
 
-    ```
-    kubectl scale deployment helloworld-service-v1 --replicas=17
-    ```
+To share the config with docker you need to first open the docker prefrences and add the guestbook directory.
 
-If you look at the pod status, some of the pods will show a `Pending` state. That is because we only have four physical nodes, and the underlying infrastructure has run out of capacity to run the containers with the requested resources. And the underlying infrastructure has run out of capacity to run the containers with the requested resources.
 
-3. Pick a pod name that has a `Pending` state to confirm the lack of resources in the detailed status.
+```sh
+docker run -it --rm envoyproxy/envoy envoy --help
+docker run -it --name proxy --link httpbin \
+  -p 15000:15000 -p 15001:15001 \
+  -v $(pwd)/guestbook/simple.json:/etc/simple.json \
+  envoyproxy/envoy envoy -c /etc/simple.json
+```
 
-    ```
-    kubectl describe pod helloworld-service...
-    ```
+curl the envoy proxy:
 
-4. We can easily spin up another Compute Engine instance to append to the cluster.
+```sh
+curl  -X GET http://localhost:15001/headers
+```
 
-    ```
-    gcloud container clusters resize guestbook --size=5
-    gcloud compute instances list
-    ```
+Notice that Envoy added a X-Request-Id
 
-    Open another terminal and run:
+Curl the envoy admin stats and then zero in on the retry count:
 
-    ```
-    kubectl get po -w -o wide
-    ```
+```sh
+curl -X GET http://localhost:15000/stats
+curl -X GET http://localhost:15000/stats | grep retry
+```
 
-    This will monitor the recovering process.
+In the simple json the retry policy for 5xx is set to:
 
-5. Verify the new instance has joined the Kubernetes cluster, you’ll should be able to see it with this command:    
+"retry_policy": {
+  "retry_on": "5xx",
+  "num_retries": 3
+}
 
-    ```
-    kubectl get nodes
-    kubectl get pods -o wide
-    ```
+If you trigger a 500 you can see the retry count go up:
+
+```sh
+curl -X GET http://localhost:15001/status/500
+curl -X GET http://localhost:15001/status/500
+curl -X GET http://localhost:15001/status/500
+curl -X GET http://localhost:15001/status/500
+curl -X GET http://localhost:15001/status/500
+curl -X GET http://localhost:15000/stats | grep retry
+```
 
 
 #### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)
