@@ -18,7 +18,18 @@ Lets see where our old buddy productpage is scheduled
 kubectl get  -o template --template '{{ .status.hostIP }}' po $pp
 ```
 
-That'll give you the internal ip. To ssh onto the box you'll need the external one, you can look that up on the Compute Engine page of the cloud console. You can also click the handy ssh button to get a shell. Until I say otherwise, assume that's the shell we are working with.
+That'll give you the internal ip. Copy the internal ip for the next step.
+
+Next we want to ssh onto that node.  
+1 - Navigate to the Compute Engine page of the google cloud console
+2 - Find the node where the productpage is running by finding the internal ip on that page
+3 - Click on the handy ssh button and get the gcloud command to ssh into the box (our whatever method you prefer)
+
+```
+gcloud compute --project "sparkcluster-177619" ssh --zone "us-west1-c" "gke-guestbook-default-pool-3bb0f4e2-ldbr"
+```
+
+Until I say otherwise, assume that's the shell we are working with.  That is the following commands are run inside the node specified.
 
 ```
 cid=$(docker ps | grep bookinfo-productpage | awk '{print $1}')
@@ -75,7 +86,7 @@ Chain ISTIO_REDIRECT (3 references)
     0     0 REDIRECT   tcp  --  any    any     anywhere             anywhere             /* istio/redirect-to-envoy-port */ redir ports 15001
 ```
 
-Basically there are a few rules here of interest. A complete explaination is out of the scope of this exercise but here is a summary:
+Basically there are a few rules here of interest. A complete explanation is out of the scope of this exercise but here is a summary:
 
 1. In pre-routing we catch the inbound traffic. Anything coming in jumps to our redirect rule.
 2. In output we inspect outbound traffic. This is more interesting. Istio runs under uid 1337. To avoid looping, all traffic from this uid is allowed to egress. Traffic outbound not from this uid also jumps to the redirect.

@@ -8,7 +8,7 @@ Istio provides transparent, and frankly magical, mutal TLS to services inside th
 
 Let the past go. Kill it, if you have to:
 ```
-kubectl delete -f samples/bookinfo/kube/bookinfo.yml
+kubectl delete -f samples/bookinfo/kube/bookinfo.yaml
 kubectl delete -f install/kubernetes/istio.yaml
 ```
 
@@ -16,7 +16,7 @@ It's the only way for tls to be the way it was meant to be:
 ```
 kubectl create -f install/kubernetes/istio-auth.yaml
 <<webhook dance from exercise 6>>
-kubectl create -f samples/bookinfo/kube/bookinfo.yml
+kubectl create -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
 #### Take it for a spin
@@ -31,7 +31,7 @@ kubectl label namespace default istio-injection-
 Now lets give ourselves a space to play
 
 ```
-kubectl run toolbox --image centos:7 /bin/sh -- -c 'sleep 84600'
+kubectl run toolbox -l app=toolbox  --image centos:7 /bin/sh -- -c 'sleep 84600'
 ```
 
 First: let's prove to ourselves that we really are doing something with tls. From here on out assume names like foo-XXXX need to be replaced with the foo podname you have in your cluster. We pass `-k` to `curl` to convince it to be a bit laxer about cert checking.
@@ -43,7 +43,7 @@ kubectl exec -it $tb curl -- https://details:9080/details/0 -k
 
 Denied!
 
-Let's exfiltrate the certificates out of a proxy so we can pretend to be them (incidentally I hope this serves as a cautionary talr about the importance locking down pods).
+Let's exfiltrate the certificates out of a proxy so we can pretend to be them (incidentally I hope this serves as a cautionary tale about the importance locking down pods).
 
 ```
 pp=$(kubectl get po -l app=productpage -o template --template '{{(index .items 0).metadata.name}}')
@@ -75,4 +75,3 @@ kubectl exec -it $tb curl -- http://details:9080/details/0
 ```
 
 Notice the protocol.
-
