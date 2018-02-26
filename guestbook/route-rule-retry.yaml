@@ -1,0 +1,13 @@
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: helloworld-retry
+spec:
+  destination:
+    name: helloworld-service
+  route:
+  - labels:
+      version: v1
+  httpReqRetries:
+    simpleRetry:
+      attempts: 3

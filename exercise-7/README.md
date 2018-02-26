@@ -22,7 +22,7 @@ kubectl port-forward istio-ingress-d8d5fdc86-69jtx -n istio-system 15000:15000
 You can view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
 
 ```sh
-kubectl port-forward helloworld-service-v1-fd94c8576-5ttqc 15000:15000
+curl localhost:15000/help
 curl localhost:15000/stats
 curl localhost:15000/listeners
 curl localhost:15000/routes

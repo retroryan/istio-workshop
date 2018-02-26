@@ -197,4 +197,15 @@ curl 35.185.201.165:8080/hello/world
 {"hostname":"helloworld-service-v2-744696b8cb-lwdng","greeting":"Hola world from helloworld-service-v2-744696b8cb-lwdng version 2.0","version":"2.0"}
 ```
 
+8.  Inspect the details of the pods
+
+Look at the details of the pod and then inspect the envoy config:
+
+```
+kubectl describe pod helloworld-service-v1.....
+kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
+cd /etc/istio/proxy
+more envoy-rev6.json
+```
+
 #### [Continue to Exercise 7 - Istio Ingress controller](../exercise-7/README.md)

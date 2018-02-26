@@ -15,6 +15,9 @@ httpFault:
   delay:
     percent: 100
     fixedDelay: 10s
+  abort:
+      percent: 10
+      httpStatus: 400
 ```
 
 Be sure the old route rule for mobile is removed before adding the delay.

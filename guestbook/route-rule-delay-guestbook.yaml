@@ -19,3 +19,6 @@ spec:
     delay:
       percent: 100
       fixedDelay: 4s
+    abort:
+        percent: 10
+        httpStatus: 400
