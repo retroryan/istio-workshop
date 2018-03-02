@@ -8,14 +8,27 @@ Istio provides transparent, and frankly magical, mutal TLS to services inside th
 
 Let the past go. Kill it, if you have to:
 ```
-kubectl delete -f samples/bookinfo/kube/bookinfo.yaml
 kubectl delete -f install/kubernetes/istio.yaml
 ```
 
 It's the only way for tls to be the way it was meant to be:
+
 ```
+# (from istio install root)
 kubectl create -f install/kubernetes/istio-auth.yaml
-<<webhook dance from exercise 6>>
+```
+
+We need to (re)create the auto injector. There is a script bundled that will do this but you will need to switch back to _this_ directory and give it the location of your istio install. Or you can redo the steps from exercise 6. Your call.
+
+```
+./install-auto-injector.sh ../../istio-0.5.0
+```
+
+Finally enable injection and deploy the thrilling book info sample.
+
+```
+# (from istio install root)
+kubectl label namespace default istio-injection=enabled
 kubectl create -f samples/bookinfo/kube/bookinfo.yaml
 ```
 
