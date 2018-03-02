@@ -27,7 +27,7 @@ For wrk2:
 ```sh
  brew install --HEAD jabley/wrk2/wrk2
 
-wrk2 -d 500s -c 5 -t 5 http://$INGRESS_IP/hello/world
+wrk2 -d 500s -c 5 -t 5 -R 10 http://$INGRESS_IP/hello/world
 ```
 
 Or a shell script:
