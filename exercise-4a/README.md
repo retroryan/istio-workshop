@@ -28,7 +28,7 @@ curl localhost:8000/headers
 
 Run envoy using the sample config in guestbook directory.  
 
-To share the config with docker you need to first open the docker prefrences and add the guestbook directory.
+To share the config with docker you need to first open the docker preferences and add the guestbook directory.
 
 
 ```sh
