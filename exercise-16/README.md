@@ -6,7 +6,7 @@ Istio has an rbac engine implemented as a mixer adapter. There are a number of t
 
 #### Who did what
 
-The founddation is an instance of an authorization template. The purpose of the auth template is to select from the attribute vocabulary available a subset that will be endowed with specific meaning for rbac. Consider subject selection; who is making the request? This could be extracted from a customer header, from the spiffe uri, from a cookie etc etc. The authorization template is what specifies this.
+The founddation is an instance of an authorization template. The purpose of the auth template is to select from the attribute vocabulary available a subset that will be endowed with specific meaning for rbac. Consider subject selection; who is making the request? This could be extracted from a header, from the spiffe uri, from a cookie etc etc. The authorization template is what specifies this.
 
 Example usage:
 
@@ -34,11 +34,11 @@ spec:
       version: destination.labels["version"] | ""
 ```
 
-Subjects is the who, action is the what. In this instance will we be using the _service account_ as the user, which will allow us to take advantage of spiffe identity asserted by our x509 certificates. We also take advantage of properies to include metadata in our auth decisions, for instance the app label.
+Subject is the who, action is the what. In this instance will we be using the _service account_ as the user, which will allow us to take advantage of spiffe identity asserted by our x509 certificates. We also take advantage of properies to include metadata in our auth decisions, for instance the app label.
 
 #### The binding of services
 
-In order to make decisions about what we will allow we need to more ingredients: roles, and a binding of those roles to eligible inbound requests. An example role:
+In order to make decisions about what we will allow we need two more ingredients: roles, and bindings of those roles to eligible inbound requests. An example role:
 
 ```
 Version: "config.istio.io/v1alpha2"
@@ -60,7 +60,7 @@ spec:
 Details to note:
 - The role has an applicable namespace
 - We define an array of rules, with values to be matched onto the corresponding attributes from our earlier authorization template instance (service / method / path). If path is not supplied it defaults to allowing all paths.
-- Finally constraints can be added to our extra properties from the authorization template.
+- Finally constraints can be added via the extra properties defined in the authorization template.
 
 What does a binding look like?
 
@@ -109,7 +109,7 @@ spec:
 
 #### Switching it on
 
-There are some files missing from the istio release that we require to do this exercise. You can obtain them by running the pull-files.sh script in this directory. It takes one argument, which should be the _root_ directory of your unpacked istio release.
+There are some files missing from the istio release that we require to do this exercise. You can obtain them by running the `pull-files.sh` script in this directory. It takes one argument, which should be the _root_ directory of your unpacked istio release.
 
 ```
 $ ./pull-files.sh ../../istio-0.5.0
