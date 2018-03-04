@@ -4,14 +4,15 @@
 
 Istio provides transparent, and frankly magical, mutal TLS to services inside the service mesh when asked. By mutual TLS we understand that both the client and the server authenticate each others certificates as part of the TLS handshake.
 
-#### Enable mutual tls
+#### Enable Mutual TLS
 
 Let the past go. Kill it, if you have to:
 ```
+cd ~/istio
 kubectl delete -f install/kubernetes/istio.yaml
 ```
 
-It's the only way for tls to be the way it was meant to be:
+It's the only way for TLS to be the way it was meant to be:
 
 ```
 # (from istio install root)
@@ -21,13 +22,15 @@ kubectl create -f install/kubernetes/istio-auth.yaml
 We need to (re)create the auto injector. There is a script bundled that will do this but you will need to switch back to _this_ directory and give it the location of your istio install. Or you can redo the steps from exercise 6. Your call.
 
 ```
-./install-auto-injector.sh ../../istio-0.5.0
+cd ~/istio-workshop/exercise-13
+./install-auto-injector.sh ~/istio
 ```
 
-Finally enable injection and deploy the thrilling book info sample.
+Finally enable injection and deploy the thrilling Book Info sample.
 
 ```
 # (from istio install root)
+cd ~/istio
 kubectl label namespace default istio-injection=enabled
 kubectl create -f samples/bookinfo/kube/bookinfo.yaml
 ```
@@ -60,8 +63,8 @@ Let's exfiltrate the certificates out of a proxy so we can pretend to be them (i
 
 ```
 pp=$(kubectl get po -l app=productpage -o template --template '{{(index .items 0).metadata.name}}')
-mkdir tmp # or wherever you want to stash these certs
-cd tmp
+mkdir ~/tmp # or wherever you want to stash these certs
+cd ~/tmp
 fs=(key.pem cert-chain.pem root-cert.pem)
 for f in ${fs[@]}; do kubectl exec -c istio-proxy $pp /bin/cat -- /etc/certs/$f >$f; done
 ```
@@ -88,3 +91,5 @@ kubectl exec -it $tb curl -- http://details:9080/details/0
 ```
 
 Notice the protocol.
+
+#### [Continue to Exercise 14 - Ensuring security with iptables](../exercise-14/README.md)

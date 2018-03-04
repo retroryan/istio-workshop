@@ -5,12 +5,12 @@
 Envoy proxies call Mixer to report statistics and check for route rules. By opening up some of the mixer ports we can get an of idea what calls its seeing:
 
 ```sh
-kubectl get po -n istio-system
-kubectl  port-forward -n istio-system istio-mixer-65bb55df98-s47ns 9093:9093
+kubectl get pods -n istio-system
+kubectl port-forward -n istio-system istio-mixer-... 9093:9093
 curl localhost:9093/metrics
 ```
 
-#### Configure the default route for hello world service
+#### Configure the default route for Hello World service V1
 
 Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
@@ -93,7 +93,7 @@ curl http://$INGRESS_IP/echo/universe
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
-An important point to note is that the user-agent http header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
+An important point to note is that the user-agent HTTP header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
 
 #### Route based on the browser
 
@@ -118,13 +118,13 @@ istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 
 Test this by first navigating to the echo service in Chrome:
 
-http://35.197.94.184/echo/universe
+http://INGRESS_IP/echo/universe
 
 You should see:
 
 Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
 
-If you then navigate to it another browser like firefox you will see:
+If you then navigate to it another browser like Firefox you will see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 

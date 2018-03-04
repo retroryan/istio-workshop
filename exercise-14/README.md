@@ -97,3 +97,5 @@ This effectively forces all traffic to run through the proxy without any coopera
 #### When did that happen?
 
 The init container that istio injects runs a small script to setup this rules with NET\_CAP\_ADMIN. Neat, eh?
+
+#### [Continue to Exercise 15 - mTLS again, now with 100% more SPIFFE](../exercise-15/README.md)

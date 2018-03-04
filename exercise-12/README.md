@@ -44,5 +44,4 @@ $ curl http://$INGRESS_IP/echo/universe -A mobile
 
 If you modify the delay below the timeout configured in the applciation the service will still return.  For example if we modify it to 4 seconds, the guestbook service still returns a response.
 
-
 #### [Continue to Exercise 13 - Security](../exercise-13/README.md)

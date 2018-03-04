@@ -56,7 +56,7 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
     Open another terminal and run:
 
     ```
-    kubectl get po -w -o wide
+    kubectl get pods -w -o wide
     ```
 
     This will monitor the recovering process.
@@ -68,5 +68,12 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
     kubectl get pods -o wide
     ```
 
+6. Scale back the number of replicas before moving on!
+
+    ```
+    kubectl scale deployment helloworld-service-v1 --replicas=2
+    ```
+
+    Kubernetes will only keep 2 of the Hello World instances and terminate the rest.
 
 #### [Continue to Exercise 4a - Envoy](../exercise-4a/README.md)

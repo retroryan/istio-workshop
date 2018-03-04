@@ -12,18 +12,9 @@ If you were provided with a Google Cloud Lab username setup the account by:
 
 ![Google Cloud Console Setup](../images/homescreen.png)
 
-2 - Select the ScaleBay SFO [SOME_NUMBER] project:
+2 - Select the only Google Cloud Platform project in the project list. If you don't see a project, let the instructor know!
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
-
-### Google Cloud
-
-You must set your default compute service account to include:
-
-* `roles/container.admin (Kubernetes Engine Admin)`
-* `Editor (on by default)`
-
-To set this, navigate to the IAM section of the Cloud Console and find your default GCE/GKE service account in the following form: projectNumber-compute@developer.gserviceaccount.com: by default it should just have the Editor role. Then in the Roles drop-down list for that account, find the Kubernetes Engine group and select the role Kubernetes Engine Admin. The Roles listing for your account will change to Multiple.
 
 ##  Google Cloud Shell or Local Install
 
@@ -55,7 +46,7 @@ If you already have an installation of kubectl in your computer you can skip thi
 
 ## Get the Workshop Source:
 
-  `git clone https://github.com/retroryan/istio-workshop`
+  `git clone https://github.com/saturnism/istio-workshop`
 
 #### Windows Setup
 
