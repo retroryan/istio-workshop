@@ -4,18 +4,18 @@
 
 Generate a small load to the application either using wrk2 or a shell script:
 
-For wrk2:
+With simple shell script:
+
+```sh
+while sleep 0.5; do curl http://$INGRESS_IP/hello/world; done
+```
+
+Or, with wrk2:
 
 ```sh
 docker pull saturnism/wrk2
 docker run -ti --rm saturnism/wrk2 \
-  -d 500s -c 5 -t 5 http://$INGRESS_IP/hello/world
-```
-
-Or a shell script:
-
-```sh
-while sleep 0.5; do curl http://$INGRESS_IP/hello/world; done
+  -d 5s -R 5 http://$INGRESS_IP/hello/world
 ```
 
 ### Grafana
