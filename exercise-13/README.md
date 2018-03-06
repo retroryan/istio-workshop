@@ -10,6 +10,7 @@ Let the past go. Kill it, if you have to:
 ```
 cd ~/istio
 kubectl delete -f install/kubernetes/istio.yaml
+kubectl delete all --all
 ```
 
 It's the only way for TLS to be the way it was meant to be:
