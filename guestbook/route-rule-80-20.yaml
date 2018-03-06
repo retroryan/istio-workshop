@@ -7,9 +7,9 @@ spec:
     name: helloworld-service
   precedence: 1
   route:
-  - tags:
+  - labels:
       version: "1.0"
     weight: 80
-  - tags:
+  - labels:
       version: "2.0"
     weight: 20

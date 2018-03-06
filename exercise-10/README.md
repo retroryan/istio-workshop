@@ -56,7 +56,25 @@ curl http://$INGRESS_IP/echo/universe
 
 #### Canary Testing
 
-Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll do canary testing based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the Hello World service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We can do canary testing by splitting traffic between the 2 versions:
+
+```yaml
+  destination: helloworld-service.default.svc.cluster.local
+  precedence: 1
+  route:
+  - tags:
+      version: "1.0"
+    weight: 80
+  - tags:
+      version: "2.0"
+    weight: 20
+```
+
+We'll do canary testing based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+
+```sh
+istioctl create -f guestbook/route-rule-80-20.yaml
+```
 
 ```yaml
 destination:
