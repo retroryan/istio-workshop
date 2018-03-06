@@ -8,7 +8,7 @@ To test our guestbook application for resiliency, this exercise will test inject
 #### Inject a route rule to delay hello world
 
 
-We'll delay access to the Hello World service by adding the mixer-rule-denial.yaml rule that forces a delay:
+We'll delay access to the Hello World service by adding the `mixer-rule-denial.yaml` rule that forces a delay:
 
 ```yaml
 httpFault:
@@ -16,14 +16,16 @@ httpFault:
     percent: 100
     fixedDelay: 10s
   abort:
-      percent: 10
-      httpStatus: 400
+    percent: 10
+    httpStatus: 400
 ```
 
 Be sure the old route rule for mobile is removed before adding the delay.
 
 ```sh
 
+istioctl delete -f guestbook/route-rule-80-20.yaml
+istioctl delete -f guestbook/route-rule-user-agent-chrome.yaml
 istioctl delete -f guestbook/route-rule-user-mobile.yaml
 
 istioctl create -f guestbook/route-rule-delay-guestbook.yaml

@@ -82,6 +82,47 @@ curl http://$INGRESS_IP/echo/universe
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
+#### Route based on HTTP header
+
+We can also canary test based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+
+```yaml
+destination:
+  name: helloworld-service
+match:
+  request:
+    headers:
+      user-agent:
+        exact: mobile
+precedence: 2
+route:
+  - labels:
+      version: "2.0"
+```
+
+Note that rules with a higher precedence number are applied first. If a precedence is not specified then it defaults to 0. So with these two rules in place the one with precedence 2 will be applied before the rule with precedence 1.
+
+Test this out by creating the rule:
+```sh
+istioctl create -f guestbook/route-rule-user-mobile.yaml
+```
+
+Now when you curl the end point set the user agent to be mobile and you should only see V2:
+
+```sh
+curl http://$INGRESS_IP/echo/universe -A mobile
+
+{"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
+```
+
+```sh
+curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+```
+
+An important point to note is that the user-agent http header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
+
 #### Route based on the browser
 
 It is also possible to route it based on the Web Browser. For example the following routes to version 2.0 if the browser is chrome:
