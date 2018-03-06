@@ -6,13 +6,13 @@ Although Istio proxies are able to automatically send spans, it needs help from 
 
 To do this the guestbook application collects and propagate the following headers from the incoming request to any outgoing requests:
 
-x-request-id
-x-b3-traceid
-x-b3-spanid
-x-b3-parentspanid
-x-b3-sampled
-x-b3-flags
-x-ot-span-context
+- `x-request-id`
+- `x-b3-traceid`
+- `x-b3-spanid`
+- `x-b3-parentspanid`
+- `x-b3-sampled`
+- `x-b3-flags`
+- `x-ot-span-context`
 
 This is done with the Spring Istio Support written by Ray Tsang:
 
