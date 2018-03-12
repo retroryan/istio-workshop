@@ -44,17 +44,10 @@ For Istio the webhook is the sidecar injector webhook deployment called "istio-s
 
 #### Installing the Webhook
 
-The Istio 0.5.0 and 0.5.1 releases are missing scripts to provision webhook certificates.  The easiest fix  is to download the scripts directly into the Istio install directories:
-
 Webhooks requires a signed cert/key pair. Use install/kubernetes/webhook-create-signed-cert.sh to generate a cert/key pair signed by the Kubernetes’ CA. The resulting cert/key file is stored as a Kubernetes secret for the sidecar injector webhook to consume.
 
 ```sh
-cd istio-0.5.0/install/kubernetes
-wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-create-signed-cert.sh
-
-wget https://raw.githubusercontent.com/istio/istio/master/install/kubernetes/webhook-patch-ca-bundle.sh
-
-chmod a+x *.sh
+cd ~/istio/install/kubernetes
 
 ./webhook-create-signed-cert.sh \
     --service istio-sidecar-injector \
@@ -106,7 +99,6 @@ kube-public    Active    1h
 kube-system    Active    1h
 ```
 
-
 ### Deploy Guestbook services
 
 To demonstrate Istio, we’re going to use [this guestbook example](https://github.com/retroryan/spring-boot-docker). This example is built with Spring Boot, a frontend using Spring MVC and Thymeleaf, and two microservices. The 3 microservices that we are going to deploy are:
@@ -124,14 +116,14 @@ Note that the services must be started in a fixed order because they depend on o
 1. Deploy MySQL, Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
 
     ```sh
-    cd istio-workshop
+    cd ~/istio-workshop
     kubectl apply -f guestbook/mysql-deployment.yaml -f guestbook/mysql-service.yaml
     kubectl apply -f guestbook/redis-deployment.yaml -f guestbook/redis-service.yaml
     kubectl apply -f guestbook/helloworld-deployment.yaml -f guestbook/helloworld-service.yaml
     kubectl apply -f guestbook/helloworld-deployment-v2.yaml
     ```
 
-2. Notice that each of the pods now has one istio init container and two running containers. One is the main application container and the second is the istio proxy container.
+2. Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
 
 ```sh
 kubectl get pod
@@ -174,6 +166,7 @@ The guestbook UI kubernetes service has a type of LoadBalancer.  This creates an
 
 ```sh
 kubectl get svc guestbook-ui
+
 NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
 guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 ```
@@ -186,7 +179,7 @@ To curl the guest book endpoint use:
 curl 35.230.4.192/echo/world
 ```
 
-Also the hello world service is declared with an external ip which can be curled:
+Also the Hello World service is declared with an external ip which can be curled:
 
 ```sh
 kubectl get svc helloworld-service
@@ -206,6 +199,7 @@ kubectl describe pod helloworld-service-v1.....
 kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
 cd /etc/istio/proxy
 more envoy-rev6.json
+exit
 ```
 
 #### [Continue to Exercise 7 - Istio Ingress controller](../exercise-7/README.md)

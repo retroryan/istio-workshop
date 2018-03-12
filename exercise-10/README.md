@@ -5,12 +5,12 @@
 Envoy proxies call Mixer to report statistics and check for route rules. By opening up some of the mixer ports we can get an of idea what calls its seeing:
 
 ```sh
-kubectl get po -n istio-system
-kubectl  port-forward -n istio-system istio-mixer-65bb55df98-s47ns 9093:9093
+kubectl get pods -n istio-system
+kubectl port-forward -n istio-system istio-mixer-... 9093:9093
 curl localhost:9093/metrics
 ```
 
-#### Configure the default route for hello world service
+#### Configure the default route for Hello World service V1
 
 Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
 
@@ -56,7 +56,35 @@ curl http://$INGRESS_IP/echo/universe
 
 #### Canary Testing
 
-Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the hello world service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We'll do canary testing based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
+Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the Hello World service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We can do canary testing by splitting traffic between the 2 versions:
+
+```yaml
+  destination: helloworld-service.default.svc.cluster.local
+  precedence: 1
+  route:
+  - tags:
+      version: "1.0"
+    weight: 80
+  - tags:
+      version: "2.0"
+    weight: 20
+```
+
+You can apply this rule from an existing configuration:
+```sh
+istioctl create -f guestbook/route-rule-80-20.yaml
+```
+
+Then try a few calls to the service:
+```sh
+curl http://$INGRESS_IP/echo/universe
+
+{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+```
+
+#### Route based on HTTP header
+
+We can also canary test based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
 
 ```yaml
 destination:
@@ -118,13 +146,13 @@ istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
 
 Test this by first navigating to the echo service in Chrome:
 
-http://35.197.94.184/echo/universe
+http://INGRESS_IP/echo/universe
 
 You should see:
 
 Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
 
-If you then navigate to it another browser like firefox you will see:
+If you then navigate to it another browser like Firefox you will see:
 
 Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
 

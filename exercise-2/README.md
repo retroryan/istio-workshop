@@ -2,7 +2,7 @@
 
 #### Deploy Hello World
 
-1 - Deploy hello world service to kubernetes
+1 - Deploy Hello World service to Kubernetes
 
 ```sh
 cd istio-workshop
@@ -12,12 +12,12 @@ kubectl apply -f kubernetes/helloworldservice-deployment.yaml --record
 kubectl get pods
 
 NAME                           READY     STATUS    RESTARTS    AGE
-helloworld-service-v1-....    1/1       Running   0           20s
+helloworld-service-v1-....     1/1       Running   0           20s
 ```
 
 An important detail to note is that READY shows 1/1.  That is referring to the number of containers in the pod that are ready and this pod only has 1 container. 
 
-2 -  Note the name of the pod above for use in the command below. Then delete one of the hello world pods.
+2 - Note the name of the pod above for use in the command below. Then delete one of the hello world pods.
 
 ```sh
 kubectl delete pod helloworld-service-v1-...
