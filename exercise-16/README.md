@@ -2,11 +2,11 @@
 
 #### Mixer all the way down
 
-Istio has an rbac engine implemented as a mixer adapter. There are a number of things that need to be configured before it can be turned loose on unsuspecting services.
+Istio has an RBAC engine implemented as a mixer adapter. There are a number of things that need to be configured before it can be turned loose on unsuspecting services.
 
 #### Who did what
 
-The founddation is an instance of an authorization template. The purpose of the auth template is to select from the attribute vocabulary available a subset that will be endowed with specific meaning for rbac. Consider subject selection; who is making the request? This could be extracted from a header, from the spiffe uri, from a cookie etc etc. The authorization template is what specifies this.
+The founddation is an instance of an authorization template. The purpose of the auth template is to select from the attribute vocabulary available a subset that will be endowed with specific meaning for RBAC. Consider subject selection; who is making the request? This could be extracted from a header, from the SPIFFE URI, from a cookie etc etc. The authorization template is what specifies this.
 
 Example usage:
 
@@ -34,7 +34,7 @@ spec:
       version: destination.labels["version"] | ""
 ```
 
-Subject is the who, action is the what. In this instance will we be using the _service account_ as the user, which will allow us to take advantage of spiffe identity asserted by our x509 certificates. We also take advantage of properies to include metadata in our auth decisions, for instance the app label.
+Subject is the who, action is the what. In this instance will we be using the _service account_ as the user, which will allow us to take advantage of SPIFFE identity asserted by our x509 certificates. We also take advantage of properies to include metadata in our auth decisions, for instance the app label.
 
 #### The binding of services
 
@@ -109,10 +109,11 @@ spec:
 
 #### Switching it on
 
-There are some files missing from the istio release that we require to do this exercise. You can obtain them by running the `pull-files.sh` script in this directory. It takes one argument, which should be the _root_ directory of your unpacked istio release.
+There are some files missing from the Istio release that we require to do this exercise. You can obtain them by running the `pull-files.sh` script in this directory. It takes one argument, which should be the _root_ directory of your unpacked Istio release.
 
 ```
-$ ./pull-files.sh ../../istio-0.5.0
+$ cd ~/istio-workshop/exercise-16/
+$ ./pull-files.sh ~/istio
 Copying rbac samples to /home/ben/src/work/grcl/istio-0.5.0/samples/bookinfo/kube, continue? [Y/n] 
 Copying...
 
@@ -120,9 +121,10 @@ Copying...
 
 ```
 
-Once we have these samples we can continue. Assume all other shell is run with the working directory set to the istio release root.
+Once we have these samples we can continue. Assume all other shell is run with the working directory set to the Istio release root.
 
 ```
+cd ~/istio
 kubectl apply -f samples/bookinfo/kube/bookinfo-add-serviceaccount.yaml
 kubectl apply -f samples/bookinfo/kube/istio-rbac-enable.yaml
 ```
@@ -130,8 +132,8 @@ kubectl apply -f samples/bookinfo/kube/istio-rbac-enable.yaml
 Now we should get denied for all the things:
 
 ```
-ingress_ip=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
-curl http://$ingress_ip/productpage
+INGRESS_IP=$(kubectl get ingress -o jsonpath='{.items[0].status.loadBalancer.ingress[0].ip}')
+curl http://$INGRESS_IP/productpage
 ```
 
 We can let ourselves back in with some roles / bindings.

@@ -1,6 +1,4 @@
-## Exercise 5 - Installing Istio 0.5.0
-
-We are using Istio 0.5.0 because of bugs with route rules in Istio 0.5.1  !
+## Exercise 5 - Installing Istio 0.6.0
 
 #### Clean up
 
@@ -10,16 +8,28 @@ Start with a clean slate and delete all deployed services from the cluster:
 kubectl delete all --all
 ```
 
-#### Download Istio 0.5.0
+#### Download Istio 0.6.0
 
-Do NOT download the latest release of istio.  Be sure to download Istio 0.5.0
+Download Istio 0.6.0 from the following website:
 
-Download Istio from the following website:
+https://github.com/istio/istio/releases/tag/0.6.0
 
-https://github.com/istio/istio/releases
+For example, in Cloud Shell, you can install Istio to the home directory:
 
 ```sh
-export PATH=$PWD/istio-0.5.0/bin:$PATH
+cd ~/
+wget https://github.com/istio/istio/releases/download/0.6.0/istio-0.6.0-linux.tar.gz
+tar -xzvf istio-0.6.0-linux.tar.gz
+ln -sf ~/istio-0.6.0 ~/istio
+```
+
+```sh
+export PATH=~/istio/bin:$PATH
+```
+
+Also, save it in `.bashrc` in case you restart your shell:
+```sh
+echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
 ```
 
 #### Running istioctl
@@ -46,17 +56,17 @@ For this workshop we are not using Istio Auth because we want to test using outs
 To install plain istio run:
 
 ```sh
-kubectl apply -f istio-0.5.0/install/kubernetes/istio.yaml
+kubectl apply -f ~/istio/install/kubernetes/istio.yaml
 ```
 
 
 ####  Install Add-ons for Grafana, Prometheus, and Zipkin:
 
 ```sh
-kubectl apply -f istio-0.5.0/install/kubernetes/addons/zipkin.yaml
-kubectl apply -f istio-0.5.0/install/kubernetes/addons/grafana.yaml
-kubectl apply -f istio-0.5.0/install/kubernetes/addons/prometheus.yaml
-kubectl apply -f istio-0.5.0/install/kubernetes/addons/servicegraph.yaml
+kubectl apply -f ~/istio/install/kubernetes/addons/zipkin.yaml
+kubectl apply -f ~/istio/install/kubernetes/addons/grafana.yaml
+kubectl apply -f ~/istio/install/kubernetes/addons/prometheus.yaml
+kubectl apply -f ~/istio/install/kubernetes/addons/servicegraph.yaml
 ```
 
 #### Viewing the Istio Deployments
@@ -64,10 +74,8 @@ kubectl apply -f istio-0.5.0/install/kubernetes/addons/servicegraph.yaml
 Istio is deployed in a separate Kubernetes namespace `istio-system`  You can watch the state of Istio and other services and pods using the watch flag (`-w`) when listing Kubernetes resources. For example, in two separate terminal windows run:
 
 ```sh
-kubectl get pods -w --all-namespaces
-```
-```sh
-kubectl get services -w --all-namespaces
+kubectl get pods -n istio-system -w
+kubectl get services -n istio-system -w
 ```
 
 #### [Continue to Exercise 6 - Creating a Service Mesh with Istio Proxy](../exercise-6/README.md)

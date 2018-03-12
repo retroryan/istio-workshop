@@ -1,12 +1,15 @@
-type: route-rule
-name: route8020-helloworld-service
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: route-rule-80-20
 spec:
-  destination: helloworld-service.default.svc.cluster.local
+  destination:
+    name: helloworld-service
   precedence: 1
   route:
-  - tags:
+  - labels:
       version: "1.0"
     weight: 80
-  - tags:
+  - labels:
       version: "2.0"
     weight: 20

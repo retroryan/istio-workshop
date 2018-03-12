@@ -43,11 +43,12 @@ istioctl create -f guestbook/mixer-rule-denial.yaml
 ```
 
 Verify that access is now denied:
+
 ```sh
 curl http://$INGRESS_IP/hello/world
 ```
 
-#### Block Access to v2 of the hello world service
+#### Block Access to v2 of the Hello World service
 
 ```yaml
 # The rule that uses denier to deny requests to version 2.0 of the helloworld service
