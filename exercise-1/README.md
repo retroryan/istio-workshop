@@ -42,7 +42,7 @@ To create a container cluster execute:
 
 ```sh
 gcloud container clusters create guestbook \
-      --cluster-version=1.9.2-gke.1  \
+      --cluster-version=1.9.6-gke.0  \
       --num-nodes 3 \
       --machine-type n1-standard-2
 ```
