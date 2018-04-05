@@ -1,4 +1,4 @@
-## Exercise 5 - Installing Istio 0.6.0
+## Exercise 5 - Installing Istio 0.7.1
 
 #### Clean up
 
@@ -8,19 +8,19 @@ Start with a clean slate and delete all deployed services from the cluster:
 kubectl delete all --all
 ```
 
-#### Download Istio 0.6.0
+#### Download Istio 0.7.1
 
-Download Istio 0.6.0 from the following website:
+Download Istio 0.7.1 from the following website:
 
-https://github.com/istio/istio/releases/tag/0.6.0
+https://github.com/istio/istio/releases/tag/0.7.1
 
 For example, in Cloud Shell, you can install Istio to the home directory:
 
 ```sh
 cd ~/
-wget https://github.com/istio/istio/releases/download/0.6.0/istio-0.6.0-linux.tar.gz
-tar -xzvf istio-0.6.0-linux.tar.gz
-ln -sf ~/istio-0.6.0 ~/istio
+wget https://github.com/istio/istio/releases/download/0.7.1/istio-0.7.1-linux.tar.gz
+tar -xzvf istio-0.7.1-linux.tar.gz
+ln -sf ~/istio-0.7.1 ~/istio
 ```
 
 ```sh
