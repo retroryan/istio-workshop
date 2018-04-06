@@ -20,7 +20,7 @@ gcloud config get-value core/project
 
 If you are in an instructor led class with a provided credential, then you don't need to set another project ID.
 
-If you are using you are not using an instructor provided credentials, then you may need to specify a project ID:
+If you are not using an instructor provided credentials, then you may need to specify a project ID:
 
 ```sh
 gcloud config set project your-project-id
