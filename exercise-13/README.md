@@ -20,12 +20,7 @@ It's the only way for TLS to be the way it was meant to be:
 kubectl create -f install/kubernetes/istio-auth.yaml
 ```
 
-We need to (re)create the auto injector. There is a script bundled that will do this but you will need to switch back to _this_ directory and give it the location of your istio install. Or you can redo the steps from exercise 6. Your call.
-
-```
-cd ~/istio-workshop/exercise-13
-./install-auto-injector.sh ~/istio
-```
+We need to (re)create the auto injector. Use the Exercise 6 instructions.
 
 Finally enable injection and deploy the thrilling Book Info sample.
 
