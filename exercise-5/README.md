@@ -1,4 +1,4 @@
-## Exercise 5 - Installing Istio 0.6.0
+## Exercise 5 - Installing Istio 0.7.1
 
 #### Clean up
 
@@ -8,19 +8,21 @@ Start with a clean slate and delete all deployed services from the cluster:
 kubectl delete all --all
 ```
 
-#### Download Istio 0.6.0
+#### Download Istio 0.7.1
 
-Download Istio 0.6.0 from the following website:
+Download Istio 0.7.1 from the following website:
 
-https://github.com/istio/istio/releases/tag/0.6.0
+https://github.com/istio/istio/releases/tag/0.7.1
 
-For example, in Cloud Shell, you can install Istio to the home directory:
+#### Setup istioctl 0.7.1 in Google Cloud Shell
+
+For example, in Google Cloud Shell or other linux distributions, you can install Istio Linux to the home directory:
 
 ```sh
 cd ~/
-wget https://github.com/istio/istio/releases/download/0.6.0/istio-0.6.0-linux.tar.gz
-tar -xzvf istio-0.6.0-linux.tar.gz
-ln -sf ~/istio-0.6.0 ~/istio
+wget https://github.com/istio/istio/releases/download/0.7.1/istio-0.7.1-linux.tar.gz
+tar -xzvf istio-0.7.1-linux.tar.gz
+ln -sf ~/istio-0.7.1 ~/istio
 ```
 
 ```sh
@@ -31,6 +33,27 @@ Also, save it in `.bashrc` in case you restart your shell:
 ```sh
 echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
 ```
+
+#### Setup istioctl 0.7.1 in Mac OSX
+
+For example on a mac osx you setup istioctl by doing the following:
+
+```sh
+cd ~/
+wget https://github.com/istio/istio/releases/download/0.7.1/istio-0.7.1-osx.tar.gz
+tar -xzvf istio-0.7.1-osx.tar.gz
+ln -sf ~/istio-0.7.1 ~/istio
+```
+
+```sh
+export PATH=~/istio/bin:$PATH
+```
+
+Also, save it in `.bashrc` in case you restart your shell:
+```sh
+echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
+```
+
 
 #### Running istioctl
 
