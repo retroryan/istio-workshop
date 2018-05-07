@@ -54,7 +54,7 @@ curl http://$INGRESS_IP/echo/universe
 {"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
 ```
 
-#### Canary Testing
+#### Skip running this section - Canary Testing
 
 Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the Hello World service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We can do canary testing by splitting traffic between the 2 versions:
 
