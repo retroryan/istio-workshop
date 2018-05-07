@@ -1,13 +1,5 @@
 ## Exercise 11 - Service Isolation Using Mixer
 
-#### First clean up old route rules:
-
-
-```yaml
-  istioctl delete -f guestbook/route-rule-80-20.yaml
-  istioctl delete -f guestbook/route-rule-user-mobile.yaml
-```
-
 #### Service Isolation Using Mixer
 
 We'll block access to the Hello World service by adding the mixer-rule-denial.yaml rule shown below:
