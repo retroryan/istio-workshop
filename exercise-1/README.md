@@ -42,8 +42,9 @@ To create a container cluster execute:
 
 ```sh
 gcloud container clusters create guestbook \
-      --cluster-version=1.9.4-gke.1   \
-      --num-nodes 3
+      --cluster-version=1.9.6 \
+      --num-nodes 3 \
+      --machine-type n1-standard-2
 ```
 
 Retrieve your credentials for kubectl:
