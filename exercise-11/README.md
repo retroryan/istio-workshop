@@ -1,89 +1,49 @@
-## Exercise 11 - Service Isolation Using Mixer
+## Exercise 11 - Fault Injection and Rate Limiting
 
-#### Service Isolation Using Mixer
+In this exercise we will learn how to test the resiliency of an application by injecting faults.
 
-We'll block access to the Hello World service by adding the mixer-rule-denial.yaml rule shown below:
+To test our guestbook application for resiliency, this exercise will test injecting different levels of delay when the user agent accessing the hello world service is mobile.
 
-```yaml
-# Create a denier that returns a google.rpc.Code 7 (PERMISSION_DENIED)
-apiVersion: "config.istio.io/v1alpha2"
-kind: denier
-metadata:
-  name: denyall
-  namespace: istio-system
-spec:
-  status:
-    code: 7
-    message: Not allowed
----
-# The (empty) data handed to denyall at run time
-apiVersion: "config.istio.io/v1alpha2"
-kind: checknothing
-metadata:
-  name: denyrequest
-  namespace: istio-system
-spec:
----
-# The rule that uses denier to deny requests to the helloworld service
-apiVersion: "config.istio.io/v1alpha2"
-kind: rule
-metadata:
-  name: deny-hello-world
-  namespace: istio-system
-spec:
-  match: destination.service=="helloworld-service.default.svc.cluster.local"
-  actions:
-  - handler: denyall.denier
-    instances:
-    - denyrequest.checknothing
-```
 
-```sh
-istioctl create -f guestbook/mixer-rule-denial.yaml
-```
+#### Inject a route rule to delay hello world
 
-Verify that access is now denied:
 
-```sh
-curl http://$INGRESS_IP/hello/world
-```
-
-#### Block Access to v2 of the Hello World service
+We'll delay access to the Hello World service by adding the `mixer-rule-denial.yaml` rule that forces a delay:
 
 ```yaml
-# The rule that uses denier to deny requests to version 2.0 of the helloworld service
-apiVersion: "config.istio.io/v1alpha2"
-kind: rule
-metadata:
-  name: deny-hello-world
-  namespace: istio-system
-spec:
-  match: destination.service=="helloworld-service.default.svc.cluster.local" && destination.labels["version"] == "2.0"
-  actions:
-  - handler: denyall.denier
-    instances:
-    - denyrequest.checknothing
+httpFault:
+  delay:
+    percent: 100
+    fixedDelay: 10s
+  abort:
+    percent: 10
+    httpStatus: 400
 ```
+
+Be sure the old route rule for mobile is removed before adding the delay.
 
 ```sh
-istioctl delete -f guestbook/mixer-rule-denial.yaml
-istioctl create -f guestbook/mixer-rule-denial-v2.yaml
+
+istioctl delete -f guestbook/route-rule-80-20.yaml
+istioctl delete -f guestbook/route-rule-user-agent-chrome.yaml
+istioctl delete -f guestbook/route-rule-user-mobile.yaml
+
+istioctl create -f guestbook/route-rule-delay-guestbook.yaml
 ```
 
-Check that you can access the v1 service:
-```sh
-curl http://$INGRESS_IP/hello/world
-```
-
-But you should not be able to access v2:
-```sh
-curl http://$INGRESS_IP/hello/world -A mobile
-```
-
-Clean up the rule:
+When you curl without a user agent it should return a response as expected:
 
 ```sh
-istioctl delete -f guestbook/mixer-rule-denial-v2.yaml
+curl http://$INGRESS_IP/echo/universe
 ```
 
-#### [Continue to Exercise 12 - Fault Injection and Rate Limiting](../exercise-12/README.md)
+However when you curl with the user agent mobile the connection will timeout:
+
+```sh
+$ curl http://$INGRESS_IP/echo/universe -A mobile
+{"greeting":{"greeting":"Unable to connect"},
+```
+
+If you modify the delay below the timeout configured in the applciation the service will still return.  For example if we modify it to 4 seconds, the guestbook service still returns a response.
+
+#### [Continue to Exercise 12 - Service Isolation Using Mixer](../exercise-12/README.md)
