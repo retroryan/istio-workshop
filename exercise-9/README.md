@@ -20,7 +20,7 @@ https://github.com/retroryan/istio-by-example-java/tree/master/spring-boot-examp
 
 #### View Guestbook Traces
 
-Generate a small load to the application either using wrk2 or a shell script:
+Generate a small load to the application either using a shell script or fortio:
 
 With shell script:
 
@@ -45,6 +45,6 @@ kubectl port-forward -n istio-system \
   9411:9411
 ```
 
-f you are in Cloud Shell, you'll need to use Web Preview and Change   Port to `9411`. Else, browse to http://localhost:9411
+If you are in Cloud Shell, you'll need to use Web Preview and Change   Port to `9411`. Else, browse to http://localhost:9411
 
 #### [Continue to Exercise 10 - Request Routing and Canary Testing](../exercise-10/README.md)
