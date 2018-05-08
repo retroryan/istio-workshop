@@ -2,7 +2,7 @@
 
 #### Generate Guestbook Telemetry data
 
-Generate a small load to the application either using wrk2 or a shell script:
+Generate a small load to the application either using a shell script or fortio:
 
 With simple shell script:
 
