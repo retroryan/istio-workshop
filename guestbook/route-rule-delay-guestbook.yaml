@@ -12,13 +12,7 @@ spec:
       headers:
         user-agent:
           exact: mobile
-  route:
-  - labels:
-      version: v2
   httpFault:
     delay:
       percent: 100
-      fixedDelay: 4s
-    abort:
-        percent: 10
-        httpStatus: 400
+      fixedDelay: 10s

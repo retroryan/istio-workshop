@@ -45,10 +45,10 @@ This workshop can either be run all locally using the following setup instructio
 If you already have an installation of kubectl in your computer you can skip this step.
 
 ## Get the Workshop Source:
-  
+
 Clone from the current repository, e.g.
 
-  `git clone https://github.com/THIS_REPOSITORY/istio-workshop`
+  `git clone https://github.com/retroryan/istio-workshop`
 
 #### Windows Setup
 
