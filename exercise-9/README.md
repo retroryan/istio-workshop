@@ -20,7 +20,7 @@ https://github.com/retroryan/istio-by-example-java/tree/master/spring-boot-examp
 
 #### View Guestbook Traces
 
-Generate a small load to the application either using wrk2 or a shell script:
+Generate a small load to the application either using a shell script or fortio:
 
 With shell script:
 
@@ -28,13 +28,13 @@ With shell script:
 while sleep 0.5; do curl http://$INGRESS_IP/echo/universe -A mobile; done
 ```
 
-Or, with wrk2:
+Or, with fortio:
 
 ```sh
-docker pull saturnism/wrk2
-docker run -ti --rm saturnism/wrk2 \
-  -d 5s R 5 http://$INGRESS_IP/hello/world
+docker run istio/fortio load -t 5m -qps 5 \
+  http://$INGRESS_IP/echo/universe
 ```
+
 
 ### Zipkin
 Establish port forward from local port:
@@ -45,6 +45,6 @@ kubectl port-forward -n istio-system \
   9411:9411
 ```
 
-f you are in Cloud Shell, you'll need to use Web Preview and Change   Port to `9411`. Else, browse to http://localhost:9411
+If you are in Cloud Shell, you'll need to use Web Preview and Change   Port to `9411`. Else, browse to http://localhost:9411
 
 #### [Continue to Exercise 10 - Request Routing and Canary Testing](../exercise-10/README.md)

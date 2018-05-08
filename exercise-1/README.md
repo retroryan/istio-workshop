@@ -42,10 +42,23 @@ To create a container cluster execute:
 
 ```sh
 gcloud container clusters create guestbook \
-      --cluster-version=1.9.6-gke.0  \
+      --cluster-version=1.9.6 \
       --num-nodes 3 \
       --machine-type n1-standard-2
 ```
+
+Retrieve your credentials for kubectl:
+
+```sh
+gcloud container clusters get-credentials guestbook
+```
+
+Grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio).
+
+kubectl create clusterrolebinding cluster-admin-binding \
+    --clusterrole=cluster-admin \
+    --user=$(gcloud config get-value core/account)
+
 
 #### Verify kubectl
   `kubectl version`

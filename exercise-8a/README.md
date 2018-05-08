@@ -4,7 +4,7 @@ First we need to configure Istio to automatically gather telemetry data for serv
 
 This is done by adding Istio configuration that instructs Mixer to automatically generate and report a new metric and a new log stream for all traffic within the mesh.
 
-The added configuration controlls three pieces of Mixer functionality:
+The added configuration controls three pieces of Mixer functionality:
 
 * Generation of instances (in this example, metric values and log entries) from Istio attributes
 * Creation of handlers (configured Mixer adapters) capable of processing generated instances
