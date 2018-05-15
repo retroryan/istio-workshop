@@ -55,10 +55,11 @@ gcloud container clusters get-credentials guestbook
 
 Grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio).
 
+```sh
 kubectl create clusterrolebinding cluster-admin-binding \
     --clusterrole=cluster-admin \
     --user=$(gcloud config get-value core/account)
-
+```
 
 #### Verify kubectl
   `kubectl version`
