@@ -17,8 +17,6 @@ spec:
     route:
     - destination:
         host: helloworld-service
-        port:
-          number: 8080
         subset: version-2-0  
   - match:
     - uri:
@@ -26,21 +24,15 @@ spec:
     route:
     - destination:
         host: helloworld-service
-        port:
-          number: 8080
         subset: version-1-0
       weight: 80
     - destination:
         host: helloworld-service
-        port:
-          number: 8080
         subset: version-2-0
       weight: 20        
   - route:
     - destination:
         host: guestbook-ui
-        port:
-          number: 80
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
