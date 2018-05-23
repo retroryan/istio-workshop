@@ -48,7 +48,7 @@ kubectl -n istio-system port-forward \
   8088:8088
 ```
 
-If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `9090`. Once opened, you'll see `404 not found` error. This is normal because `/` is not handled. Append the URI with `/dotviz`, e.g.: `http://8088-dot-...-dot-devshell.appspot.com/dotviz`
+If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `8088`. Once opened, you'll see `404 not found` error. This is normal because `/` is not handled. Append the URI with `/dotviz`, e.g.: `http://8088-dot-...-dot-devshell.appspot.com/dotviz`
 
 Browse to http://localhost:8088/dotviz
 
