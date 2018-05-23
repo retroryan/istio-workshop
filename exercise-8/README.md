@@ -27,7 +27,7 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=gr
 
 If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `3000`.
 
-Browse to http://localhost:3000 and navigate to Istio Dashboard
+Browse to http://localhost:3000 and navigate to Istio Dashboard (on the left select the "Dashboards" logo, then click "Manage", then select the "Istio Dashboard")
 
 ### Prometheus
 ```sh
