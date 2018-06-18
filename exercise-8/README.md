@@ -2,7 +2,7 @@
 
 #### Generate Guestbook Telemetry data
 
-Generate a small load to the application either using wrk2 or a shell script:
+Generate a small load to the application either using a shell script or fortio:
 
 With simple shell script:
 
@@ -27,7 +27,7 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=gr
 
 If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `3000`.
 
-Browse to http://localhost:3000 and navigate to Istio Dashboard
+Browse to http://localhost:3000 and navigate to Istio Dashboard (on the left select the "Dashboards" logo, then click "Manage", then select the "Istio Dashboard")
 
 ### Prometheus
 ```sh
@@ -48,7 +48,7 @@ kubectl -n istio-system port-forward \
   8088:8088
 ```
 
-If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `9090`. Once opened, you'll see `404 not found` error. This is normal because `/` is not handled. Append the URI with `/dotviz`, e.g.: `http://8088-dot-...-dot-devshell.appspot.com/dotviz`
+If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `8088`. Once opened, you'll see `404 not found` error. This is normal because `/` is not handled. Append the URI with `/dotviz`, e.g.: `http://8088-dot-...-dot-devshell.appspot.com/dotviz`
 
 Browse to http://localhost:8088/dotviz
 
