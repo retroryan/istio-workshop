@@ -15,29 +15,30 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  name: mysql
   labels:
-    app: guestbook-service
+    app: mysql
     visualize: "true"
-  name: guestbook-service
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: guestbook-service
-      serving: "true"
   template:
     metadata:
       labels:
-        app: guestbook-service
-        serving: "true"
-        version: latest
+        app: mysql
         visualize: "true"
-        layer: controller-plane
     spec:
       containers:
-      - name: guestbook-service
-        image: retroryan/guestbook-service-istio:java-1.0
-        imagePullPolicy: Always
+      - name: mysql
+        image: mysql:5.6
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          # change this
+          value: yourpassword
+        - name: MYSQL_DATABASE
+          value: app
         ports:
-        - containerPort: 8080
-          name: http
+        - containerPort: 3306
+          name: mysql

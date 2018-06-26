@@ -4,7 +4,7 @@
 #### Set Default Region and Zones
 
 ```sh
-gcloud config set compute/zone us-central1-f
+gcloud config set compute/zone us-central1-c
 ```
 ```sh
 gcloud config set compute/region us-central1
@@ -42,23 +42,9 @@ To create a container cluster execute:
 
 ```sh
 gcloud container clusters create guestbook \
-      --cluster-version=1.9.6 \
+      --cluster-version=1.9.7 \
       --num-nodes 3 \
       --machine-type n1-standard-2
-```
-
-Retrieve your credentials for kubectl:
-
-```sh
-gcloud container clusters get-credentials guestbook
-```
-
-Grant cluster admin permissions to the current user (admin permissions are required to create the necessary RBAC rules for Istio).
-
-```sh
-kubectl create clusterrolebinding cluster-admin-binding \
-    --clusterrole=cluster-admin \
-    --user=$(gcloud config get-value core/account)
 ```
 
 #### Verify kubectl

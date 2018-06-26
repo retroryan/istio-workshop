@@ -15,31 +15,33 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: guestbook-ui
+  name: helloworld-service-v1
   labels:
-    app: guestbook-ui
+    app: helloworld-service-v1
     visualize: "true"
+    version: "1.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: guestbook-ui
+      app: helloworld-service
       serving: "true"
   template:
     metadata:
       labels:
-        app: guestbook-ui
-        version: latest
+        app: helloworld-service
+        version: "latest"
         serving: "true"
         visualize: "true"
-        layer: frontend
-      annotations:
-        visualizer/uses: helloworld-service,guestbook-service,redis
+        version: "1.0"
+        layer: controller-plane
     spec:
       containers:
-      - name: guestbook-ui
-        image: retroryan/guestbook-ui-istio:java-1.0
-        imagePullPolicy: Always
+      - name: helloworld-service
+        image: saturnism/helloworld-service-istio:latest
+        env:
+        - name: version
+          value: "1.0"
         ports:
         - name: http
           containerPort: 8080

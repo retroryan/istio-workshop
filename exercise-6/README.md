@@ -42,54 +42,19 @@ MutatingWebhookConfiguration describes the configuration of and admission webhoo
 
 For Istio the webhook is the sidecar injector webhook deployment called "istio-sidecar-injector".  It will modify a pod before it is started to inject an istio init container and istio proxy container.
 
-#### Installing the Webhook
+#### Using the Sidecar Injector
 
-Webhooks requires a signed cert/key pair. Use install/kubernetes/webhook-create-signed-cert.sh to generate a cert/key pair signed by the Kubernetes’ CA. The resulting cert/key file is stored as a Kubernetes secret for the sidecar injector webhook to consume.
+By default, Istio is configured to apply a sidecar injector to namespaces with the label/value of `istio-injection=enabled`.
 
-```sh
-cd ~/istio/install/kubernetes
-
-./webhook-create-signed-cert.sh \
-    --service istio-sidecar-injector \
-    --namespace istio-system \
-    --secret sidecar-injector-certs
-```
-
-Install the sidecar injection configmap:
-
-```sh
-kubectl apply -f istio-sidecar-injector-configmap-release.yaml
-```
-
-Set the caBundle in the webhook install YAML that the Kubernetes api-server uses to invoke the webhook.
-
-```sh
-cat istio-sidecar-injector.yaml | \
-     ./webhook-patch-ca-bundle.sh > \
-     istio-sidecar-injector-with-ca-bundle.yaml
-```     
-
-Install the sidecar injector webhook.
-
-```sh
-kubectl apply -f istio-sidecar-injector-with-ca-bundle.yaml
-```
-
-The sidecar injector webhook should now be running.
-
-```sh
-kubectl -n istio-system get deployment -listio=sidecar-injector
-
-NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-istio-sidecar-injector   1         1         1            1           1d
-```
-
-NamespaceSelector decides whether to run the webhook on an object based on whether the namespace for that object matches the selector (see https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors).
-
-Label the default namespace with istio-injection=enabled
+Label the default namespace with `istio-injection` label set to `enabled`.
 
 ```sh
 kubectl label namespace default istio-injection=enabled
+```
+
+Check that the label is applied.
+
+```sh
 kubectl get namespace -L istio-injection
 
 NAME           STATUS    AGE       ISTIO-INJECTION
@@ -101,12 +66,10 @@ kube-system    Active    1h
 
 ### Deploy Guestbook services
 
-To demonstrate Istio, we’re going to use [this guestbook example](https://github.com/retroryan/spring-boot-docker). This example is built with Spring Boot, a frontend using Spring MVC and Thymeleaf, and two microservices. The 3 microservices that we are going to deploy are:
+To demonstrate Istio, we’re going to use [this guestbook example](https://github.com/saturnism/istio-by-example-java/tree/master/spring-boot2-example). This example is built with Spring Boot, a frontend using Spring MVC and Thymeleaf, and two microservices. The 3 microservices that we are going to deploy are:
 
 * Hello World service - A simple service that returns a greeting back to the user.
-
 * Guestbook service - A service that keeps a registry of guests and the message they left.
-
 * Guestbook UI - The front end to the application that calls to the other microservices to get the list of guests, register a new guest, and get the greeting for the user when they register.
 
 The guestbook example requires MySQL to store guestbook entries and Redis to store session information.
@@ -117,52 +80,32 @@ Note that the services must be started in a fixed order because they depend on o
 
     ```sh
     cd ~/istio-workshop
-    kubectl apply -f guestbook/mysql-deployment.yaml -f guestbook/mysql-service.yaml
-    kubectl apply -f guestbook/redis-deployment.yaml -f guestbook/redis-service.yaml
-    kubectl apply -f guestbook/helloworld-deployment.yaml -f guestbook/helloworld-service.yaml
-    kubectl apply -f guestbook/helloworld-deployment-v2.yaml
+    kubectl apply -f kubernetes/
     ```
 
 2. Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
 
-```sh
-kubectl get pod
-```
+    ```sh
+    kubectl get pod
+    ```
 
-When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
+    When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
 
-When you describe the pod what that shows is the details of the additional containers.
+    When you describe the pod what that shows is the details of the additional containers.
 
-```sh
-kubectl describe pods helloworld-service-v1.....
-```
+    ```sh
+    kubectl describe pods helloworld-service-v1.....
+    ```
 
 3. Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
-    ```
+    ```sh
     kubectl get -w deployment
     ```
 
-4. Deploy the guestbook microservice.
+4. Access the guestbook UI in the web browser:
 
-    ```sh
-    kubectl apply -f guestbook/guestbook-deployment.yaml -f guestbook/guestbook-service.yaml
-    ```
-
-5. Verify that guestbook is available before continuing. **Do not procede until the microservice is up and running.**
-
-    ```
-    kubectl get -w deployment
-    ```
-
-6. Deploy the guestbook UI:
-
-    ```sh
-    kubectl apply -f guestbook/guestbook-ui-deployment.yaml -f guestbook/guestbook-ui-service.yaml
-    ```
-7. Access the guestbook UI in the web browser:
-
-The guestbook UI kubernetes service has a type of LoadBalancer.  This creates an external ip through which the ui can be accessed:
+The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
 ```sh
 kubectl get svc guestbook-ui
@@ -171,26 +114,26 @@ NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
 guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 ```
 
-You can test access via a web browser and curl.  You should be able to navigate to that IP to access the guestbook ui.
+You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
 
-To curl the guest book endpoint use:
+To `curl` the Guestbook endpoint use:
 
 ```sh
-curl 35.230.4.192/echo/world
+curl 35.230.4.192/
 ```
 
-Also the Hello World service is declared with an external ip which can be curled:
+Also the Hello World service is declared with an external IP which can be curled:
 
 ```sh
 kubectl get svc helloworld-service
 NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
 helloworld-service   LoadBalancer   10.59.242.178   35.185.201.165   8080:31255/TCP   14m
 
-curl 35.185.201.165:8080/hello/world
-{"hostname":"helloworld-service-v2-744696b8cb-lwdng","greeting":"Hola world from helloworld-service-v2-744696b8cb-lwdng version 2.0","version":"2.0"}
+curl 35.185.201.165:8080/hello/Ray
+{"hostname":"helloworld-service-v2-744696b8cb-lwdng","greeting":"Hola Ray from helloworld-service-v2-744696b8cb-lwdng version 2.0","version":"2.0"}
 ```
 
-8.  Inspect the details of the pods
+5.  Inspect the details of the pods
 
 Look at the details of the pod and then inspect the envoy config:
 
