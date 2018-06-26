@@ -1,5 +1,5 @@
 # Create a denier that returns a google.rpc.Code 7 (PERMISSION_DENIED)
-apiVersion: config.istio.io/v1alpha3
+apiVersion: config.istio.io/v1alpha2
 kind: denier
 metadata:
   name: denyall
@@ -10,7 +10,7 @@ spec:
     message: Not allowed
 ---
 # The (empty) data handed to denyall at run time
-apiVersion: config.istio.io/v1alpha3
+apiVersion: config.istio.io/v1alpha2
 kind: checknothing
 metadata:
   name: denyrequest
@@ -18,7 +18,7 @@ metadata:
 spec:
 ---
 # The rule that uses denier to deny requests with source.labels["app"] == "helloworld-service"
-apiVersion: config.istio.io/v1alpha3
+apiVersion: config.istio.io/v1alpha2
 kind: rule
 metadata:
   name: deny-guestbook-service
