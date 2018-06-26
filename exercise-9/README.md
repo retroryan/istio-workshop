@@ -14,37 +14,31 @@ To do this the guestbook application collects and propagate the following header
 - `x-b3-flags`
 - `x-ot-span-context`
 
-This is done with the Spring Istio Support written by Ray Tsang:
+Our sample application uses Spring Boot 2 and Spring Cloud Finchley release. Spring Cloud has built in Zipkin header propagation using Spring Cloud Sleuth, which will automatically propagate `x-b3-*` headers.
 
-https://github.com/retroryan/istio-by-example-java/tree/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio
+To configure additional headers to propagate, the sample application configured `application.properties` to add additional `propagation keys`, e.g., `spring.sleuth.propagation-keys=x-request-id,x-ot-span-context`.
 
 #### View Guestbook Traces
 
-Generate a small load to the application either using a shell script or fortio:
+Browse to the Guestbook UI and say Hello a few times.
 
-With shell script:
+### Jaeger
 
+Istio demo configuration installs Jaeger for trace collection. This is interchangeable. The demo configuration also exposes Jaeger on a public IP address using a Kubernetes Load Balancer service.
+
+Find the Jeager external IP address:
 ```sh
-while sleep 0.5; do curl http://$INGRESS_IP/echo/universe -A mobile; done
+kubectl -n istio-system get svc tracing
 ```
 
-Or, with fortio:
-
-```sh
-docker run istio/fortio load -t 5m -qps 5 \
-  http://$INGRESS_IP/echo/universe
+Look for the `EXTERNAL-IP` associated with the `tracing` service:
+```
+NAME      TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+tracing   LoadBalancer   10.3.247.155   Y.Y.Y.Y        80:32203/TCP   7d
 ```
 
+Browse to the external IP address of the `tracing` service.
 
-### Zipkin
-Establish port forward from local port:
-
-```sh
-kubectl port-forward -n istio-system \
-  $(kubectl get pod -n istio-system -l app=zipkin -o jsonpath='{.items[0].metadata.name}') \
-  9411:9411
-```
-
-If you are in Cloud Shell, you'll need to use Web Preview and Change   Port to `9411`. Else, browse to http://localhost:9411
+Under *Find Traces* and in *Service* drop down, select *guestbook-ui*, and then click on *Find Traces*.
 
 #### [Continue to Exercise 10 - Request Routing and Canary Testing](../exercise-10/README.md)

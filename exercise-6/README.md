@@ -116,24 +116,15 @@ guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 
 You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
 
-To `curl` the Guestbook endpoint use:
+To `curl` the Guestbook UI endpoint use:
 
 ```sh
-curl 35.230.4.192/
+curl 35.230.4.192
 ```
 
-Also the Hello World service is declared with an external IP which can be curled:
+You can also open it up in a browser.
 
-```sh
-kubectl get svc helloworld-service
-NAME                 TYPE           CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE
-helloworld-service   LoadBalancer   10.59.242.178   35.185.201.165   8080:31255/TCP   14m
-
-curl 35.185.201.165:8080/hello/Ray
-{"hostname":"helloworld-service-v2-744696b8cb-lwdng","greeting":"Hola Ray from helloworld-service-v2-744696b8cb-lwdng version 2.0","version":"2.0"}
-```
-
-5.  Inspect the details of the pods
+4.  Inspect the details of the pods
 
 Look at the details of the pod and then inspect the envoy config:
 
@@ -141,7 +132,7 @@ Look at the details of the pod and then inspect the envoy config:
 kubectl describe pod helloworld-service-v1.....
 kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
 cd /etc/istio/proxy
-more envoy-rev6.json
+more envoy-rev0.json
 exit
 ```
 

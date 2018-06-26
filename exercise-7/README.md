@@ -2,21 +2,22 @@
 
 The components deployed on the service mesh by default are not exposed outside the cluster. External access to individual services so far has been provided by creating an external load balancer on each service.
 
-A Kubernetes Ingress rule can be created that routes external requests through the Istio Ingress Controller to the backing services.
+Traditionally in Kubernetes, you would use an Ingress to configure a L7 proxy. However, Istio provides a much richer set of proxy configurations that are not well-defined in Kubernetes Ingress.
+Thus, in Istio, we will use Isito Gateway to define fine grained control over L7 edge proxy configuration.
 
-#### Inspecting the Istio Ingress controller
+#### Inspecting the Istio Ingress Gateway
 
-The ingress controller gets expossed as a normal kubernetes service load balancer:
+The ingress controller gets expossed as a normal Kubernetes service load balancer:
 
 ```sh
-kubectl get svc istio-ingress -n istio-system -o yaml
+kubectl get svc istio-ingressgateway -n istio-system -o yaml
 ```
 
 Because the Istio Ingress Controller is an Envoy Proxy you can inspect it using the admin routes.  First find the name of the istio ingress proxy:
 
 ```sh
 kubectl get pods -n istio-system
-kubectl port-forward istio-ingress-... -n istio-system 15000:15000
+kubectl port-forward istio-ingressgateway-... -n istio-system 15000:15000
 ```
 
 If you see a bind error because port `15000` is already used, it's probably the Envoy proxy from previous exercise that's still running locally. Kill the local Envoy proxy:
@@ -41,123 +42,81 @@ See the [admin docs](https://www.envoyproxy.io/docs/envoy/v1.5.0/operations/admi
 Also it can be helpful to look at the log files of the Istio ingress controller to see what request is being routed.  First find the ingress pod and the output the log files:
 
 ```sh
-kubectl logs istio-ingress-... -n istio-system
+kubectl logs istio-ingressgateway-... -n istio-system
 ```
 
-#### Configure Guest Book Ingress Routes with the Istio Ingress Controller
-
-1 - Configure the Guess Book UI default route with the Istio Ingress Controller:
-
-First look at what the current route is using the admin interface above.  Then run the following command to change the routes:
+Find the IP address of the Ingress Gateway:
 
 ```sh
-kubectl apply -f guestbook/guestbook-ingress.yaml
+export INGRESS_IP=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo $INGRESS_IP
 ```
 
-After applying the routes you can see the routes have changed in the admin interface.
-
-In the guestbook ingress file notice that the ingress class is specified as   `kubernetes.io/ingress.class: istio` which routes the request to Istio.
-
-The second thing to notice is that the request is routed to different services, either helloworld-service or guestbook-ui depending on the request. We can see how this works by having Kubernetes describe the ingress resource for us:
+`curl` the IP address:
 
 ```sh
-kubectl describe ingress
-
-Name:             simple-ingress
-Namespace:        default
-Address:          
-Default backend:  default-http-backend:80 (<none>)
-Rules:
-  Host  Path  Backends
-  ----  ----  --------
-  *     
-        /hello/.*   helloworld-service:8080 (<none>)
-        /.*         guestbook-ui:80 (<none>)
-Annotations:
-Events:  <none>
-
+curl http://$INGRESS_IP
 ```
 
-2 - Find the external IP of the Istio Ingress controller and export it to an environment variable:
+This will return `connection refused` error. That is because there are no gateway configured to listen to any incoming connections.
+
+#### Configure Guestbook Ingress
+
+1 - Create a new Gateway
 
 ```sh
-kubectl get service istio-ingress -n istio-system -o wide
-
-NAMESPACE      NAME                   CLUSTER-IP      EXTERNAL-IP      PORT(S)                       AGE
-istio-system   istio-ingress          10.31.244.185   35.188.171.180   80:31920/TCP,443:32165/TCP    1h
+kubectl apply -f istio/guestbook-gateway.yaml
 ```
 
-Once the Ingress is successfully configured, you can also get the Ingress IP doing:
+There is a `selector` block in the gateway definition. The `selector` will be used to find the actual edge proxy that should be configured to accept traffic for the gateway. This example selects pods from any namespaces that has the label of `istio` and value of `ingressgateway`.
+
+This is similar to running:
+```sh
+kubectl get pods -l istio=ingressgateway --all-namespaces
+```
+
+You'll find a single pod that matches this label, which is the Ingress Gateway that we looked at earlier.
+```
+NAMESPACE      NAME                                    READY     STATUS    RESTARTS   AGE
+istio-system   istio-ingressgateway-...                1/1       Running   0          7d
+```
+
+After creating the Gateway, it'll enable the Istio Ingress Gateway to listen on port `80`. 
+The `hosts` block of the configuration can be used to configure virtual hosting. E.g., the same IP address can be configured to respond to different host names with different routing rules.
+
+If you `curl` the ingress IP again:
+```sh
+curl -v http://$INGRESS_IP
+```
+
+Rather than `connection refused`, you should see the server responded with `404 Not Found` HTTP response. This is because we have not bound any backends to this gatway yet.
+
+2 - Create a Virtual Service
+
+To bind a backend to the gateway, we'll need to create a virtual service.
 
 ```sh
-kubectl get ingress
-
-NAME             HOSTS     ADDRESS          PORTS     AGE
-simple-ingress   *         35.224.145.187   80        2m
+kubectl apply -f istio/guestbook-ui-vs.yaml
 ```
+
+A virtual service is a logical grouping of routing rules for a given target service. For ingress, we can use virtual service to bind to a gateway.
+
+This example binds the to the gateway we just created, and will respond to any hostname. Again, if you need to use virtual hosting and respond to different host names, you can specify them in the `hosts` section.
+
+3 - Connect via the Ingress Gateway
+
+Try connecting to the Ingress Gateway again.
 
 ```sh
-export INGRESS_IP=$(kubectl get service istio-ingress -n istio-system --template="{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}")
+curl http://$INGRESS_IP
 ```
 
-3 - Browse to the website of the guest Book using the INGRESS IP to see the Guest Book UI: `http://INGRESS_IP`
+This time you should see the HTTP response!
 
-4 - You can also access the Hello World service and see the json in the browser:
-`http://INGRESS_IP/hello/world`
+4 - Browse to the Guestbook UI using the Ingress Gateway IP address.
 
+5 - Say Hello a few times
 
-5 - curl the Guest Book Service:
-```
-curl http://$INGRESS_IP/echo/universe
-```
-
-And the Hello World service:
-```
-curl http://$INGRESS_IP/hello/world
-```
-
-6 - Then curl the echo endpoint multiple times and notice how it round robins between v1 and v2 of the Hello World service:
-
-```sh
-curl http://$INGRESS_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},
-```
-
-```sh
-curl http://$INGRESS_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v2-1009285752-n2tpb","greeting":"Hello universe from helloworld-service-v2-1009285752-n2tpb with 2.0","version":"2.0"}
-```
-
-#### Inspecting the Istio proxy of the Hello World service pod
-
-To better understand the istio proxy, let's inspect the details.  exec into the hellworld service pod to find the proxy details.  First find the full pod name and then exec into the istio-proxy container:
-
-```sh
-kubectl get pods
-kubectl exec -it helloworld-service-v1-... -c istio-proxy  sh
-```
-
-Once in the container look at some of the envoy proxy details:
-
-```sh
-$  ps aux
-$  ls -l /etc/istio/proxy
-$  cat /etc/istio/proxy/envoy-rev0.json
-```
-
-You can also view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
-
-```sh
-kubectl port-forward helloworld-service-v1-... 15000:15000
-curl localhost:15000/stats
-curl localhost:15000/listeners
-curl localhost:15000/routes
-curl localhost:15000/clusters
-curl localhost:15000/server_info
-```
-
-See the [admin docs](https://www.envoyproxy.io/docs/envoy/v1.5.0/operations/admin) for more details.
+In the browser, say hello a couple of times, and you'll see that the greeting reply will round robin between v1 and v2 versions of the hello service. This is because we have 
 
 #### [Exercise 8 - Telemetry](../exercise-8/README.md)

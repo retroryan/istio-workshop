@@ -1,160 +1,55 @@
 ## Exercise 10 - Request Routing and Canary Testing
 
-#### Inspecting Mixer
+#### Deploy Guestbook UI 2.0
 
-Envoy proxies call Mixer to report statistics and check for route rules. By opening up some of the mixer ports we can get an of idea what calls its seeing:
-
-```sh
-kubectl get pods -n istio-system
-kubectl port-forward -n istio-system istio-mixer-... 9093:9093
-curl localhost:9093/metrics
-```
-
-#### Configure the default route for Hello World service V1
-
-Because there are 2 version of the HelloWorld Service Deployment (v1 and v2), before modifying any of the routes a default route needs to be set to just V1. Otherwise it will just round robin between V1 and V2
-
-1 - Set the default version for all requests to the hello world service using :
+We currently have Guestbook UI 1.0 running in the environment. Let's deploy Guestbook UI 2.0, which has a green background.
 
 ```sh
-istioctl create -f guestbook/route-rule-force-hello-v1.yaml
+kubectl apply -f kubernetes-v2/guestbook-ui-deployment-v2.yaml
 ```
 
-This ingress rule forces `v1` of the service by giving it a weight of 100. We can see this by describing the resource we created:
-```sh
-kubectl describe routerules helloworld-default
+Once deployed, browse to the Ingress IP from the previous exercise and you should see that everytime you reload the Guestbook UI website, it'll switch between the 2 versions (2 different background colors).
 
-Name:         helloworld-default
-Namespace:    default
-Labels:       <none>
-Annotations:  <none>
-API Version:  config.istio.io/v1alpha2
-Kind:         RouteRule
-Metadata:
-  ...
-Spec:
-  Destination:
-    Name:      helloworld-service
-  Precedence:  1
-  Route:
-    Labels:
-      Version:  1.0
-```
+#### Default the to V1
 
-2 - Now when you curl the echo service it should always return V1 of the hello world service:
+We can default the production traffic to V1.
+
+1 - Define Destination Rule
+
+Istio needs your help to understand which deployments/pods belongs to which version. We can use `DestinationRule` to define `subsets`. A `subset` is a way group different pods together into a `subset` by using Kubernetes label selectors.
 
 ```sh
-curl http://$INGRESS_IP/echo/universe  
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+kubectl apply -f istio/guestbook-ui-dest.yaml
 ```
+
+2 - Define Virtual Service
+
+Earlier in the lab we used virtual service to bind Kubernetes service to Istio Ingress Gateway. A virtual service can also be used to define routing rules and traffic shifting rules as well. Let's configure the virtual service so that all the requests go to `v1`.
+
 ```sh
-curl http://$INGRESS_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
+kubectl apply -f istio/guestbook-ui-v1-vs.yaml
 ```
 
-#### Skip running this section - Canary Testing
+If you refresh Guestbook UI several times, you should see that all of the requests are now responded by V1 application.
 
-Currently the routing rule only routes to `v1` of the hello world service which. What we want to do is a deployment of `v2` of the Hello World service by allowing only a small amount of traffic to it from a small group. This can be done by creating another rule with a higher precedence that routes some of the traffic to `v2`. We can do canary testing by splitting traffic between the 2 versions:
+#### Traffic Shifting
 
-```yaml
-  destination: helloworld-service.default.svc.cluster.local
-  precedence: 1
-  route:
-  - tags:
-      version: "1.0"
-    weight: 80
-  - tags:
-      version: "2.0"
-    weight: 20
-```
+Rather than routing 100% of the traffic to `v1`, you can also configure weights so that you can route `x%` of traffic to `v1`, and `y%` of traffic to `v2`, etc.
 
-You can apply this rule from an existing configuration:
 ```sh
-istioctl create -f guestbook/route-rule-80-20.yaml
+kubectl apply -f istio/guestbook-ui-80p-v1-vs.yaml
 ```
 
-Then try a few calls to the service:
-```sh
-curl http://$INGRESS_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
-```
+If you refresh Guestbook UI several times, you should see that most of the requests are now responded by V1 application, and some requests are responded by V2 application. You can adjust the weights and reapply the file to test different probabilities.
 
 #### Route based on HTTP header
 
-We can also canary test based on HTTP headers: if the user-agent is "mobile" it'll go to `v2`, otherwise requests will go to `v1`. Written as a route rule, this looks like:
-
-```yaml
-destination:
-  name: helloworld-service
-match:
-  request:
-    headers:
-      user-agent:
-        exact: mobile
-precedence: 2
-route:
-  - labels:
-      version: "2.0"
-```
-
-Note that rules with a higher precedence number are applied first. If a precedence is not specified then it defaults to 0. So with these two rules in place the one with precedence 2 will be applied before the rule with precedence 1.
-
-Test this out by creating the rule:
-```sh
-istioctl create -f guestbook/route-rule-user-mobile.yaml
-```
-
-Now when you curl the end point set the user agent to be mobile and you should only see V2:
+We can also canary test based on HTTP headers. For example, if we want to test different versions of the application based on browser's User Agent, we can setup match rules against the header values.
 
 ```sh
-curl http://$INGRESS_IP/echo/universe -A mobile
-
-{"greeting":{"hostname":"helloworld-service-v2-3297856697-6m4bp","greeting":"Hello dog2 from helloworld-service-v2-3297856697-6m4bp with 2.0","version":"2.0"}
+kubectly apply -f istio/guestbook-ui-chrome-vs.yaml
 ```
 
-```sh
-curl http://$INGRESS_IP/echo/universe
-
-{"greeting":{"hostname":"helloworld-service-v1-286408581-9204h","greeting":"Hello universe from helloworld-service-v1-286408581-9204h with 1.0","version":"1.0"},"
-```
-
-An important point to note is that the user-agent http header is propagated in the span baggage. Look at these two classes for details on how the header is [injected](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanInjector.java) and [extracted](https://github.com/retroryan/istio-by-example-java/blob/master/spring-boot-example/spring-istio-support/src/main/java/com/example/istio/IstioHttpSpanExtractor.java):
-
-#### Route based on the browser
-
-It is also possible to route it based on the Web Browser. For example the following routes to version 2.0 if the browser is chrome:
-
-```yaml
-match:
-  request:
-    headers:
-      user-agent:
-        regex: ".*Chrome.*"
-route:
-- labels:
-    version: "2.0"
-```
-
-To apply this route run:
-
-```sh
-istioctl create -f guestbook/route-rule-user-agent-chrome.yaml
-```
-
-Test this by first navigating to the echo service in Chrome:
-
-http://INGRESS_IP/echo/universe
-
-You should see:
-
-Hola test from helloworld-service-v2-87744028-x20j0 version 2.0
-
-If you then navigate to it another browser like Firefox you will see:
-
-Hello sdsdffsd from helloworld-service-v1-4086392344-42q21 with 1.0
-
+Try browsing the Guestbook UI with both Chrome and Firefox. Chrome should show V2 of the application, and Firefox should show V1 of the application.
 
 #### [Continue to Exercise 11 - Fault Injection and Rate Limiting](../exercise-11/README.md)
