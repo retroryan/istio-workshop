@@ -1,4 +1,4 @@
-## Exercise 5 - Installing Istio 0.7.1
+## Exercise 5 - Installing Istio
 
 #### Clean up
 

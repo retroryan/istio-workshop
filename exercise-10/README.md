@@ -47,7 +47,7 @@ If you refresh Guestbook UI several times, you should see that most of the reque
 We can also canary test based on HTTP headers. For example, if we want to test different versions of the application based on browser's User Agent, we can setup match rules against the header values.
 
 ```sh
-kubectly apply -f istio/guestbook-ui-chrome-vs.yaml
+kubectl apply -f istio/guestbook-ui-chrome-vs.yaml
 ```
 
 Try browsing the Guestbook UI with both Chrome and Firefox. Chrome should show V2 of the application, and Firefox should show V1 of the application.
