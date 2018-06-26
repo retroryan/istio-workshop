@@ -15,9 +15,10 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: guestbook-ui
+  name: guestbook-ui-v2
   labels:
     app: guestbook-ui
+    version: "2.0"
     visualize: "true"
 spec:
   replicas: 1
@@ -29,17 +30,18 @@ spec:
     metadata:
       labels:
         app: guestbook-ui
-        version: latest
+        version: "2.0"
         serving: "true"
         visualize: "true"
-        layer: frontend
       annotations:
         visualizer/uses: helloworld-service,guestbook-service,redis
     spec:
       containers:
       - name: guestbook-ui
-        image: retroryan/guestbook-ui-istio:java-1.0
-        imagePullPolicy: Always
+        image: saturnism/guestbook-ui-istio:2.0
+        env:
+        - name: BACKEND_GUESTBOOK_SERVICE_URL
+          value: http://guestbook-service:80/messages
         ports:
         - name: http
           containerPort: 8080

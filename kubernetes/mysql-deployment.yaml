@@ -26,7 +26,6 @@ spec:
       labels:
         app: mysql
         visualize: "true"
-        layer: data-plane
     spec:
       containers:
       - name: mysql

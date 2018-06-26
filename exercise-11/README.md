@@ -1,49 +1,64 @@
-## Exercise 11 - Fault Injection and Rate Limiting
+## Exercise 11 - Fault Injection and Circuit Breaking
 
 In this exercise we will learn how to test the resiliency of an application by injecting faults.
 
 To test our guestbook application for resiliency, this exercise will test injecting different levels of delay when the user agent accessing the hello world service is mobile.
 
+#### Inject a route rule to delay request
 
-#### Inject a route rule to delay hello world
-
-
-We'll delay access to the Hello World service by adding the `mixer-rule-denial.yaml` rule that forces a delay:
-
-```yaml
-httpFault:
-  delay:
-    percent: 100
-    fixedDelay: 10s
-  abort:
-    percent: 10
-    httpStatus: 400
-```
-
-Be sure the old route rule for mobile is removed before adding the delay.
+We can inject delays into the request.
 
 ```sh
-
-istioctl delete -f guestbook/route-rule-80-20.yaml
-istioctl delete -f guestbook/route-rule-user-agent-chrome.yaml
-istioctl delete -f guestbook/route-rule-user-mobile.yaml
-
-istioctl create -f guestbook/route-rule-delay-guestbook.yaml
+kubectl apply -f istio/guestbook-ui-delay-vs.yaml
 ```
 
-When you curl without a user agent it should return a response as expected:
+Browse to the Guestbook UI, and you'll see that the request is responding much slower!
+
+#### Inject error responses
+
+We can also inject error responses, such as returning 503 from a service.
 
 ```sh
-curl http://$INGRESS_IP/echo/universe
+kubectl apply -f istio/guestbook-service-503.yaml
 ```
 
-However when you curl with the user agent mobile the connection will timeout:
+Visiting the Guestbook UI, and you'll see that it is now unable to retrieve any Guestbook messages. Luckily, the application has a graceful fallback to display a nice error message.
+
+#### Remove the faults
+
+Remove the annoying 503 errors.
 
 ```sh
-$ curl http://$INGRESS_IP/echo/universe -A mobile
-{"greeting":{"greeting":"Unable to connect"},
+kubectl delete -f istio/guestbook-service-503.yaml
 ```
 
-If you modify the delay below the timeout configured in the applciation the service will still return.  For example if we modify it to 4 seconds, the guestbook service still returns a response.
+Then reset the Guestbook UI virtual service so that it routes all requests to V1.
+
+```sh
+kubectl apply -f istio/guestbook-ui-v1-vs.yaml
+```
+
+#### Circuit Breaking
+
+There are several circuit breaker rules you can apply in Istio:
+* Retries
+* Outlier Detection
+* Connection pooling
+
+Retries can be configured in the virtual service.
+
+```sh
+kubectl apply -f istio/guestbook-service-retry-vs.yaml
+```
+
+Outlier and connection pooling are configured in the destination rule.
+
+```sh
+kubectl apply -f istio/guestbook-service-dest.yaml
+```
+
+```sh
+kubectl apply -f istio/guestbook-service-dest.yaml
+```
 
 #### [Continue to Exercise 12 - Service Isolation Using Mixer](../exercise-12/README.md)

@@ -13,20 +13,29 @@
 # limitations under the License.
 
 apiVersion: extensions/v1beta1
-kind: Ingress
+kind: Deployment
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: istio
-  name: simple-ingress
+  labels:
+    app: guestbook-service
+    visualize: "true"
+  name: guestbook-service
 spec:
-  rules:
-    - http:
-        paths:
-          - path: /hello/.*
-            backend:
-              serviceName: helloworld-service
-              servicePort: 8080
-          - path: /.*
-            backend:
-              serviceName: guestbook-ui
-              servicePort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: guestbook-service
+      serving: "true"
+  template:
+    metadata:
+      labels:
+        app: guestbook-service
+        serving: "true"
+        version: "1.0"
+        visualize: "true"
+    spec:
+      containers:
+      - name: guestbook-service
+        image: saturnism/guestbook-service-istio:1.0
+        ports:
+        - containerPort: 8080
+          name: http

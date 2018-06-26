@@ -12,18 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-kind: Service
-apiVersion: v1
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
-  name: guestbook-service
+  name: helloworld-service-v1
   labels:
-    app: guestbook-service
+    app: helloworld-service-v1
     visualize: "true"
+    version: "1.0"
 spec:
-  ports:
-    - port: 8080
-      targetPort: 8080
-      name: http
+  replicas: 1
   selector:
-    app: guestbook-service
-    serving: "true"
+    matchLabels:
+      app: helloworld-service
+      serving: "true"
+  template:
+    metadata:
+      labels:
+        app: helloworld-service
+        version: "latest"
+        serving: "true"
+        visualize: "true"
+        version: "1.0"
+    spec:
+      containers:
+      - name: helloworld-service
+        image: saturnism/helloworld-service-istio:1.0
+        env:
+        - name: version
+          value: "1.0"
+        ports:
+        - name: http
+          containerPort: 8080

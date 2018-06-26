@@ -3,13 +3,6 @@
 - [Exercise 1 - Google Cloud SDK Setup](exercise-1/README.md)
 - [Exercise 1 - AWS Setup](exercise-1/README_AWS.md)
 
-## Exploring Kubernetes
-
-- [Exercise 2 - Deploying a microservice to Kubernetes](exercise-2/README.md)
-- [Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
-- [Exercise 4 - Scaling In and Out](exercise-4/README.md)
-- [Exercise 4a - Envoy](exercise-4a/README.md)
-
 ## Creating a Service Mesh with Istio
 
 - [Exercise 5 - Installing Istio](exercise-5/README.md)
@@ -20,8 +13,6 @@
 - [Exercise 10 - Request Routing and Canary Deployments](exercise-10/README.md)
 - [Exercise 11 - Fault Injection and Rate Limiting](exercise-11/README.md)
 - [Exercise 12 - Service Isolation Using Mixer](exercise-12/README.md)
-- [Exercise 13 - Security](exercise-13/README.md)
-
 
 ## Credits
 These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and [Grand Cloud](https://www.grandcloud.com).  This content is free to use we only ask that you keep the original attributions included in any future contributions or forks.

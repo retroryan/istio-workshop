@@ -4,11 +4,11 @@ metadata:
   name: guestbook-gateway
 spec:
   selector:
-    istio: ingressgateway # use istio default controller
+    istio: ingressgateway
   servers:
-  - port:
+  - hosts:
+    - "*"
+    port:
       number: 80
       name: http
       protocol: HTTP
-    hosts:
-    - "*"

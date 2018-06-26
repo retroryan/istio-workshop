@@ -12,32 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: extensions/v1beta1
-kind: Deployment
+kind: Service
+apiVersion: v1
 metadata:
+  name: helloworld-service
   labels:
-    app: guestbook-service
+    app: helloworld-service
     visualize: "true"
-  name: guestbook-service
 spec:
-  replicas: 1
+  ports:
+    - port: 8080
+      targetPort: 8080
+      name: http
   selector:
-    matchLabels:
-      app: guestbook-service
-      serving: "true"
-  template:
-    metadata:
-      labels:
-        app: guestbook-service
-        serving: "true"
-        version: latest
-        visualize: "true"
-        layer: controller-plane
-    spec:
-      containers:
-      - name: guestbook-service
-        image: retroryan/guestbook-service-istio:java-1.0
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-          name: http
+    app: helloworld-service
+    serving: "true"
