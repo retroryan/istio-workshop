@@ -10,8 +10,8 @@ spec:
     validDuration: 1s
     overrides:
     - dimensions:
-        destination: guestbook-ui
-        source: guestbook-service
+        source: guestbook-ui
+        destination: guestbook-service
       maxAmount: 1
       validDuration: 1s
     - dimensions:
