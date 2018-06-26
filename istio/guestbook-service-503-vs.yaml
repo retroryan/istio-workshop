@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: guestbook-service
+spec:
+  hosts:
+  - guestbook-service
+  http:
+  - route:
+    - destination:
+        host: guestbook-service
+    fault:
+      abort:
+        percent: 100
+        httpStatus: 503

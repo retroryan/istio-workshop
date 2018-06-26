@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: guestbook-service
+spec:
+  host: guestbook-service
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 100
+      http:
+        maxRequestsPerConnection: 10
+        http1MaxPendingRequests: 1024
+    outlierDetection:
+      http:
+        consecutiveErrors: 7
+        interval: 5m
+        baseEjectionTime: 15m
