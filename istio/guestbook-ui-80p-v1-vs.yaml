@@ -14,3 +14,9 @@ spec:
     route:
     - destination:
         host: guestbook-ui
+        subset: v1
+      weight: 80
+    - destination:
+        host: guestbook-ui
+        subset: v2
+      weight: 20
