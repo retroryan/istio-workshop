@@ -38,6 +38,9 @@ spec:
       containers:
       - name: guestbook-ui
         image: saturnism/guestbook-ui-istio:1.0
+        env:
+        - name: BACKEND_GUESTBOOK_SERVICE_URL
+          value: http://guestbook-service:80/messages
         ports:
         - name: http
           containerPort: 8080
