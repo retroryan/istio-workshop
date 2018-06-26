@@ -30,15 +30,13 @@ spec:
     metadata:
       labels:
         app: helloworld-service
-        version: "latest"
         serving: "true"
         visualize: "true"
         version: "2.0"
-        layer: controller-plane
     spec:
       containers:
       - name: helloworld-service
-        image: retroryan/helloworld-service-istio:java-1.0
+        image: saturnism/helloworld-service-istio:1.0
         env:
         - name: version
           value: "2.0"

@@ -29,16 +29,15 @@ spec:
     metadata:
       labels:
         app: guestbook-ui
-        version: latest
+        version: "1.0"
         serving: "true"
         visualize: "true"
-        layer: frontend
       annotations:
         visualizer/uses: helloworld-service,guestbook-service,redis
     spec:
       containers:
       - name: guestbook-ui
-        image: saturnism/guestbook-ui-istio:latest
+        image: saturnism/guestbook-ui-istio:1.0
         ports:
         - name: http
           containerPort: 8080

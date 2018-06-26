@@ -34,11 +34,10 @@ spec:
         serving: "true"
         visualize: "true"
         version: "1.0"
-        layer: controller-plane
     spec:
       containers:
       - name: helloworld-service
-        image: saturnism/helloworld-service-istio:latest
+        image: saturnism/helloworld-service-istio:1.0
         env:
         - name: version
           value: "1.0"

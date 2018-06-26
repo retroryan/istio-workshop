@@ -30,13 +30,12 @@ spec:
       labels:
         app: guestbook-service
         serving: "true"
-        version: latest
+        version: "1.0"
         visualize: "true"
-        layer: controller-plane
     spec:
       containers:
       - name: guestbook-service
-        image: saturnism/guestbook-service-istio:latest
+        image: saturnism/guestbook-service-istio:1.0
         ports:
         - containerPort: 8080
           name: http
