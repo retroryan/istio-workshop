@@ -27,3 +27,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+*.sw?
