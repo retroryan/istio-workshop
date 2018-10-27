@@ -27,7 +27,7 @@ kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=gr
 
 If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `3000`.
 
-Browse to http://localhost:3000 and navigate to Istio Dashboard (on the left select the "Dashboards" logo, then click "Manage", then select the "Istio Dashboard")
+Browse to http://localhost:3000 and navigate to the different Istio Dashboards. On the left select the "Dashboards" logo, then click "Manage", then select the "Istio Mesh Dashboard" and "Istio Performance Dashboard"
 
 ### Prometheus
 ```sh
@@ -38,7 +38,7 @@ kubectl -n istio-system port-forward \
 
 If you are in Cloud Shell, you'll need to use Web Preview and Change Port to `9090`.  
 
-Browse to http://localhost:9090/graph and in the “Expression” input box enter: `istio_request_count`. Click the Execute button.
+Browse to http://localhost:9090/graph and in the “Expression” input box enter: `istio_request_bytes_count`. Click the Execute button.
 
 ### Service Graph
 

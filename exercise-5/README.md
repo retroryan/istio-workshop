@@ -65,8 +65,8 @@ kubectl apply -f ~/istio/install/kubernetes/istio-demo.yaml \
 Istio is deployed in a separate Kubernetes namespace `istio-system`.  You can watch the state of Istio and other services and pods using the watch flag (`-w`) when listing Kubernetes resources. For example, in two separate terminal windows run:
 
 ```sh
-watch kubectl get pods -n istio-system
-watch kubectl get services -n istio-system
+watch -n30 kubectl get pods -n istio-system
+watch -n30 kubectl get services -n istio-system
 ```
 
 #### What just happened?!
