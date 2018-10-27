@@ -28,15 +28,38 @@ This workshop can either be run all locally using the following setup instructio
 
 #### Initialize Cloud SDK
 
-  `./google-cloud-sdk/bin/gcloud init`
+  `gcloud init`
 
-#### Login to Cloud
+Login to your account and then choose the goto berlin project back at the command line:
 
-  `gcloud auth login`
+```
+  Pick cloud project to use:
+    [1] gotober2018-ber-9049
+    [2] Create a new project
+    Please enter numeric choice or text value (must exactly match list
+item):  1
+
+```
+
+Configure the default Compute Region and Zone:
+
+```
+Do you want to configure a default Compute Region and Zone? (Y/n)?  Y
+.....
+[16] europe-west4-c
+.....
+Please enter numeric choice or text value (must exactly match list
+item):  16
+
+```
 
 #### Verify Cloud SDK
 
   `gcloud config list`
+
+#### If need you can manually login to cloud
+
+    `gcloud auth login`
 
 #### Install kubectl
 
