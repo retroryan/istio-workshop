@@ -57,9 +57,9 @@ item):  16
 
   `gcloud config list`
 
-#### If need you can manually login to cloud
+#### Optional if necesary - manual login to cloud
 
-    `gcloud auth login`
+  `gcloud auth login`
 
 #### Install kubectl
 
