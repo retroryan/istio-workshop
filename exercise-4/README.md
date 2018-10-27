@@ -35,7 +35,7 @@
 2. Try scaling out further.
 
     ```
-    kubectl scale deployment helloworld-service-v1 --replicas=17
+    kubectl scale deployment helloworld-service-v1 --replicas=25
     ```
 
 If you look at the pod status, some of the pods will show a `Pending` state. That is because we only have four physical nodes, and the underlying infrastructure has run out of capacity to run the containers with the requested resources. And the underlying infrastructure has run out of capacity to run the containers with the requested resources.
@@ -68,10 +68,11 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
     kubectl get pods -o wide
     ```
 
-6. Scale back the number of replicas before moving on!
+6. IMPORTANT! - Scale back the number of replicas before moving on!
 
     ```
     kubectl scale deployment helloworld-service-v1 --replicas=2
+    gcloud container clusters resize guestbook --size=3
     ```
 
     Kubernetes will only keep 2 of the Hello World instances and terminate the rest.

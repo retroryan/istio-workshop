@@ -16,7 +16,7 @@ That will list the node the pod is running on. For example you should see:
 The Pod name is automatically assigned as the hostname of the container:
 
 ```
-kubectl exec -ti helloworld-service-v1-... /bin/bash
+kubectl exec -ti helloworld-service-v1-... /bin/ash
 
 root@helloworld-...:/data# hostname
 helloworld-service-....
