@@ -31,9 +31,4 @@ The Kubernetes and Istio Exercises are derived from the work of Ray Tsang  [@sat
 
 Zach was instrumental in helping write the Istio tutorials and in particular the Istio Mixer Exercises.
 
-####  Kelsey Hightower [@kelseyhightower](https://twitter.com/kelseyhightower)
-The Istio Ingress Tutorial is largely based on the work of Kelsey and this repository:
-
-[https://github.com/kelseyhightower/istio-ingress-tutorial](https://github.com/kelseyhightower/istio-ingress-tutorial)
-
-Kelsey's tutorial uses more advance features of Kubernetes to taint some of the nodes so that the ingress controller runs on dedicated nodes. The ingress controller is then deployed as a daemonset.
+####  Ben Edwards  - No Social Media Presence
