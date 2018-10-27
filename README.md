@@ -21,7 +21,11 @@ These workshop exercises are built with the help from a number of amazing Kubern
 
 #### Ray Tsang  [@saturnism](https://twitter.com/saturnism)
 
-The Kubernetes and Istio Exercises are derived from the work of Ray Tsang  [@saturnism](https://twitter.com/saturnism) and these repositories:
+The Kubernetes and Istio Exercises are derived from the work of Ray Tsang  [@saturnism](https://twitter.com/saturnism)
+
+A lot of the exercises where copied from the [Istio Workshop Google Doc](https://t.co/yDJY1yODzX)
+
+And the exercises from these repositories:
 
 [https://github.com/saturnism/spring-boot-docker](https://github.com/saturnism/spring-boot-docker)
 
