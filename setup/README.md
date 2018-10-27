@@ -67,12 +67,6 @@ item):  16
 
 If you already have an installation of kubectl in your computer you can skip this step.
 
-## Get the Workshop Source:
-
-Clone from the current repository, e.g.
-
-  `git clone https://github.com/retroryan/istio-workshop`
-
 #### Windows Setup
 
 If you install [Git for Windows](https://git-scm.com/downloads) you get Curl automatically too. There are some advantages:
@@ -91,13 +85,18 @@ The entire workshop can also be run from the [Google Cloud Shell](https://cloud.
 
 2. Check to see if Cloud Shell's Boost mode is Enabled.
 
-![Shell Boost Mode](../images/cloud_shell.png)
+![Shell Boost Mode](../images/boost_mode.png)
 
 3. If not, then enable Boost Mode for Cloud Shell.
 
 Note: When you run gcloud on your own machine, the config settings will be persisted across sessions.  But in Cloud Shell, you will need to set this for every new session / reconnection.
 
 
+## Get the Workshop Source:
+
+Clone from the current repository, e.g.
+
+  `git clone https://github.com/retroryan/istio-workshop`
 
 
 
