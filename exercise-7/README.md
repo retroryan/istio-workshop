@@ -81,7 +81,7 @@ NAMESPACE      NAME                                    READY     STATUS    RESTA
 istio-system   istio-ingressgateway-...                1/1       Running   0          7d
 ```
 
-After creating the Gateway, it'll enable the Istio Ingress Gateway to listen on port `80`. 
+After creating the Gateway, it'll enable the Istio Ingress Gateway to listen on port `80`.
 The `hosts` block of the configuration can be used to configure virtual hosting. E.g., the same IP address can be configured to respond to different host names with different routing rules.
 
 If you `curl` the ingress IP again:
@@ -113,10 +113,10 @@ curl http://$INGRESS_IP
 
 This time you should see the HTTP response!
 
-4 - Browse to the Guestbook UI using the Ingress Gateway IP address.
+4 - In a Web Browser navigate o the Guestbook UI using the Ingress Gateway IP address.
 
 5 - Say Hello a few times
 
-In the browser, say hello a couple of times, and you'll see that the greeting reply will round robin between v1 and v2 versions of the hello service. This is because we have 
+In the browser, say hello a couple of times, and you'll see that the greeting reply will round robin between v1 and v2 versions of the hello service. This is because we have
 
 #### [Exercise 8 - Telemetry](../exercise-8/README.md)
