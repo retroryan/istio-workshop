@@ -2,57 +2,41 @@
 
 #### Clean up
 
-Start with a clean slate and delete all deployed services from the cluster:
+If you have anything running in Kubernetes from the previous exercises first remove those. The easiest way is to start with a clean slate and delete all deployed services from the cluster:
 
 ```sh
 kubectl delete all --all
 ```
 
-#### Download Istio
+#### Install Istio
 
-Download Istio 1.0.0 from the following website:
-
-https://github.com/istio/istio/releases/tag/1.0.0
-
-#### Setup istioctl in Google Cloud Shell
-
-For example, in Google Cloud Shell or other linux distributions, you can install Istio Linux to the home directory:
+1. Download Istio CLI and release.
 
 ```sh
 cd ~/
-wget https://github.com/istio/istio/releases/download/1.0.0/istio-1.0.0-linux.tar.gz
-tar -xzvf istio-1.0.0-linux.tar.gz
-ln -sf ~/istio-1.0.0 ~/istio
+export ISTIO_VERSION=1.0.3
+curl -L https://git.io/getLatestIstio | sh -
+ln -sf istio-$ISTIO_VERSION istio
 ```
+
+2. Add Istio binary path to $PATH.
 
 ```sh
 export PATH=~/istio/bin:$PATH
 ```
 
-Also, save it in `.bashrc` in case you restart your shell:
+Also, save it in `.bashrc` in case you restart your shell. On linux:
+
 ```sh
 echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
 ```
 
-#### Setup istioctl in Mac OSX
-
-For example on a mac osx you setup istioctl by doing the following:
+Or on a mac:
 
 ```sh
-cd ~/
-wget https://github.com/istio/istio/releases/download/1.0.0/istio-1.0.0-osx.tar.gz
-tar -xzvf istio-1.0.0-osx.tar.gz
-ln -sf ~/istio-1.0.0 ~/istio
+echo 'export PATH=~/istio/bin:$PATH' >> ~/.bash_profile
 ```
 
-```sh
-export PATH=~/istio/bin:$PATH
-```
-
-Also, save it in `.bashrc` in case you restart your shell:
-```sh
-echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
-```
 
 #### Running istioctl
 
@@ -69,20 +53,24 @@ For this workshop we are not using Istio Auth because we want to test using outs
 To install plain Istio run:
 
 ```sh
+kubectl apply -f ~/istio/install/kubernetes/helm/istio/templates/crds.yaml
+
 kubectl apply -f ~/istio/install/kubernetes/istio-demo.yaml \
     --as=admin --as-group=system:masters
 ```
+
 
 #### Viewing the Istio Deployments
 
 Istio is deployed in a separate Kubernetes namespace `istio-system`.  You can watch the state of Istio and other services and pods using the watch flag (`-w`) when listing Kubernetes resources. For example, in two separate terminal windows run:
 
 ```sh
-kubectl get pods -n istio-system -w
-kubectl get services -n istio-system -w 
+watch kubectl get pods -n istio-system
+watch kubectl get services -n istio-system
 ```
 
 #### What just happened?!
+
 Congratulations! You have installed Istio into the Kubernetes cluster. A lot has been installed:
 * Istio Controllers and related RBAC rules
 * Istio Custom Resource Defintiions

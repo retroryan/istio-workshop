@@ -16,19 +16,46 @@ To create a service mesh with Istio, you update the deployment of the pods to ad
 
 #### Manual sidecar injection
 
-The side car can be injected manually by running the istioctl kube-inject command, which modifies the YAML file before creating the deployments. This injects the Proxy into the deployment by updating the YAML to add the Proxy as a sidecar. When this command is used, the microservices are now packaged with an Proxy sidecar that manages incoming and outgoing calls for the service. To see how the deployment YAML is modified, run thw following from the `istio-workshop` dir:
+The side car can be injected manually by running the istioctl kube-inject command, which modifies the YAML file before creating the deployments. This injects the Proxy into the deployment by updating the YAML to add the Proxy as a sidecar. When this command is used, the microservices are now packaged with an Proxy sidecar that manages incoming and outgoing calls for the service.
+
+To see how the deployment YAML is modified, run the following from the `istio-workshop` dir:
+
+1. Examine the Hello World Deployment:
 
 ```sh
-istioctl kube-inject -f ~/istio-workshop/kubernetes/helloworld-deployment.yaml
+less kubernetes/helloworld-deployment.yaml
+```
+
+2. Use istioctl to see what manual sidecar injection will add to the deployment:
+
+```sh
+istioctl kube-inject -f kubernetes/helloworld-deployment.yaml | less
 ```
 
 This adds the Istio Proxy as an additional container to the Pod and setups the necessary configuration. Inside the YAML there is now an additional container:
 
 ```
-image: docker.io/istio/proxy_debug:0.2.12
-imagePullPolicy: IfNotPresent
-name: istio-proxy
+  spec:
+  containers:
+  - image: saturnism/helloworld-service-istio:1.0
+   ...
+  - args:
+   ...
+   image: gcr.io/istio-release/proxyv2:1.0.2
+   ...
+  initContainers:
+  - args:
+   ...
+   image: gcr.io/istio-release/proxy_init:1.0.2
+   ...
 ```
+
+Notice that the output has more than just the application container. Specifically, it has an additional istio-proxy container, and an init container.
+
+The init container is responsible for setting up the IP table rules to intercept incoming and outgoing connections and directing them to the Istio Proxy. The istio-proxy container is the Envoy proxy itself.
+
+If you want to use manual Istio sidecar injection, then you would always filter your Kubernetes deployment file through istioctl utility, and deploy the resulting Deployment specification.
+
 
 #### Automatic sidecar injection
 
