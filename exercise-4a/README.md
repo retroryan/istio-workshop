@@ -1,5 +1,7 @@
 # Exercise 4a - Running Envoy Manually
 
+This Envoy exercise is copied from [Christian Posta's workshop](https://github.com/christian-posta/istio-workshop)
+
 ### Run envoy locally using docker
 
 Pull envoy images:
@@ -41,7 +43,7 @@ cd ~/istio-workshop/
 docker run -it --rm envoyproxy/envoy envoy --help
 docker run -it --name proxy --link httpbin \
   -p 15000:15000 -p 15001:15001 \
-  -v $(pwd)/guestbook/simple.json:/etc/simple.json \
+  -v $(pwd)/envoy-conf/simple-v1.json:/etc/simple.json \
   envoyproxy/envoy envoy -c /etc/simple.json
 ```
 
