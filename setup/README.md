@@ -8,7 +8,7 @@ Login to Google Cloud Console with the special workshop credentials:
 
 If you were provided with a Google Cloud Lab username setup the account by:
 
-1 - Dismiss the offer for a free trial and select the project
+1 - If you see a top bar with Sign Up for Free Trial - DO NOT SIGN UP FOR THE FREE TRIAL. Click Dismiss since you'll be using a pre-provisioned lab account. If you are doing this on your own account, then you may want the free trial.
 
 ![Google Cloud Console Setup](../images/homescreen.png)
 
@@ -81,7 +81,7 @@ Git takes care of the PATH setup during installation automatically.
 You get the GNU bash, a really powerful shell, in my opinion much better than the native Windows console.
 You get many other useful Linux tools like tail, cat, grep, gzip, pdftotext, less, sort, tar, vim and even Perl.
 
-### Optional - Cloud Shell
+## Optional - Cloud Shell
 
 The entire workshop can also be run from the [Google Cloud Shell](https://cloud.google.com/developer-shell/#how_do_i_get_started), a command line environment running in the Cloud. This Debian-based virtual machine is loaded with all the development tools you’ll need (docker, gcloud, kubectl and others) and offers a persistent 5GB home directory. Open the Google Cloud Shell by clicking on the icon on the top right of the screen:
 
