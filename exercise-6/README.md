@@ -127,7 +127,7 @@ Note that the services must be started in a fixed order because they depend on o
 3. Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
     ```sh
-    kubectl get -w deployment
+    watch kubectl get deployment
     ```
 
 4. Access the guestbook UI in the web browser:
