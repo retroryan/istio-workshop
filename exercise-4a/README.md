@@ -1,4 +1,4 @@
-# Exercise 4a - Envoy
+# Exercise 4a - Running Envoy Manually
 
 ### Run envoy locally using docker
 
