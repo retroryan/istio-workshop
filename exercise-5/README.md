@@ -10,9 +10,9 @@ kubectl delete all --all
 
 #### Download Istio
 
-Download Istio 0.8.0 from the following website:
+Download Istio 1.0.0 from the following website:
 
-https://github.com/istio/istio/releases/tag/0.8.0
+https://github.com/istio/istio/releases/tag/1.0.0
 
 #### Setup istioctl in Google Cloud Shell
 
@@ -20,9 +20,9 @@ For example, in Google Cloud Shell or other linux distributions, you can install
 
 ```sh
 cd ~/
-wget https://github.com/istio/istio/releases/download/0.8.0/istio-0.8.0-linux.tar.gz
-tar -xzvf istio-0.8.0-linux.tar.gz
-ln -sf ~/istio-0.8.0 ~/istio
+wget https://github.com/istio/istio/releases/download/1.0.0/istio-1.0.0-linux.tar.gz
+tar -xzvf istio-1.0.0-linux.tar.gz
+ln -sf ~/istio-1.0.0 ~/istio
 ```
 
 ```sh
@@ -40,9 +40,9 @@ For example on a mac osx you setup istioctl by doing the following:
 
 ```sh
 cd ~/
-wget https://github.com/istio/istio/releases/download/0.8.0/istio-0.8.0-osx.tar.gz
-tar -xzvf istio-0.8.0-osx.tar.gz
-ln -sf ~/istio-0.8.0 ~/istio
+wget https://github.com/istio/istio/releases/download/1.0.0/istio-1.0.0-osx.tar.gz
+tar -xzvf istio-1.0.0-osx.tar.gz
+ln -sf ~/istio-1.0.0 ~/istio
 ```
 
 ```sh
