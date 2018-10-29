@@ -35,9 +35,10 @@ A simple way to achieve this is via the Docker Toolbox.
 
 #### Step 2: Start all of our containers
 
+Inside the istio-workshop directory:
+
   ```sh
-  $ pwd
-  envoy/examples/front-proxy
+  $ cd envoy-front-proxy
   $ docker-compose up --build -d
   $ docker-compose ps
           Name                       Command               State      Ports
@@ -95,72 +96,34 @@ In addition of using curl from your host machine, you can also enter the contain
   Hello from behind Envoy (service 2)! hostname: 92f4a3737bbc resolvedhostname: 172.19.0.2
   ```
 
-#### Step 8: enter containers and curl admin
+#### Step 8: curl admin
 
 When envoy runs it also attaches an admin to your desired port. In the example configs the admin is bound to port 8001. We can curl it to gain useful information. For example you can curl /server_info to get information about the envoy version you are running. Additionally you can curl /stats to get statistics. For example inside frontenvoy we can get:
 
-$ docker-compose exec front-envoy /bin/bash
-root@e654c2c83277:/# curl localhost:8001/server_info
-envoy 10e00b/RELEASE live 142 142 0
-root@e654c2c83277:/# curl localhost:8001/stats
-cluster.service1.external.upstream_rq_200: 7
-...
-cluster.service1.membership_change: 2
-cluster.service1.membership_total: 3
-...
-cluster.service1.upstream_cx_http2_total: 3
-...
-cluster.service1.upstream_rq_total: 7
-...
-cluster.service2.external.upstream_rq_200: 2
-...
-cluster.service2.membership_change: 1
-cluster.service2.membership_total: 1
-...
-cluster.service2.upstream_cx_http2_total: 1
-...
-cluster.service2.upstream_rq_total: 2
-...
+  ```sh
+  $ curl localhost:8001/server_info
+  envoy 10e00b/RELEASE live 142 142 0
+  $ curl localhost:8001/stats
+  cluster.service1.external.upstream_rq_200: 7
+  ...
+  cluster.service1.membership_change: 2
+  cluster.service1.membership_total: 3
+  ...
+  cluster.service1.upstream_cx_http2_total: 3
+  ...
+  cluster.service1.upstream_rq_total: 7
+  ...
+  cluster.service2.external.upstream_rq_200: 2
+  ...
+  cluster.service2.membership_change: 1
+  cluster.service2.membership_total: 1
+  ...
+  cluster.service2.upstream_cx_http2_total: 1
+  ...
+  cluster.service2.upstream_rq_total: 2
+  ...
+  ```
+
 Notice that we can get the number of members of upstream clusters, number of requests fulfilled by them, information about http ingress, and a plethora of other useful stats.
-
-
-
-
-
-
-
-
-curl the Envoy proxy on port `15001`:
-
-```sh
-curl -s http://localhost:15001/headers
-```
-
-Notice that Envoy added a X-Request-Id
-
-Curl the Envoy admin stats and then zero in on the retry count:
-
-```sh
-curl -s http://localhost:15000/stats
-curl -s http://localhost:15000/stats | grep retry
-```
-
-In the simple json the retry policy for 5xx is set to:
-
-"retry_policy": {
-  "retry_on": "5xx",
-  "num_retries": 3
-}
-
-If you trigger a 500 you can see the retry count go up:
-
-```sh
-curl -s http://localhost:15001/status/500
-curl -s http://localhost:15001/status/500
-curl -s http://localhost:15001/status/500
-curl -s http://localhost:15001/status/500
-curl -s http://localhost:15001/status/500
-curl -s http://localhost:15000/stats | grep retry
-```
 
 #### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)
