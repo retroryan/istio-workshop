@@ -10,12 +10,20 @@ kubectl delete all --all
 
 #### Install Istio
 
+DO NOT USE ISTIO 1.0.3 or get the latest release!
+
+Be sure to use Istio 1.0.2
+
 1. Download Istio CLI and release.
 
+
+Download the 1.0.2 release from here:
+
+[https://github.com/istio/istio/releases/tag/1.0.2](https://github.com/istio/istio/releases/tag/1.0.2)
+
+Unzip it and link it to the istio directory:
+
 ```sh
-cd ~/
-export ISTIO_VERSION=1.0.3
-curl -L https://git.io/getLatestIstio | sh -
 ln -sf istio-$ISTIO_VERSION istio
 ```
 
