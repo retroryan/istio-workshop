@@ -16,7 +16,7 @@ Force remove a running docker image:
 
 On a mac you need to share the directoy to `envoy-front-proxy`.  To mount the `envoy-front-proxy` directory inside of the docker container you need to first setup docker file sharing. Under docker preferences go to the File Sharing dialog and add the envoy-conf directory:
 
-![Docker Compose Deployment](../images/docker_compose_v0.1.svg)
+![Docker File Sharing](../images/docker_file_sharing.png)
 
 
 ### Docker Compose Overview
