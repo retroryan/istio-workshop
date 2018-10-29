@@ -30,6 +30,7 @@ Finally enable injection and deploy the thrilling Book Info sample.
 # (from istio install root)
 kubectl label namespace default istio-injection=enabled
 kubectl create -f samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl create -f $ISTIO/samples/bookinfo/platform/kube/bookinfo-ingress.yaml
 ```
 
 #### Take it for a spin
