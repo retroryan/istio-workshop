@@ -12,6 +12,12 @@ View all running docker images and find the container id:
 Force remove a running docker image:
 `docker rm -f #CONTAINER_ID`
 
+### Docker File Sharing on Mac
+
+On a mac you need to share the directoy to `envoy-front-proxy`.  To mount the `envoy-front-proxy` directory inside of the docker container you need to first setup docker file sharing. Under docker preferences go to the File Sharing dialog and add the envoy-conf directory:
+
+![Docker Compose Deployment](../images/docker_compose_v0.1.svg)
+
 
 ### Docker Compose Overview
 
@@ -27,7 +33,7 @@ Ensure that you have a recent versions of docker, docker-compose and docker-mach
 
 A simple way to achieve this is via the Docker Toolbox.
 
-Step 2: Start all of our containers
+#### Step 2: Start all of our containers
 
   ```sh
   $ pwd
@@ -41,7 +47,7 @@ Step 2: Start all of our containers
   example_front-envoy_1   /bin/sh -c /usr/local/bin/ ... Up       0.0.0.0:8000->80/tcp, 0.0.0.0:8001->8001/tcp
   ```
 
-Step 3: Test Envoy’s routing capabilities
+####  Step 3: Test Envoy’s routing capabilities
 
 You can now send a request to both services via the front-envoy.
 
@@ -57,7 +63,7 @@ For service2:
   curl -v localhost:8000/service/2
   ```
 
-Step 4: Test Envoy’s load balancing capabilities
+#### Step 4: Test Envoy’s load balancing capabilities
 
 Now let’s scale up our service1 nodes to demonstrate the clustering abilities of envoy.:
 
@@ -71,22 +77,25 @@ Now if we send a request to service1 multiple times, the front envoy will load b
 
   ```sh
   curl -v localhost:8000/service/1
-  ```sh
+  ```
 
-Step 7: enter containers and curl services
+#### Step 7: enter containers and curl services
 
 In addition of using curl from your host machine, you can also enter the containers themselves and curl from inside them. To enter a container you can use docker-compose exec <container_name> /bin/bash. For example we can enter the front-envoy container, and curl for services locally:
 
-$ docker-compose exec front-envoy /bin/bash
-root@81288499f9d7:/# curl localhost:80/service/1
-Hello from behind Envoy (service 1)! hostname: 85ac151715c6 resolvedhostname: 172.19.0.3
-root@81288499f9d7:/# curl localhost:80/service/1
-Hello from behind Envoy (service 1)! hostname: 20da22cfc955 resolvedhostname: 172.19.0.5
-root@81288499f9d7:/# curl localhost:80/service/1
-Hello from behind Envoy (service 1)! hostname: f26027f1ce28 resolvedhostname: 172.19.0.6
-root@81288499f9d7:/# curl localhost:80/service/2
-Hello from behind Envoy (service 2)! hostname: 92f4a3737bbc resolvedhostname: 172.19.0.2
-Step 8: enter containers and curl admin
+  ```sh
+  $ docker-compose exec front-envoy /bin/bash
+  root@81288499f9d7:/# curl localhost:80/service/1
+  Hello from behind Envoy (service 1)! hostname: 85ac151715c6 resolvedhostname: 172.19.0.3
+  root@81288499f9d7:/# curl localhost:80/service/1
+  Hello from behind Envoy (service 1)! hostname: 20da22cfc955 resolvedhostname: 172.19.0.5
+  root@81288499f9d7:/# curl localhost:80/service/1
+  Hello from behind Envoy (service 1)! hostname: f26027f1ce28 resolvedhostname: 172.19.0.6
+  root@81288499f9d7:/# curl localhost:80/service/2
+  Hello from behind Envoy (service 2)! hostname: 92f4a3737bbc resolvedhostname: 172.19.0.2
+  ```
+
+#### Step 8: enter containers and curl admin
 
 When envoy runs it also attaches an admin to your desired port. In the example configs the admin is bound to port 8001. We can curl it to gain useful information. For example you can curl /server_info to get information about the envoy version you are running. Additionally you can curl /stats to get statistics. For example inside frontenvoy we can get:
 
