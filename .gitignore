@@ -28,3 +28,4 @@ dist/
 nbdist/
 .nb-gradle/
 *.sw?
+.envrc
