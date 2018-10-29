@@ -24,20 +24,13 @@ Browse to the Guestbook UI and say Hello a few times.
 
 ### Jaeger
 
-Istio demo configuration installs Jaeger for trace collection. This is interchangeable. The demo configuration also exposes Jaeger on a public IP address using a Kubernetes Load Balancer service.
+Istio demo configuration installs Jaeger for trace collection. This is interchangeable. Setup a port-forward in the usual way.
 
-Find the Jeager external IP address:
 ```sh
-kubectl -n istio-system get svc tracing
+kubectl -n istio-system port-forward (kubectl -n istio-system get po -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686
 ```
 
-Look for the `EXTERNAL-IP` associated with the `tracing` service:
-```
-NAME      TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
-tracing   LoadBalancer   10.3.247.155   Y.Y.Y.Y        80:32203/TCP   7d
-```
-
-Browse to the external IP address of the `tracing` service.
+Browse to http://localhost:16886. 
 
 Under *Find Traces* and in *Service* drop down, select *guestbook-ui*, and then click on *Find Traces*.
 

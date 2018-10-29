@@ -4,7 +4,6 @@ metadata:
   name: guestbook-ui
 spec:
   hosts:
-  - guestbook-ui
   - "*"
   gateways:
   - guestbook-gateway
@@ -15,7 +14,6 @@ spec:
     route:
     - destination:
         host: guestbook-ui
-        subset: v1
     fault:
       delay:
         percent: 100
