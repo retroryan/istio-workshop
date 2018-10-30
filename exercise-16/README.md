@@ -114,7 +114,7 @@ Assume all other shell is run with the working directory set to the Istio releas
 ```
 cd ~/istio
 kubectl create -f samples/bookinfo/platform/kube/bookinfo-add-serviceaccount.yaml
-kubectl create -f samples/bookinfo/platform/kube/istio-rbac-enable.yaml
+kubectl create -f samples/bookinfo/platform/kube/rbac/rbac-config-ON.yaml
 ```
 
 Now we should get denied for all the things:
@@ -128,7 +128,7 @@ curl http://$INGRESS_IP/productpage
 We can let ourselves back in with some roles / bindings.
 
 ```
-kubectl apply -f samples/bookinfo/kube/istio-rbac-namespace.yaml
+kubectl apply -f $ISTIO/samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
 ```
 
 This creates a catch-all rule that allows service in either `istio-system` or `default` to use `GET` on any service. Open the file for the details. Use curl or a brower to hit the previous endpoint and enjoy unfettered access.
@@ -138,7 +138,7 @@ This creates a catch-all rule that allows service in either `istio-system` or `d
 Let's delete our overly lax policy:
 
 ```
-kubectl delete -f samples/bookinfo/kube/istio-rbac-namespace.yaml
+kubectl delete -f samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
 ```
 
 Let's introduce something a bit more fine-grained. A picture of the architecture will be helpful here.
@@ -148,13 +148,13 @@ Let's introduce something a bit more fine-grained. A picture of the architecture
 We'd like ingress to be able to contact the productpage.
 
 ```
-kubectl apply -f samples/bookinfo/kube/istio-rbac-productpage.yaml
+kubectl apply -f samples/bookinfo/platform/kube/rbac/productpage-policy.yaml
 ```
 
 Now if we visit the page in the browser we can that we have the first level of the service graph opened up. Again, details are in the file. Currently everything else is showing an error. This is solved by throwing more targeted policy at the problem:
 
 ```
-kubectl apply -f samples/bookinfo/kube/istio-rbac-details-reviews.yaml
+kubectl apply -f samples/bookinfo/platform/kube/rbac/details-reviews-policy.yaml
 ```
 
 This enables reviews (for v2 / v3) and details. Visit the page! You can see how this was done by checking out the file. Note the usage of the spiffe identity.
@@ -162,7 +162,7 @@ This enables reviews (for v2 / v3) and details. Visit the page! You can see how 
 Lastly:
 
 ```
-kubectl apply -f samples/bookinfo/kube/istio-rbac-ratings.yaml
+kubectl apply -f samples/bookinfo/platform/kube/rbac/ratings-policy.yaml
 ```
 
 Ratings should now appear.
