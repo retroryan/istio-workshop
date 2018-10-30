@@ -21,6 +21,13 @@
 - [Exercise 11 - Fault Injection and Rate Limiting](exercise-11/README.md)
 - [Exercise 12 - Service Isolation Using Mixer](exercise-12/README.md)
 
+## Securing Istio
+
+- [Exercise 13 - Istio Mutual TLS](exercise-13/README.md)
+- [Exercise 14 - Ensuring security with iptables](exercise-14/README.md)
+- [Exercise 15 - mTLS again, now with 100% more SPIFFE](exercise-15/README.md)
+- [Exercise 16 - Istio RBAC](exercise-16/README.md)
+
 ## Credits
 These workshop exercises are built with the help from a number of amazing Kubernetes and Istio Experts from Google and [Grand Cloud](https://www.grandcloud.com).  This content is free to use we only ask that you keep the original attributions included in any future contributions or forks.
 

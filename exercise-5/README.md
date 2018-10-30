@@ -58,12 +58,12 @@ istioctl -h
 
 For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods but it prevents the ability to access the services outside the cluster and will require additional configurations.
 
-To install plain Istio run:
+To install plain Istio from inside the istio download directory run:
 
 ```sh
-kubectl apply -f ~/istio/install/kubernetes/helm/istio/templates/crds.yaml
+kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 
-kubectl apply -f ~/istio/install/kubernetes/istio-demo.yaml \
+kubectl apply -f install/kubernetes/istio-demo.yaml \
     --as=admin --as-group=system:masters
 ```
 
