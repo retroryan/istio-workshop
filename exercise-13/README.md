@@ -19,7 +19,7 @@ It's the only way for TLS to be the way it was meant to be:
 # (from istio install root)
 kubectl create -f install/kubernetes/istio-demo-auth.yaml \
   --as=admin \
-  --as-group=system:master
+  --as-group=system:masters
 ```
 
 We need to (re)create the auto injector. Use the Exercise 6 instructions.
