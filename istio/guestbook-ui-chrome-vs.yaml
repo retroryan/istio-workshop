@@ -4,7 +4,7 @@ metadata:
   name: guestbook-ui
 spec:
   hosts:
-  - guestbook-ui
+  - "*"
   gateways:
   - guestbook-gateway
   http:
