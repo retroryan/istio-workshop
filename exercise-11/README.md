@@ -19,7 +19,7 @@ Browse to the Guestbook UI, and you'll see that the request is responding much s
 We can also inject error responses, such as returning 503 from a service.
 
 ```sh
-kubectl apply -f istio/guestbook-service-503.yaml
+kubectl apply -f istio/guestbook-service-503-vs.yaml
 ```
 
 Visiting the Guestbook UI, and you'll see that it is now unable to retrieve any Guestbook messages. Luckily, the application has a graceful fallback to display a nice error message.
@@ -29,7 +29,7 @@ Visiting the Guestbook UI, and you'll see that it is now unable to retrieve any 
 Remove the annoying 503 errors.
 
 ```sh
-kubectl delete -f istio/guestbook-service-503.yaml
+kubectl delete -f istio/guestbook-service-503-vs.yaml
 ```
 
 Then reset the Guestbook UI virtual service so that it routes all requests to V1.
