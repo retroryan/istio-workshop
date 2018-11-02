@@ -7,7 +7,7 @@ cd ~/tmp
 openssl x509 -in cert-chain.pem -text | less
 ```
 
-The important thing to notice is that the subject isn't what you'd normally expect. It has no meaning here. What is interesting is the URI SAN extension. Note the SPIFFE identify. There is one more part to SPIFFE identity, and that's a signing authority. This a CA certificate with a SPIFFE identify with _no_ path component.
+The important thing to notice is that the subject isn't what you'd normally expect. It has no meaning here. What is interesting is the URI SAN (Subject Alternative Name) extension. Note the SPIFFE identify. There is one more part to SPIFFE identity, and that's a signing authority. This a CA certificate with a SPIFFE identify with _no_ path component.
 
 ```
 openssl verify -show_chain -CAfile root-cert.pem cert-chain.pem
