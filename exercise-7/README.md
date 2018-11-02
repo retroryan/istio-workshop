@@ -117,6 +117,4 @@ This time you should see the HTTP response!
 
 5 - Say Hello a few times
 
-In the browser, say hello a couple of times, and you'll see that the greeting reply will round robin between v1 and v2 versions of the hello service. This is because we have
-
 #### [Exercise 8 - Telemetry](../exercise-8/README.md)
