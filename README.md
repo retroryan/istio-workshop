@@ -6,7 +6,7 @@
 ## Optional Kubernetes Exercises
 
 - [Exercise 2 - Deploying a microservice to Kubernetes](exercise-2/README.md)
-- [Exercise 3 - Creating a Kubernetes Service](exercise-3/README_AWS.md)
+- [Exercise 3 - Creating a Kubernetes Service](exercise-3/README.md)
 - [Exercise 4 - Scaling in and out](exercise-4/README.md)
 - [Exercise 4a - Running Envoy Manually](exercise-4a/README.md)
 
