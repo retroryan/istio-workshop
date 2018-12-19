@@ -27,7 +27,7 @@ Browse to the Guestbook UI and say Hello a few times.
 Istio demo configuration installs Jaeger for trace collection. This is interchangeable. Setup a port-forward in the usual way.
 
 ```sh
-kubectl -n istio-system port-forward (kubectl -n istio-system get po -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686
+kubectl -n istio-system port-forward $(kubectl -n istio-system get po -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686
 ```
 
 Browse to http://localhost:16886. 

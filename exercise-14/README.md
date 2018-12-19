@@ -21,9 +21,9 @@ kubectl get  -o template --template '{{ .status.hostIP }}' po $pp
 That'll give you the internal ip. Copy the internal ip for the next step.
 
 Next we want to ssh onto that node.  
-1 - Navigate to the Compute Engine page of the google cloud console
-2 - Find the node where the productpage is running by finding the internal ip on that page
-3 - Click on the handy ssh button and get the gcloud command to ssh into the box (our whatever method you prefer)
+1. Navigate to the Compute Engine page of the google cloud console
+2. Find the node where the productpage is running by finding the internal ip on that page
+3. Click on the handy ssh button and get the gcloud command to ssh into the box (our whatever method you prefer)
 
 ```
 gcloud compute --project "sparkcluster-177619" ssh --zone "us-west1-c" "gke-guestbook-default-pool-3bb0f4e2-ldbr"

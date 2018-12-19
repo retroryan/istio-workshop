@@ -128,7 +128,7 @@ curl http://$INGRESS_IP/productpage
 We can let ourselves back in with some roles / bindings.
 
 ```
-kubectl apply -f $ISTIO/samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
+kubectl apply -f samples/bookinfo/platform/kube/rbac/namespace-policy.yaml
 ```
 
 This creates a catch-all rule that allows service in either `istio-system` or `default` to use `GET` on any service. Open the file for the details. Use curl or a brower to hit the previous endpoint and enjoy unfettered access.
