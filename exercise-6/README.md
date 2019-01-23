@@ -103,7 +103,7 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
 
 Note that the services must be started in a fixed order because they depend on other services being started first.
 
-1. Deploy MySQL[^1], Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
+1. Deploy MySQL[<sup>1</sup>](#NOTE), Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
 
     ```sh
     cd ~/istio-workshop
@@ -163,10 +163,11 @@ more envoy-rev0.json
 exit
 ```
 
-[^1]: NOTE: Recent versions of Istio (1.0.4, 1.0.5, 1.1.0-snapshot.3) have an issue which prevents guestbook-service connections to mysql:
+#### NOTE 
+Recent versions of Istio (1.0.4, 1.0.5, 1.1.0-snapshot.3) have an issue which prevents guestbook-service connections to MySQL:
       
 [istio/istio#10062](https://github.com/istio/istio/issues/10062)
-      
+  
 The following workaround is discussed in the issue notes:
 
 ```      
