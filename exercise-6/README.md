@@ -111,14 +111,14 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   kubectl delete meshpolicies.authentication.istio.io default
 ```
 
-1. Deploy MySQL, Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
+1 - Deploy MySQL, Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
 
   ```sh
   cd ~/istio-workshop
   kubectl apply -f kubernetes/
   ```
 
-2. Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
+3 - Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
 
 ```sh
   kubectl get pod
@@ -138,13 +138,13 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   kubectl logs guestbook-service- -c guestbook-service
 ```
 
-3. Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
+4 - Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
     ```sh
     watch kubectl get deployment
     ```
 
-4. Access the guestbook UI in the web browser:
+5 -  Access the guestbook UI in the web browser:
 
   The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
@@ -165,7 +165,7 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
 
   You can also open it up in a browser.
 
-4.  Inspect the details of the pods
+6 -  Inspect the details of the pods
 
   Look at the details of the pod and then inspect the envoy config:
 
