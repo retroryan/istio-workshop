@@ -16,7 +16,7 @@ Sign in to the Google Cloud Platform Console: [https://console.cloud.google.com/
 
 ![Google Cloud Console Setup](../images/homescreen.png)
 
-2 - Select the only Google Cloud Platform project in the project list. If you don't see a project, let the instructor know!
+3 - Select the only Google Cloud Platform project in the project list. If you don't see a project, let the instructor know!
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 

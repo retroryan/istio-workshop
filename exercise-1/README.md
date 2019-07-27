@@ -1,6 +1,6 @@
 ## Exercise 1 - Startup a Kubernetes Cluster using the Google Kubernetes Engine
 
-### Enable APIs and set Default Zone and Region
+### Enable Google Cloud APIs and set Default Zone and Region
 
 You should perform all of the lab instructions directly in Cloud Shell.
 
@@ -26,7 +26,6 @@ Note: For the lab, use the region/zone recommended by the instructor. Learn more
 
 1 - Creating a Kubernetes cluster in Google Cloud Platform is very easy! Use Kubernetes Engine to create a cluster:
 
-
 ```sh
 gcloud beta container clusters create guestbook \
   --addons=HorizontalPodAutoscaling,HttpLoadBalancing,Istio \
@@ -44,7 +43,7 @@ This will take a few minutes to run. Behind the scenes, it will create Google Co
 
 You can see the newly created instances in the Compute Engine → VM Instances page.
 
-2 - Grant cluster-admin permissions to the current user:
+2 - Grant cluster administrator (admin) permissions to the current user. To create the necessary RBAC rules for Istio, the current user requires admin permissions.
 
 ```sh
 kubectl create clusterrolebinding cluster-admin-binding \
@@ -52,8 +51,13 @@ kubectl create clusterrolebinding cluster-admin-binding \
   --user=$(gcloud config get-value core/account)
 ```
 
+Admin permissions are required to instal Istio
+
 3 - Verify kubectl
-  `kubectl version`
+
+```sh
+  kubectl version`
+```
 
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)

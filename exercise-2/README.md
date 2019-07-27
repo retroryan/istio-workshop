@@ -55,7 +55,7 @@ kubectl describe pods helloworld-service-v1-...
 
 This shows all the details of the pod such as status, events, containers, IP and more.  
 
-An important detail to notice, that will be relevant to Istio is that the pod currently only has a single container.  
+An important detail to notice, that will be relevant to Istio, is that the pod currently only has a single container:
 
 ```
 Containers:

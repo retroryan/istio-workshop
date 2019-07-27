@@ -1,6 +1,6 @@
 ## Workshop Setup
 - [Setup for the workshop](setup/README.md)
-- [Exercise 1 - Google Cloud SDK Setup](exercise-1/README.md)
+- [Exercise 1 - Startup a Cluster using the Google Kubernetes Engine](exercise-1/README.md)
 - [Exercise 1 - AWS Setup](exercise-1/README_AWS.md)
 
 ## Optional Kubernetes Exercises
