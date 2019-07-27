@@ -118,7 +118,7 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   kubectl apply -f kubernetes/
   ```
 
-3 - Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
+2 - Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
 
 ```sh
   kubectl get pod
@@ -138,13 +138,13 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   kubectl logs guestbook-service- -c guestbook-service
 ```
 
-4 - Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
+3 - Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
-    ```sh
-    watch kubectl get deployment
-    ```
+```sh
+  watch kubectl get deployment
+```
 
-5 -  Access the guestbook UI in the web browser:
+4 -  Access the guestbook UI in the web browser:
 
   The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
