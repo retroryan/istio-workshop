@@ -1,62 +1,58 @@
-## Exercise 1 - Startup a Kubernetes Cluster
+## Exercise 1 - Startup a Kubernetes Cluster using the Google Kubernetes Engine
 
+### Enable APIs and set Default Zone and Region
 
-#### Optional - Set the default region and zones
+You should perform all of the lab instructions directly in Cloud Shell.
 
-If you did not set the default region and zones in the setup, configure them now.
-
-Note: For the lab, use the region/zone recommended by the instructor. Learn more about different zones and regions in [Regions & Zones documentation](https://cloud.google.com/compute/docs/zones).
-
-
-```sh
-gcloud config set compute/zone us-central1-c
-```
-```sh
-gcloud config set compute/region us-central1
-```
-
-#### Configure your Default Project
-
-If you have multiple gcloud accounts then be sure the correct one is specified for the gcloud. You can get your default project id from the command line with:
-
-```sh
-gcloud config get-value core/project
-```
-
-If you are in an instructor led class with a provided credential, then you don't need to set another project ID.
-
-If you are not using an instructor provided credentials, then you may need to specify a project ID:
-
-```sh
-gcloud config set project your-project-id
-```
-
-#### Enable Compute Engine and Kubernetes Engine API
+1. Enable Google Cloud APIs that you'll be using from our Kubernetes cluster.
 
 ```sh
 gcloud services enable \
-  compute.googleapis.com \
-  container.googleapis.com
+  cloudapis.googleapis.com \
+  container.googleapis.com \
+  containerregistry.googleapis.com
 ```
 
-#### Create a Kubernetes Cluster using the Google Kubernetes Engine
-
-Google Kubernetes Engine is Google’s hosted version of Kubernetes.
-
-To create a container cluster execute:
+2. Set the default zone and region
 
 ```sh
-gcloud container clusters create guestbook \
-      --cluster-version=1.10 \
-      --num-nodes 3 \
-      --machine-type n1-standard-2 \
-      --scopes cloud-platform
+gcloud config set compute/zone us-central1-f
+gcloud config set compute/region us-central1
 ```
 
-Warning: The scopes parameter is important for this lab. Scopes determine what Google Cloud Platform resources these newly created instances can access.  By default, instances are able to read from Google Cloud Storage, write metrics to Google Cloud Monitoring, etc. For our lab, we add the cloud-platform scope to give us more privileges, such as writing to Cloud Storage as well.
+Note: For the lab, use the region/zone recommended by the instructor. Learn more about different zones and regions in [Regions & Zones documentation](https://cloud.google.com/compute/docs/zones).
+
+### Create a Kubernetes Cluster using the Google Kubernetes Engine
+
+1 - Creating a Kubernetes cluster in Google Cloud Platform is very easy! Use Kubernetes Engine to create a cluster:
 
 
-#### Verify kubectl
+```sh
+gcloud beta container clusters create guestbook \
+  --addons=HorizontalPodAutoscaling,HttpLoadBalancing,Istio \
+  --machine-type=n1-standard-4 \
+  --cluster-version=1.12 \
+  --enable-stackdriver-kubernetes --enable-ip-alias \
+  --enable-autoscaling --min-nodes=3 --max-nodes=5 \
+  --enable-autorepair \
+  --scopes cloud-platform
+```
+
+**Note:** The scopes parameter is important for this lab. Scopes determine what Google Cloud Platform resources these newly created instances can access.  By default, instances are able to read from Google Cloud Storage, write metrics to Google Cloud Monitoring, etc. For our lab, we add the cloud-platform scope to give us more privileges, such as writing to Cloud Storage as well.
+
+This will take a few minutes to run. Behind the scenes, it will create Google Compute Engine instances, and configure each instance as a Kubernetes node. These instances don’t include the Kubernetes Master node. In Google Kubernetes Engine, the Kubernetes Master node is managed service so that you don’t have to worry about it!
+
+You can see the newly created instances in the Compute Engine → VM Instances page.
+
+2 - Grant cluster-admin permissions to the current user:
+
+```sh
+kubectl create clusterrolebinding cluster-admin-binding \
+  --clusterrole=cluster-admin \
+  --user=$(gcloud config get-value core/account)
+```
+
+3 - Verify kubectl
   `kubectl version`
 
 ## Explanation
