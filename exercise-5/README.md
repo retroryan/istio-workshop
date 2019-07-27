@@ -10,16 +10,116 @@ kubectl delete all --all
 
 #### Install Istio
 
-DO NOT USE ISTIO 1.0.3 or get the latest release!
+We will follow the slightly modified GKE instructions from [installing Istio](https://cloud.google.com/istio/docs/how-to/installing-oss#install_istio)
 
-Be sure to use Istio 1.0.2
+For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods but it prevents the ability to access the services outside the cluster and will require additional configurations.
 
-1. Download Istio CLI and release.
+1 - Run the following command to download and extract the Istio installation file and Istio client.
+
+curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
+
+The installation directory contains:
+
+1. Installation .yaml files for Kubernetes in install
+2. Sample applications in samples
+3. The istioctl client binary in the bin/ directory. You can use istioctl to manually inject Envoy as a sidecar proxy and to create routing rules and policies.
+4. The istio.VERSION configuration file
+
+2 - Ensure that you're in the Istio installation's root directory.
+
+```sh
+cd
+```
+
+3 - Add the istioctl client to your PATH:
+
+```sh
+export PATH=$PWD/bin:$PATH
+```
+
+4 - Set up the istio-system namespace for Istio's control plane components:
+
+```sh
+kubectl create namespace istio-system
+```
+
+5 - We will install Istio in the istio-system namespace you just created, and then manage microservices from all other namespaces. The installation includes Istio core components, tools, and samples.
 
 
-Download the 1.0.2 release from here:
+6 - Install the Istio Custom Resource Definitions (CRDs) and wait a few seconds for the CRDs to be committed in the Kubernetes API server:
 
-[https://github.com/istio/istio/releases/tag/1.0.2](https://github.com/istio/istio/releases/tag/1.0.2)
+```sh
+helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
+```
+
+7 - Verify that all 23 Istio CRDs were committed using the following command:
+
+```
+kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
+```
+
+In the output you should see:
+23
+
+8 - Install Istio with the default profile. Although you can choose another profile, we recommend the default profile for production deployments.
+
+```sh
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
+```
+
+This deploys the core Istio components:
+
+* Istio-Pilot, which is responsible for service discovery and for configuring the Envoy sidecar proxies in an Istio service mesh.
+* The Mixer components Istio-Policy and Istio-Telemetry, which enforce usage policies and gather telemetry data across the service mesh.
+* Istio-Ingressgateway, which provides an ingress point for traffic from outside the cluster.
+* Istio-Citadel, which automates key and certificate management for Istio.
+
+9 - Verify Istio installation
+
+Ensure the following Kubernetes Services are deployed: istio-citadel, istio-pilot, istio-ingressgateway, istio-policy, and istio-telemetry (you'll also see the other deployed services):
+
+```sh
+kubectl get service -n istio-system
+```
+
+Output:
+
+NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                               AGE
+...
+istio-citadel              ClusterIP      10.19.253.95            8060/TCP,9093/TCP                                                     37s
+istio-galley               ClusterIP      10.19.245.2             443/TCP,15014/TCP,9901/TCP                                            37s
+istio-ingressgateway       LoadBalancer   10.19.247.233        80:31380/TCP,443:31390/TCP,31400:31400/TCP                            40s
+istio-pilot                ClusterIP      10.19.243.14            15003/TCP,15005/TCP,15007/TCP,15010/TCP,15011/TCP,8080/TCP,9093/TCP   38s
+istio-policy               ClusterIP      10.19.254.117           9091/TCP,15004/TCP,9093/TCP                                           39s
+istio-sidecar-injector     ClusterIP      10.19.248.228           443/TCP                                                               37s
+istio-statsd-prom-bridge   ClusterIP      10.19.252.35            9102/TCP,9125/UDP                                                     39s
+istio-telemetry            ClusterIP      10.19.250.11            9091/TCP,15004/TCP,9093/TCP,42422/TCP                                 39s
+...
+
+10 - Ensure the corresponding Kubernetes Pods are deployed and all containers are up and running: istio-pilot-*, istio-policy-*, istio-telemetry-*, istio-ingressgateway-*, and istio-citadel-*.*
+
+```sh
+kubectl get pods -n istio-system
+```
+
+Output:
+NAME                                        READY     STATUS      RESTARTS   AGE
+istio-citadel-54f4678f86-4549b              1/1       Running     0          12m
+istio-cleanup-secrets-5pl77                 0/1       Completed   0          12m
+istio-galley-7bd8b5f88f-nhwlc               1/1       Running     0          12m
+istio-ingressgateway-665699c874-l62rg       1/1       Running     0          12m
+istio-pilot-68cbbcd65d-l5298                2/2       Running     0          12m
+istio-policy-7c5b5bb744-k6vm9               2/2       Running     0          12m
+istio-security-post-install-g9l9p           0/1       Completed   3          12m
+istio-sidecar-injector-85ccf84984-2hpfm     1/1       Running     0          12m
+istio-telemetry-5b6c57fffc-9j4dc            2/2       Running     0          12m
+istio-tracing-77f9f94b98-jv8vh              1/1       Running     0          12m
+prometheus-7456f56c96-7hrk5                 1/1       Running     0          12m
+...
+
+
+
+
 
 Unzip it and link it to the istio directory:
 
@@ -27,23 +127,6 @@ Unzip it and link it to the istio directory:
 ln -sf istio-$ISTIO_VERSION istio
 ```
 
-2. Add Istio binary path to $PATH.
-
-```sh
-export PATH=~/istio/bin:$PATH
-```
-
-Also, save it in `.bashrc` in case you restart your shell. On linux:
-
-```sh
-echo 'export PATH=~/istio/bin:$PATH' >> ~/.bashrc
-```
-
-Or on a mac:
-
-```sh
-echo 'export PATH=~/istio/bin:$PATH' >> ~/.bash_profile
-```
 
 
 #### Running istioctl
@@ -54,18 +137,6 @@ Istio related commands need to have `istioctl` in the path. Verify it is availab
 istioctl -h
 ```
 
-#### Install Istio on the Kubernetes Cluster
-
-For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods but it prevents the ability to access the services outside the cluster and will require additional configurations.
-
-To install plain Istio from inside the istio download directory run:
-
-```sh
-kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
-
-kubectl apply -f install/kubernetes/istio-demo.yaml \
-    --as=admin --as-group=system:masters
-```
 
 
 #### Viewing the Istio Deployments
