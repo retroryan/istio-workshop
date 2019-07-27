@@ -68,6 +68,11 @@ Containers:
 
 When we deploy with Istio be sure to notice the additional containers that get added.
 
+Pods can also have associated labels that are viewed with the following command:
+
+```sh
+  kubectl get pods --show-labels
+```
 
 ## Explanation
 

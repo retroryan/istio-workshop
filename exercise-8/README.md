@@ -21,7 +21,7 @@ docker run istio/fortio load -t 5m -qps 5 \
 
 Establish port forward from local port 3000 to the Grafana instance:
 ```sh
-kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=grafana \
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=telemetry \
   -o jsonpath='{.items[0].metadata.name}') 3000:3000
 ```
 

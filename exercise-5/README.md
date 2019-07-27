@@ -48,7 +48,9 @@ We will install Istio in the istio-system namespace you just created, and then m
 5 - Install the Istio Custom Resource Definitions (CRDs) and wait a few seconds for the CRDs to be committed in the Kubernetes API server:
 
 ```sh
-helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
+helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system \
+      --set grafana.enabled=true --set prometheus.enabled=true \
+      --set tracing.enabled=true | kubectl apply -f -
 ```
 
 6 - Verify that all 23 Istio CRDs were committed using the following command:

@@ -5,7 +5,7 @@ The components deployed on the service mesh by default are not exposed outside t
 Traditionally in Kubernetes, you would use an Ingress to configure a L7 proxy. However, Istio provides a much richer set of proxy configurations that are not well-defined in Kubernetes Ingress.
 Thus, in Istio, we will use Isito Gateway to define fine grained control over L7 edge proxy configuration.
 
-#### Inspecting the Istio Ingress Gateway - DOES NOT WORK WITH CLOUD SHELL!
+#### Inspecting the Istio Ingress Gateway
 
 Skip this exercise if you are doing this in the Google Cloud Shell!
 
@@ -17,11 +17,14 @@ kubectl get svc istio-ingressgateway -n istio-system -o yaml
 
 Because the Istio Ingress Controller is an Envoy Proxy you can inspect it using the admin routes.  First find the name of the istio ingress proxy:
 
+
 ```sh
-kubectl get pods -n istio-system
-kubectl port-forward istio-ingressgateway-... -n istio-system 15000:15000
+kubectl port-forward $(kubectl -n istio-system get pod -l app=istio-ingressgateway \
+    -o jsonpath='{.items[0].metadata.name}') \
+    -n istio-system 8080:15000
 ```
 
+From the Cloud Shell, use the Web Preview button in the top right corner.
 
 You can view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
 
