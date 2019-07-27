@@ -18,18 +18,24 @@ To create a service mesh with Istio, you update the deployment of the pods to ad
 
 The side car can be injected manually by running the istioctl kube-inject command, which modifies the YAML file before creating the deployments. This injects the Proxy into the deployment by updating the YAML to add the Proxy as a sidecar. When this command is used, the microservices are now packaged with an Proxy sidecar that manages incoming and outgoing calls for the service.
 
-To see how the deployment YAML is modified, run the following from the `istio-workshop` dir:
+To see how the deployment YAML is modified, run the following from
 
-1. Examine the Hello World Deployment:
+1.  Change to the the `istio-workshop` dir:
 
 ```sh
-less kubernetes/helloworld-deployment.yaml
+  cd ~/istio-workshop/
 ```
 
-2. Use istioctl to see what manual sidecar injection will add to the deployment:
+2. Examine the Hello World Deployment:
 
 ```sh
-istioctl kube-inject -f kubernetes/helloworld-deployment.yaml | less
+  more kubernetes/helloworld-deployment.yaml
+```
+
+3. Use istioctl to see what manual sidecar injection will add to the deployment:
+
+```sh
+  istioctl kube-inject -f kubernetes/helloworld-deployment.yaml | more
 ```
 
 This adds the Istio Proxy as an additional container to the Pod and setups the necessary configuration. Inside the YAML there is now an additional container:
@@ -41,12 +47,12 @@ This adds the Istio Proxy as an additional container to the Pod and setups the n
    ...
   - args:
    ...
-   image: gcr.io/istio-release/proxyv2:1.0.2
+   image: docker.io/istio/proxyv2:1.2.2
    ...
   initContainers:
   - args:
    ...
-   image: gcr.io/istio-release/proxy_init:1.0.2
+   image: docker.io/istio/proxy_init:1.2.2
    ...
 ```
 
@@ -99,30 +105,38 @@ To demonstrate Istio, we’re going to use [this guestbook example](https://gith
 * Guestbook service - A service that keeps a registry of guests and the message they left.
 * Guestbook UI - The front end to the application that calls to the other microservices to get the list of guests, register a new guest, and get the greeting for the user when they register.
 
-The guestbook example requires MySQL to store guestbook entries and Redis to store session information.
+The guestbook example requires MySQL to store guestbook entries and Redis to store session information. There is a storied history to MySQL connectivity issues [documented here](https://github.com/istio/istio/issues/10062).  The simple fix for this workshop is:
 
-Note that the services must be started in a fixed order because they depend on other services being started first.
+```sh
+  kubectl delete meshpolicies.authentication.istio.io default
+```
 
-1. Deploy MySQL[<sup>1</sup>](#NOTE), Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
+1. Deploy MySQL, Redis, the Hello World microservices, and the associated Kubernetes Services from the `istio-workshop` dir:
 
-    ```sh
-    cd ~/istio-workshop
-    kubectl apply -f kubernetes/
-    ```
+  ```sh
+  cd ~/istio-workshop
+  kubectl apply -f kubernetes/
+  ```
 
 2. Notice that each of the pods now has one Istio init container and two running containers. One is the main application container and the second is the istio proxy container.
 
-    ```sh
-    kubectl get pod
-    ```
+```sh
+  kubectl get pod
+```
 
-    When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
+When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
 
-    When you describe the pod what that shows is the details of the additional containers.
+When you describe the pod what that shows is the details of the additional containers.
 
-    ```sh
-    kubectl describe pods helloworld-service-v1.....
-    ```
+```sh
+  kubectl describe pods helloworld-service-v1.....
+```
+
+And to view the logs for a container use:
+
+```sh
+  kubectl logs guestbook-service- -c guestbook-service
+```
 
 3. Verify that previous deployments are all in a state of AVAILABLE before continuing. **Do not procede until they are up and running.**
 
@@ -135,10 +149,10 @@ Note that the services must be started in a fixed order because they depend on o
 The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
 ```sh
-kubectl get svc guestbook-ui
+  kubectl get svc guestbook-ui
 
-NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
-guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
+  NAME           TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)        AGE
+  guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 ```
 
 You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
@@ -146,7 +160,7 @@ You can test access via a web browser and curl.  You should be able to navigate 
 To `curl` the Guestbook UI endpoint use:
 
 ```sh
-curl 35.230.4.192
+  curl 35.230.4.192
 ```
 
 You can also open it up in a browser.
@@ -156,22 +170,12 @@ You can also open it up in a browser.
 Look at the details of the pod and then inspect the envoy config:
 
 ```
-kubectl describe pod helloworld-service-v1.....
-kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
-cd /etc/istio/proxy
-more envoy-rev0.json
-exit
+  kubectl describe pod helloworld-service-v1.....
+  kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
+  cd /etc/istio/proxy
+  more envoy-rev0.json
+  exit
 ```
 
-#### NOTE 
-Recent versions of Istio (1.0.4, 1.0.5, 1.1.0-snapshot.3) have an issue which prevents guestbook-service connections to MySQL:
-      
-[istio/istio#10062](https://github.com/istio/istio/issues/10062)
-  
-The following workaround is discussed in the issue notes:
-
-```      
-kubectl delete meshpolicies.authentication.istio.io default
-```
 
 #### [Continue to Exercise 7 - Istio Ingress controller](../exercise-7/README.md)

@@ -12,8 +12,6 @@ If you have anything running in Kubernetes from the previous exercises first rem
 
 We will follow the slightly modified GKE instructions from [installing Istio](https://cloud.google.com/istio/docs/how-to/installing-oss#install_istio)
 
-For this workshop we are not using Istio Auth because we want to test using outside services accessing the cluster.  Istio Auth enables mutual TLS authentication between pods but it prevents the ability to access the services outside the cluster and will require additional configurations.
-
 1 - Run the following command to download and extract the Istio installation file and Istio client.
 
 ```sh
@@ -109,33 +107,12 @@ kubectl get pods -n istio-system
 ```
 
 
-
-
-Unzip it and link it to the istio directory:
-
-```sh
-ln -sf istio-$ISTIO_VERSION istio
-```
-
-
-
 #### Running istioctl
 
 Istio related commands need to have `istioctl` in the path. Verify it is available by running:
 
 ```sh
 istioctl -h
-```
-
-
-
-#### Viewing the Istio Deployments
-
-Istio is deployed in a separate Kubernetes namespace `istio-system`.  You can watch the state of Istio and other services and pods using the watch flag (`-w`) when listing Kubernetes resources. For example, in two separate terminal windows run:
-
-```sh
-watch -n30 kubectl get pods -n istio-system
-watch -n30 kubectl get services -n istio-system
 ```
 
 #### What just happened?!
