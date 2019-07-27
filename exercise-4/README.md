@@ -77,4 +77,4 @@ If you look at the pod status, some of the pods will show a `Pending` state. Tha
 
     Kubernetes will only keep 2 of the Hello World instances and terminate the rest.
 
-#### [Continue to Exercise 4a - Envoy](../exercise-4a/README.md)
+#### [Continue to Exercise 5 - Installing Istio](../exercise-5/README.md)

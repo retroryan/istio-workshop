@@ -36,7 +36,7 @@ You will do most of the work from the [Google Cloud Shell](https://cloud.google.
 
 ** Note: When you run gcloud on your own machine, the config settings will be persisted across sessions.  But in Cloud Shell, you will need to set this for every new session / reconnection. **
 
-## Get the Workshop Source:
+## Download the workshop source into the cloud shell:
 
 Clone from the current repository, e.g.
 

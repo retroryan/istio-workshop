@@ -59,6 +59,18 @@ Admin permissions are required to instal Istio
   kubectl version`
 ```
 
+4 - Install Helm
+
+Helm is a Package Manager for Kubernetes, similar to Linux Packager Managers like RPM. We will use Helm to install Istio.
+
+Install helm using the following script:
+
+```sh
+  sh script/startup.sh
+```
+
+This script is from Jonathan Campos blog on [Installing Helm in Google Kubernetes Engine (GKE)](https://medium.com/google-cloud/installing-helm-in-google-kubernetes-engine-7f07f43c536e)
+
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
