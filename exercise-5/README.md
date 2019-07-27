@@ -30,7 +30,7 @@ The installation directory contains:
 2 - Ensure that you're in the Istio installation's root directory.
 
 ```sh
-cd
+  cd ~/istio-1.2.2/
 ```
 
 3 - Add the istioctl client to your PATH:
@@ -45,25 +45,24 @@ export PATH=$PWD/bin:$PATH
 kubectl create namespace istio-system
 ```
 
-5 - We will install Istio in the istio-system namespace you just created, and then manage microservices from all other namespaces. The installation includes Istio core components, tools, and samples.
+We will install Istio in the istio-system namespace you just created, and then manage microservices from all other namespaces. The installation includes Istio core components, tools, and samples.
 
-
-6 - Install the Istio Custom Resource Definitions (CRDs) and wait a few seconds for the CRDs to be committed in the Kubernetes API server:
+5 - Install the Istio Custom Resource Definitions (CRDs) and wait a few seconds for the CRDs to be committed in the Kubernetes API server:
 
 ```sh
 helm template install/kubernetes/helm/istio-init --name istio-init --namespace istio-system | kubectl apply -f -
 ```
 
-7 - Verify that all 23 Istio CRDs were committed using the following command:
+6 - Verify that all 23 Istio CRDs were committed using the following command:
 
 ```
 kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
 ```
 
-In the output you should see:
+It will take a minute to install the CRDs. After a minute you should see in the output:
 23
 
-8 - Install Istio with the default profile. Although you can choose another profile, we recommend the default profile for production deployments.
+7 - Install Istio with the default [profile](https://istio.io/docs/setup/kubernetes/additional-setup/config-profiles/). Although you can choose another profile, we recommend the default profile for production deployments.
 
 ```sh
 helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
@@ -76,7 +75,7 @@ This deploys the core Istio components:
 * Istio-Ingressgateway, which provides an ingress point for traffic from outside the cluster.
 * Istio-Citadel, which automates key and certificate management for Istio.
 
-9 - Verify Istio installation
+8 - Verify Istio installation
 
 Ensure the following Kubernetes Services are deployed: istio-citadel, istio-pilot, istio-ingressgateway, istio-policy, and istio-telemetry (you'll also see the other deployed services):
 
@@ -84,19 +83,7 @@ Ensure the following Kubernetes Services are deployed: istio-citadel, istio-pilo
 kubectl get service -n istio-system
 ```
 
-Output:
-
-NAME                       TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                               AGE
-...
-istio-citadel              ClusterIP      10.19.253.95            8060/TCP,9093/TCP                                                     37s
-istio-galley               ClusterIP      10.19.245.2             443/TCP,15014/TCP,9901/TCP                                            37s
-istio-ingressgateway       LoadBalancer   10.19.247.233        80:31380/TCP,443:31390/TCP,31400:31400/TCP                            40s
-istio-pilot                ClusterIP      10.19.243.14            15003/TCP,15005/TCP,15007/TCP,15010/TCP,15011/TCP,8080/TCP,9093/TCP   38s
-istio-policy               ClusterIP      10.19.254.117           9091/TCP,15004/TCP,9093/TCP                                           39s
-istio-sidecar-injector     ClusterIP      10.19.248.228           443/TCP                                                               37s
-istio-statsd-prom-bridge   ClusterIP      10.19.252.35            9102/TCP,9125/UDP                                                     39s
-istio-telemetry            ClusterIP      10.19.250.11            9091/TCP,15004/TCP,9093/TCP,42422/TCP                                 39s
-...
+In the output you should see istio-citadel, istio-galley, istio-ingressgateway, istio-pilot, istio-policy, istio-sidecar-injector, istio-statsd-prom-bridge, istio-telemetry and prometheus.
 
 10 - Ensure the corresponding Kubernetes Pods are deployed and all containers are up and running: istio-pilot-*, istio-policy-*, istio-telemetry-*, istio-ingressgateway-*, and istio-citadel-*.*
 
@@ -104,21 +91,22 @@ istio-telemetry            ClusterIP      10.19.250.11            9091/TCP,15004
 kubectl get pods -n istio-system
 ```
 
-Output:
-NAME                                        READY     STATUS      RESTARTS   AGE
-istio-citadel-54f4678f86-4549b              1/1       Running     0          12m
-istio-cleanup-secrets-5pl77                 0/1       Completed   0          12m
-istio-galley-7bd8b5f88f-nhwlc               1/1       Running     0          12m
-istio-ingressgateway-665699c874-l62rg       1/1       Running     0          12m
-istio-pilot-68cbbcd65d-l5298                2/2       Running     0          12m
-istio-policy-7c5b5bb744-k6vm9               2/2       Running     0          12m
-istio-security-post-install-g9l9p           0/1       Completed   3          12m
-istio-sidecar-injector-85ccf84984-2hpfm     1/1       Running     0          12m
-istio-telemetry-5b6c57fffc-9j4dc            2/2       Running     0          12m
-istio-tracing-77f9f94b98-jv8vh              1/1       Running     0          12m
-prometheus-7456f56c96-7hrk5                 1/1       Running     0          12m
-...
-
+```
+    Output:
+    NAME                                        READY     STATUS      RESTARTS   AGE
+    istio-citadel-54f4678f86-4549b              1/1       Running     0          12m
+    istio-cleanup-secrets-5pl77                 0/1       Completed   0          12m
+    istio-galley-7bd8b5f88f-nhwlc               1/1       Running     0          12m
+    istio-ingressgateway-665699c874-l62rg       1/1       Running     0          12m
+    istio-pilot-68cbbcd65d-l5298                2/2       Running     0          12m
+    istio-policy-7c5b5bb744-k6vm9               2/2       Running     0          12m
+    istio-security-post-install-g9l9p           0/1       Completed   3          12m
+    istio-sidecar-injector-85ccf84984-2hpfm     1/1       Running     0          12m
+    istio-telemetry-5b6c57fffc-9j4dc            2/2       Running     0          12m
+    istio-tracing-77f9f94b98-jv8vh              1/1       Running     0          12m
+    prometheus-7456f56c96-7hrk5                 1/1       Running     0          12m
+    ...
+```
 
 
 
