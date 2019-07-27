@@ -146,7 +146,7 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
 
 4 -  Access the guestbook UI in the web browser:
 
-  The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
+The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
 ```sh
   kubectl get svc guestbook-ui
@@ -155,22 +155,12 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 ```
 
-  You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
+You can test access via a web browser and curl.  You should be able to access the guestbook ui in your browser with that IP address.
 
-  To `curl` the Guestbook UI endpoint use:
-
-```sh
-  curl 35.230.4.192
-```
-
-  You can also open it up in a browser.
-
-6 -  Inspect the details of the pods
-
-  Look at the details of the pod and then inspect the envoy config:
+6 -  For the curious you can inspect the details of the envoy proxy by gaining shell access to the container:
 
 ```
-  kubectl describe pod helloworld-service-v1.....
+  kubectl get pods
   kubectl exec -it helloworld-service-v1..... -c istio-proxy bash
   cd /etc/istio/proxy
   more envoy-rev0.json

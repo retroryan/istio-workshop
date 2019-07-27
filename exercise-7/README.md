@@ -5,7 +5,9 @@ The components deployed on the service mesh by default are not exposed outside t
 Traditionally in Kubernetes, you would use an Ingress to configure a L7 proxy. However, Istio provides a much richer set of proxy configurations that are not well-defined in Kubernetes Ingress.
 Thus, in Istio, we will use Isito Gateway to define fine grained control over L7 edge proxy configuration.
 
-#### Inspecting the Istio Ingress Gateway
+#### Inspecting the Istio Ingress Gateway - DOES NOT WORK WITH CLOUD SHELL!
+
+Skip this exercise if you are doing this in the Google Cloud Shell!
 
 The ingress controller gets expossed as a normal Kubernetes service load balancer:
 
@@ -20,11 +22,6 @@ kubectl get pods -n istio-system
 kubectl port-forward istio-ingressgateway-... -n istio-system 15000:15000
 ```
 
-If you see a bind error because port `15000` is already used, it's probably the Envoy proxy from previous exercise that's still running locally. Kill the local Envoy proxy:
-
-```sh
-docker kill proxy
-```
 
 You can view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
 
@@ -39,7 +36,9 @@ curl localhost:15000/server_info
 
 See the [admin docs](https://www.envoyproxy.io/docs/envoy/v1.5.0/operations/admin) for more details.
 
-Also it can be helpful to look at the log files of the Istio ingress controller to see what request is being routed.  First find the ingress pod and the output the log files:
+#### Inspecting the Istio Log Files
+
+It can be helpful to look at the log files of the Istio ingress controller to see what request is being routed.  First find the ingress pod and the output the log files:
 
 ```sh
 kubectl logs istio-ingressgateway-... -n istio-system
@@ -101,7 +100,7 @@ kubectl apply -f istio/guestbook-ui-vs.yaml
 
 A virtual service is a logical grouping of routing rules for a given target service. For ingress, we can use virtual service to bind to a gateway.
 
-This example binds the to the gateway we just created, and will respond to any hostname. Again, if you need to use virtual hosting and respond to different host names, you can specify them in the `hosts` section.
+This example binds to the gateway we just created, and will respond to any hostname. Again, if you need to use virtual hosting and respond to different host names, you can specify them in the `hosts` section.
 
 3 - Connect via the Ingress Gateway
 
