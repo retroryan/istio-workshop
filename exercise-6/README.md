@@ -124,15 +124,15 @@ The guestbook example requires MySQL to store guestbook entries and Redis to sto
   kubectl get pod
 ```
 
-When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
+  When you get the pods you should see in the READY column 2/2 meaning that 2 of 2 containers are in the running state (it might take a minute or two to get to that state).  
 
-When you describe the pod what that shows is the details of the additional containers.
+  When you describe the pod what that shows is the details of the additional containers.
 
 ```sh
   kubectl describe pods helloworld-service-v1.....
 ```
 
-And to view the logs for a container use:
+  And to view the logs for a container use:
 
 ```sh
   kubectl logs guestbook-service- -c guestbook-service
@@ -146,7 +146,7 @@ And to view the logs for a container use:
 
 4. Access the guestbook UI in the web browser:
 
-The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
+  The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an external IP through which the UI can be accessed:
 
 ```sh
   kubectl get svc guestbook-ui
@@ -155,19 +155,19 @@ The Guestbook UI Kubernetes service has a type of LoadBalancer.  This creates an
   guestbook-ui   LoadBalancer   10.59.245.13   35.197.94.184   80:30471/TCP   2m
 ```
 
-You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
+  You can test access via a web browser and curl.  You should be able to navigate to that IP to access the Guestbook UI.
 
-To `curl` the Guestbook UI endpoint use:
+  To `curl` the Guestbook UI endpoint use:
 
 ```sh
   curl 35.230.4.192
 ```
 
-You can also open it up in a browser.
+  You can also open it up in a browser.
 
 4.  Inspect the details of the pods
 
-Look at the details of the pod and then inspect the envoy config:
+  Look at the details of the pod and then inspect the envoy config:
 
 ```
   kubectl describe pod helloworld-service-v1.....
