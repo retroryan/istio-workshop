@@ -5,7 +5,7 @@
 If you have anything running in Kubernetes from the previous exercises first remove those. The easiest way is to start with a clean slate and delete all deployed services from the cluster:
 
 ```sh
-kubectl delete all --all
+  kubectl delete all --all
 ```
 
 #### Install Istio
@@ -16,14 +16,16 @@ For this workshop we are not using Istio Auth because we want to test using outs
 
 1 - Run the following command to download and extract the Istio installation file and Istio client.
 
-curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
+```sh
+  curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
+```
 
 The installation directory contains:
 
-1. Installation .yaml files for Kubernetes in install
-2. Sample applications in samples
-3. The istioctl client binary in the bin/ directory. You can use istioctl to manually inject Envoy as a sidecar proxy and to create routing rules and policies.
-4. The istio.VERSION configuration file
+* Installation .yaml files for Kubernetes in install
+* Sample applications in samples
+* The istioctl client binary in the bin/ directory. You can use istioctl to manually inject Envoy as a sidecar proxy and to create routing rules and policies.
+* The istio.VERSION configuration file
 
 2 - Ensure that you're in the Istio installation's root directory.
 
