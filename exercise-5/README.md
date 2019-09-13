@@ -12,10 +12,16 @@ If you have anything running in Kubernetes from the previous exercises first rem
 
 We will follow the slightly modified GKE instructions from [installing Istio](https://cloud.google.com/istio/docs/how-to/installing-oss#install_istio)
 
-1 - Run the following command to download and extract the Istio installation file and Istio client.
+1 - Be sure you are in the home directory:
 
 ```sh
-  curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.2 sh -
+      cd
+```
+
+2 - Run the following command to download and extract the Istio installation file and Istio client.
+
+```sh
+  curl -L https://git.io/getLatestIstio | ISTIO_VERSION=1.2.5 sh -
 ```
 
 The installation directory contains:
@@ -28,7 +34,7 @@ The installation directory contains:
 2 - Ensure that you're in the Istio installation's root directory.
 
 ```sh
-  cd ~/istio-1.2.2/
+  cd ~/istio-1.2.5/
 ```
 
 3 - Add the istioctl client to your PATH:
@@ -62,10 +68,11 @@ kubectl get crds | grep 'istio.io\|certmanager.k8s.io' | wc -l
 It will take a minute to install the CRDs. After a minute you should see in the output:
 23
 
-7 - Install Istio with the default [profile](https://istio.io/docs/setup/kubernetes/additional-setup/config-profiles/). Although you can choose another profile, we recommend the default profile for production deployments.
+7 - Install Istio with the [Demo Profile](https://istio.io/docs/setup/kubernetes/additional-setup/config-profiles/). Although you can choose another profile, we recommend the default profile for production deployments.
 
 ```sh
-helm template install/kubernetes/helm/istio --name istio --namespace istio-system | kubectl apply -f -
+helm install install/kubernetes/helm/istio --name istio --namespace istio-system \
+    --values install/kubernetes/helm/istio/values-istio-demo.yaml
 ```
 
 This deploys the core Istio components:
@@ -74,6 +81,8 @@ This deploys the core Istio components:
 * The Mixer components Istio-Policy and Istio-Telemetry, which enforce usage policies and gather telemetry data across the service mesh.
 * Istio-Ingressgateway, which provides an ingress point for traffic from outside the cluster.
 * Istio-Citadel, which automates key and certificate management for Istio.
+
+And it also deploys the monitoring components.
 
 8 - Verify Istio installation
 
