@@ -5,47 +5,7 @@ The components deployed on the service mesh by default are not exposed outside t
 Traditionally in Kubernetes, you would use an Ingress to configure a L7 proxy. However, Istio provides a much richer set of proxy configurations that are not well-defined in Kubernetes Ingress.
 Thus, in Istio, we will use Isito Gateway to define fine grained control over L7 edge proxy configuration.
 
-#### Inspecting the Istio Ingress Gateway
-
-Skip this exercise if you are doing this in the Google Cloud Shell!
-
-The ingress controller gets expossed as a normal Kubernetes service load balancer:
-
-```sh
-kubectl get svc istio-ingressgateway -n istio-system -o yaml
-```
-
-Because the Istio Ingress Controller is an Envoy Proxy you can inspect it using the admin routes.  First find the name of the istio ingress proxy:
-
-
-```sh
-kubectl port-forward $(kubectl -n istio-system get pod -l app=istio-ingressgateway \
-    -o jsonpath='{.items[0].metadata.name}') \
-    -n istio-system 8080:15000
-```
-
-From the Cloud Shell, use the Web Preview button in the top right corner.
-
-You can view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
-
-```sh
-curl localhost:15000/help
-curl localhost:15000/stats
-curl localhost:15000/listeners
-curl localhost:15000/routes
-curl localhost:15000/clusters
-curl localhost:15000/server_info
-```
-
-See the [admin docs](https://www.envoyproxy.io/docs/envoy/v1.5.0/operations/admin) for more details.
-
-#### Inspecting the Istio Log Files
-
-It can be helpful to look at the log files of the Istio ingress controller to see what request is being routed.  First find the ingress pod and the output the log files:
-
-```sh
-kubectl logs istio-ingressgateway-... -n istio-system
-```
+#### Set the Ingress IP for future exercises
 
 Find the IP address of the Ingress Gateway:
 
@@ -115,8 +75,48 @@ curl http://$INGRESS_IP
 
 This time you should see the HTTP response!
 
-4 - In a Web Browser navigate o the Guestbook UI using the Ingress Gateway IP address.
+4 - In a Web Browser navigate to the Guestbook UI using the Ingress Gateway IP address.
 
 5 - Say Hello a few times
+
+#### Optional -Inspecting the Istio Ingress Gateway
+
+The ingress controller gets expossed as a normal Kubernetes service load balancer:
+
+```sh
+kubectl get svc istio-ingressgateway -n istio-system -o yaml
+```
+
+Because the Istio Ingress Controller is an Envoy Proxy you can inspect it using the admin routes.  First find the name of the istio ingress proxy:
+
+
+```sh
+kubectl port-forward $(kubectl -n istio-system get pod -l app=istio-ingressgateway \
+    -o jsonpath='{.items[0].metadata.name}') \
+    -n istio-system 8080:15000
+```
+
+From the Cloud Shell, use the Web Preview button in the top right corner.
+
+You can view the statistics, listeners, routes, clusters and server info for the envoy proxy by forwarding the local port:
+
+```sh
+curl localhost:8080/help
+curl localhost:8080/stats
+curl localhost:8080/listeners
+curl localhost:8080/routes
+curl localhost:8080/clusters
+curl localhost:8080/server_info
+```
+
+See the [admin docs](https://www.envoyproxy.io/docs/envoy/v1.5.0/operations/admin) for more details.
+
+#### Optional - Inspecting the Istio Log Files
+
+It can be helpful to look at the log files of the Istio ingress controller to see what request is being routed.  First find the ingress pod and the output the log files:
+
+```sh
+kubectl logs istio-ingressgateway-... -n istio-system
+```
 
 #### [Exercise 8 - Telemetry](../exercise-8/README.md)

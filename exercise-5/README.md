@@ -71,8 +71,8 @@ It will take a minute to install the CRDs. After a minute you should see in the 
 7 - Install Istio with the [Demo Profile](https://istio.io/docs/setup/kubernetes/additional-setup/config-profiles/). Although you can choose another profile, we recommend the default profile for production deployments.
 
 ```sh
-helm install install/kubernetes/helm/istio --name istio --namespace istio-system \
-    --values install/kubernetes/helm/istio/values-istio-demo.yaml
+helm template install/kubernetes/helm/istio --name istio --namespace istio-system \
+    --values install/kubernetes/helm/istio/values-istio-demo.yaml | kubectl apply -f -
 ```
 
 This deploys the core Istio components:
