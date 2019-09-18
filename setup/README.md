@@ -38,12 +38,6 @@ You will do most of the work from the [Google Cloud Shell](https://cloud.google.
 
 3. If not, then enable Boost Mode for Cloud Shell.
 
-** Note: When you run gcloud on your own machine, the config settings will be persisted across sessions.  But in Cloud Shell, you will need to set this for every new session / reconnection. **
-
-4. Set the current project to be the full project name from above:
-
-`gcloud config set project none-219021`
-
 ## Download the workshop source into the cloud shell:
 
 Clone from the current repository, e.g.
