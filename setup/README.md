@@ -20,9 +20,9 @@ Sign in to the Google Cloud Platform Console: [https://console.cloud.google.com/
 
 ![Google Cloud Console Setup 2](../images/homescreen2.png)
 
-4 - Take note of the full project name from the URL:
+4 - Take note of the full project name from the URL such as codeone19-sfo-... :
 
-![Google Cloud Project Name](../images/cloud_project_name.png)
+![Google Cloud Project Name](../images/project_name.jpg)
 
 ##  Google Cloud Shell
 

@@ -30,7 +30,7 @@ Istio demo configuration installs Jaeger for trace collection. This is interchan
 kubectl -n istio-system port-forward $(kubectl -n istio-system get po -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 16686
 ```
 
-Browse to http://localhost:16886. 
+Browse to http://localhost:16886.
 
 Under *Find Traces* and in *Service* drop down, select *guestbook-ui*, and then click on *Find Traces*.
 

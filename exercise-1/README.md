@@ -74,6 +74,14 @@ Install helm using the install script in the workshop script directory:
 
 This script is from Jonathan Campos blog on [Installing Helm in Google Kubernetes Engine (GKE)](https://medium.com/google-cloud/installing-helm-in-google-kubernetes-engine-7f07f43c536e)
 
+5 - Optional View the Kubernets Cluster in the Web Console
+
+You can view the Kubernets Cluster in the Web Console by clicking on the hamburger icon and then going under Kubernetes Engine:
+
+![Google Cloud Kubernetes Engine](../images/k8console.png)
+
+
+
 ## Explanation
 #### By Ray Tsang [@saturnism](https://twitter.com/saturnism)
 
